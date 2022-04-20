@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/19 16:57:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:46:08 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ namespace ft
 		     /**                                     CONSTRUCTORS                           */
 		     /** ************************************************************************** */
              
-                 /** default **/
                  
+                /** Default
+                 * 
+                 * @brief  Creates a %vector with default constructed elements.
+                 * @param  __n  The number of elements to initially create.
+                 * @param  __a  An allocator.
+                 */
                 explicit vector (const allocator_type& alloc = allocator_type()):
                     _alloc(alloc),
                     _start(0),
@@ -70,7 +75,15 @@ namespace ft
                     _capacity(0)
                  {}
                  
-                 /** fill **/
+                 
+                 /** fill
+                 *  @brief  Creates a %vector with copies of an exemplar element.
+                 *  @param  __n  The number of elements to initially create.
+                 *  @param  __value  An element to copy.
+                 *  @param  __a  An allocator.
+                 *
+                 *  This constructor fills the %vector with @a __n copies of @a __value.
+                 */
                  explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()):
                  _alloc(alloc)
                  {
@@ -84,7 +97,18 @@ namespace ft
                      }
                      _size = n;
                  }
-                 /** range **/
+                
+                /** range
+                 *  @brief  %Vector copy constructor.
+                 *  @param  __x  A %vector of identical element and allocator types.
+                 *
+                 *  All the elements of @a __x are copied, but any unused capacity in
+                 *  @a __x  will not be copied
+                 *  (i.e. capacity() == size() in the new %vector).
+                 *
+                 *  The newly-created %vector uses a copy of the allocator object used
+                 *  by @a __x (unless the allocator traits dictate a different object).
+                 */
                 template <class InputIterator>
                 vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
                 typename std::enable_if< !std::is_integral<InputIterator>::value, InputIterator>::type* = 0):
@@ -104,7 +128,21 @@ namespace ft
                 }
                  
                  /** copy **/
-                 //vector (const vector& x);
+                 /**
+                 *  @brief  %Vector copy constructor.
+                 *  @param  __x  A %vector of identical element and allocator types.
+                 *
+                 *  All the elements of @a __x are copied, but any unused capacity in
+                 *  @a __x  will not be copied
+                 *  (i.e. capacity() == size() in the new %vector).
+                 *
+                 *  The newly-created %vector uses a copy of the allocator object used
+                 *  by @a __x (unless the allocator traits dictate a different object).
+                 */
+                //  vector (const vector& x)
+                //  {
+                     
+                //  }
                  
                  
                  
@@ -123,6 +161,20 @@ namespace ft
              /** ************************************************************************** */
 		     /**                                 ELEMENT ACCESS                             */
 		     /** ************************************************************************** */
+
+             /** ************************************************************************** */
+		     /**                                 CAPACITY                                   */
+		     /** ************************************************************************** */
+
+             size_type size() const{ return (_size);}     
+             //size_type max_size() const{return (std::allocator<value_type>::max_size);}
+             //void resize (size_type n, value_type val = value_type());
+             size_type capacity() const{return(_capacity);}
+             
+             
+             
+             
+             
     };
 
 }
