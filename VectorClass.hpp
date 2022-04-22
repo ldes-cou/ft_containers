@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/22 12:03:43 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:53:00 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ namespace ft
             pointer         _start;
             pointer         _end;
             pointer         _capacity;
-            // const size_type	computeCapacity(size_type __n)
-			// {
-			// 	if (this->_capacity() > (this->_size() + __n))
-			// 		return (this->_capacity());
-			// 	const size_type __len = size() + std::max(size(), __n);
-			// 	return (__len < size() || __len > max_size()) ? max_size() : __len;
-			//}   
+            size_type	computeCapacity(size_type __n)
+			{
+				if (this->capacity() > (this->size() + __n))
+					return (this->capacity());
+				size_type __len = size() + std::max(size(), __n);
+				return (__len < size() || __len > max_size()) ? max_size() : __len;
+			}   
 
            
             
@@ -60,7 +60,8 @@ namespace ft
 		     /** ************************************************************************** */
              
                  
-                /** Default
+                /**
+                 *  Default
                  * 
                  * @brief  Creates a %vector with default constructed elements.
                  * @param  __n  The number of elements to initially create.
@@ -163,7 +164,7 @@ namespace ft
 		     /** ************************************************************************** */
 
              size_type size() const{ return (this->_end - this->_start);}     
-             size_type max_size() const{return (std::allocator<value_type>::max_size);}
+             size_type max_size() const{return (_alloc.max_size());}
              void resize (size_type n, value_type val = value_type())
              {
                 if (n < size())
@@ -182,26 +183,28 @@ namespace ft
                         _end++;
                     }
                 }
-                if (n > _capacity)
+                if (n > capacity())
                 {
-                    while(_capacity < n)
+                    while(capacity() < n)
                     {
-                        _alloc.allocate(_end);
+                        _alloc.allocate(1);
                         _end++;
                     }
                 }
              }
-             size_type capacity() const{return(_capacity);}
-             bool empty() const{return (size() == 0);}
+            size_type capacity() const{return (size_type(const_iterator(this->_capacity) - this->begin()));}
+             //bool empty() const{return (size() == 0);}
              void reserve (size_type n)
              {
+                if (n == 0)
+                    n = 1;
                 if (n > max_size())
                     throw std::length_error("vector::reserve");
-                if (n > _capacity)
+                if (n > capacity())
                 {
-                    while (_capacity < n)
+                    while (capacity() < n)
                     {
-                        _alloc.allocate(_end);
+                        _alloc.allocate(computeCapacity(n));
                         _end++;
                     }
                 }
@@ -210,10 +213,22 @@ namespace ft
 		    /**                                 MODIFIERS                                  */
 		    /** ************************************************************************* */
 
-            template <class InputIterator>
-            void assign (InputIterator first, InputIterator last);
-
-            void assign (size_type n, const value_type& val);
+            // template <class InputIterator>
+            // void assign (InputIterator first, InputIterator last)
+            // {
+            // }
+            // void assign (size_type n, const value_type& val);
+            void push_back (const value_type& val)
+            {
+                if (this->end() == this->_capacity)
+                {
+                    std::cout << "reserve" << std::endl;
+                    reserve(this->size());
+                }
+                _alloc.construct(_end, val);
+                _end++;
+            }
+            
 
              
     };
