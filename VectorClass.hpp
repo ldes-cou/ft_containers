@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/22 15:41:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:46:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,13 @@ namespace ft
                 //  {
                      
                 //  }
+                
+                /*destructor*/
+                ~vector()
+                {
+                    this->_alloc.deallocate(this->_start, capacity());
+                    clear();
+                };
                  
                  
                  
@@ -171,23 +178,16 @@ namespace ft
                 {
                     while (size() > n)
                     {
+                        --_end;
                         _alloc.destroy(_end);
-                        _end--;
                     }
                 }
-                if (n > size())
+                else if (n > size())
                 {
-                    while (size() > n)
+                    reserve(n);
+                    while (size() < n)
                     {
                         _alloc.construct(_end, val);
-                        _end++;
-                    }
-                }
-                if (n > capacity())
-                {
-                    while(capacity() < n)
-                    {
-                        _alloc.allocate(1);
                         _end++;
                     }
                 }
@@ -238,9 +238,22 @@ namespace ft
                 _alloc.construct(_end, val);
                 _end++;
             }
+            void pop_back()
+            {
+                --_end;
+                _alloc.destroy(_end);
+            }
+            void clear()
+            {
+                size_type len = size();
+                for (size_type i = 0; i < len; i++)
+                    pop_back();
+            }
+        // void swap(vector& x)
+        // {
             
+        // }
 
-             
     };
 
 }
