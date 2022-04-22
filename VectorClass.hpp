@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/22 14:53:00 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/22 15:41:40 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,20 +193,31 @@ namespace ft
                 }
              }
             size_type capacity() const{return (size_type(const_iterator(this->_capacity) - this->begin()));}
-             //bool empty() const{return (size() == 0);}
-             void reserve (size_type n)
-             {
-                if (n == 0)
-                    n = 1;
+            
+            /*Increase the capacity of the vector (the total number of elements that the vector can hold 
+            without requiring reallocation) to a value that's greater or equal to new_cap. 
+            If new_cap is greater than the current capacity(), new storage is allocated, 
+            otherwise the function does nothing. reserve() does not change the size of the vector.
+            If new_cap is greater than capacity(), all iterators, including the past-the-end iterator, 
+            and all references to the elements are invalidated. Otherwise, no iterators or references are invalidated. */
+            void reserve (size_type n)
+            {
                 if (n > max_size())
                     throw std::length_error("vector::reserve");
                 if (n > capacity())
                 {
-                    while (capacity() < n)
-                    {
-                        _alloc.allocate(computeCapacity(n));
-                        _end++;
-                    }
+                        pointer new_start = this->_alloc.allocate(n);
+                        pointer new_end = new_start;
+                        for (size_type i =0; i < this->size(); i++)
+                        {
+                            this->_alloc.construct(new_start + i, this->_start[i]);
+                            this->_alloc.destroy(&(this->_start[i]));
+                            new_end++;
+                        }
+                        this->_alloc.deallocate(this->_start, n);
+                        this->_start = new_start;
+                        this->_end = new_end;
+                        this->_capacity = this->_start + n;
                 }
              }
             /** *************************************************************************** */
@@ -220,10 +231,9 @@ namespace ft
             // void assign (size_type n, const value_type& val);
             void push_back (const value_type& val)
             {
-                if (this->end() == this->_capacity)
+                if (this->_end == this->_capacity)
                 {
-                    std::cout << "reserve" << std::endl;
-                    reserve(this->size());
+                    reserve(computeCapacity(1));
                 }
                 _alloc.construct(_end, val);
                 _end++;

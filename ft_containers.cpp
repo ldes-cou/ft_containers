@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/22 14:52:09 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/22 15:41:23 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ int main()
     std::cout << "ok" <<std::endl; 
     //ft::vector<int> fourth (third);                       // a copy of third
     std::cout << PINK << "************** TEST CAPACITY ****************" << END << std::endl;
-    ft::vector<int> myvector;
+    //ft::vector<int> myvector;
     // set some content in the vector:
-    for (int i=0; i<100; i++) myvector.push_back(i);
-    std::cout << "size: " << myvector.size() << "\n";
-    std::cout << "capacity: " << myvector.capacity() << "\n";
-    std::cout << "max_size: " << myvector.max_size() << "\n";
+    for (int i=0; i<100; i++) third.push_back(i);
+    for (int i=0; i<100; i++) third.push_back(i);
+    std::cout << "size: " << third.size() << "\n";
+    std::cout << "capacity: " << third.capacity() << "\n";
+    std::cout << "max_size: " << third.max_size() << "\n";
 
   // std::cout << PINK << "************** TEST RESIZE ****************" << END << std::endl;
   // std::vector<int> myvector;
