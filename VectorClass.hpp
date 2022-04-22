@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/20 17:46:08 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/22 12:03:43 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ namespace ft
             allocator_type  _alloc;
             pointer         _start;
             pointer         _end;
-            size_type       _size;
             pointer         _capacity;
             // const size_type	computeCapacity(size_type __n)
 			// {
@@ -71,7 +70,6 @@ namespace ft
                     _alloc(alloc),
                     _start(0),
                     _end(0),
-                    _size(0),
                     _capacity(0)
                  {}
                  
@@ -95,7 +93,6 @@ namespace ft
                         _alloc.construct(_end, val);
                         _end++;
                      }
-                     _size = n;
                  }
                 
                 /** range
@@ -124,7 +121,6 @@ namespace ft
                         first++;
                         _end++;
                     }
-                    _size = n;
                 }
                  
                  /** copy **/
@@ -166,14 +162,59 @@ namespace ft
 		     /**                                 CAPACITY                                   */
 		     /** ************************************************************************** */
 
-             size_type size() const{ return (_size);}     
-             //size_type max_size() const{return (std::allocator<value_type>::max_size);}
-             //void resize (size_type n, value_type val = value_type());
+             size_type size() const{ return (this->_end - this->_start);}     
+             size_type max_size() const{return (std::allocator<value_type>::max_size);}
+             void resize (size_type n, value_type val = value_type())
+             {
+                if (n < size())
+                {
+                    while (size() > n)
+                    {
+                        _alloc.destroy(_end);
+                        _end--;
+                    }
+                }
+                if (n > size())
+                {
+                    while (size() > n)
+                    {
+                        _alloc.construct(_end, val);
+                        _end++;
+                    }
+                }
+                if (n > _capacity)
+                {
+                    while(_capacity < n)
+                    {
+                        _alloc.allocate(_end);
+                        _end++;
+                    }
+                }
+             }
              size_type capacity() const{return(_capacity);}
-             
-             
-             
-             
+             bool empty() const{return (size() == 0);}
+             void reserve (size_type n)
+             {
+                if (n > max_size())
+                    throw std::length_error("vector::reserve");
+                if (n > _capacity)
+                {
+                    while (_capacity < n)
+                    {
+                        _alloc.allocate(_end);
+                        _end++;
+                    }
+                }
+             }
+            /** *************************************************************************** */
+		    /**                                 MODIFIERS                                  */
+		    /** ************************************************************************* */
+
+            template <class InputIterator>
+            void assign (InputIterator first, InputIterator last);
+
+            void assign (size_type n, const value_type& val);
+
              
     };
 
