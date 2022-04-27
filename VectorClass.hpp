@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 18:05:30 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 18:22:54 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ namespace ft
                     this->_alloc.deallocate(this->_start, capacity());
                     clear();
                 };
-                 
+                vector& operator= (const vector& x);
                  
                  
              /** ************************************************************************** */
@@ -335,11 +335,16 @@ namespace ft
                     first++; 
                 }
             }
-
-        // void swap(vector& x)
-        // {
-            
-        // }
+            iterator erase (iterator position);
+            iterator erase (iterator first, iterator last);
+            template <class InputIterator>
+            void assign (InputIterator first, InputIterator last);
+            void assign (size_type n, const value_type& val);
+            // void swap(vector& x)
+            // {
+                
+            // }
+        allocator_type get_allocator() const;
 
     };
 
