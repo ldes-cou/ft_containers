@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 14:03:26 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 18:09:27 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,42 @@ int main()
     std::cout << "front: "<< myvector.front() << std::endl;
     std::cout << "back : " << myvector.back() << std::endl;
     std::cout << PINK << "************** MODIFIERS ****************" << END << std::endl;
-    myvector.insert(3, )
+    ft::vector<int>::iterator it;
+    it = myvector.begin();
+    for (int i=0;i<(int)myvector.size();i++)
+      std::cout << ' ' << myvector[i];
+    std::cout << '\n';
+    it = myvector.insert(it, 4);
+    for (int i=0;i<(int)myvector.size();i++)
+      std::cout << ' ' << myvector[i];
+    std::cout << std::endl;
+
+
+    
+    ft::vector<int> v(3, 2);
+    ft::vector<int>::iterator t;
+    t = v.begin();
+    for (int i=0;i<(int)v.size();i++)
+      std::cout << ' ' << v[i];
+    std::cout << std::endl;
+    v.insert(t, 5, 6);
+    for (int i=0;i<(int)v.size();i++)
+      std::cout << ' ' << v[i];
+    std::cout << std::endl;
+    std::vector<int> l(5, 8);
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    
+    l.insert(l.begin(), v.begin(), v.end());
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    
+    
+    
+
+  
+    
+      
 }

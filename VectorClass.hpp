@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 14:02:21 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 18:05:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ namespace ft
 {
     template < class T, class Allocator = std::allocator<T> >
     class vector{
-    
+        public:
                 typedef T										value_type;
 				typedef Allocator								allocator_type;
 				typedef value_type&								reference;
 				typedef const value_type&						const_reference;
 				typedef typename Allocator::pointer				pointer;
 				typedef typename Allocator::const_pointer		const_pointer;
-				typedef value_type*								iterator;
+				typedef value_type*							    iterator;
 				typedef const value_type*						const_iterator;
 				typedef	std::reverse_iterator<iterator>			reverse_iterator;
 				typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
@@ -45,7 +45,7 @@ namespace ft
             pointer         _capacity;
             size_type	computeCapacity(size_type __n)
 			{
-				if (this->capacity() > (this->size() + __n))
+				if (this->capacity() >= (this->size() + __n))
 					return (this->capacity());
 				size_type __len = size() + std::max(size(), __n);
 				return (__len < size() || __len > max_size()) ? max_size() : __len;
@@ -246,7 +246,7 @@ namespace ft
                             this->_alloc.destroy(&(this->_start[i]));
                             new_end++;
                         }
-                        this->_alloc.deallocate(this->_start, n);
+                        this->_alloc.deallocate(this->_start, this->capacity());
                         this->_start = new_start;
                         this->_end = new_end;
                         this->_capacity = this->_start + n;
@@ -283,18 +283,58 @@ namespace ft
             }
             iterator insert (iterator position, const value_type& val)
             {
+                difference_type new_start = std::distance(begin(), position);
                 reserve(computeCapacity(1));
-                iterator new_pos = _end;
-                for (int i = 1; i < (new_pos - position); i++)
+                _end++;
+                iterator new_pos = (_end - 1);
+                while (new_pos > _start + new_start)
                 {
-                    _alloc.construct(new_pos, *(new_pos - i)); 
+                    _alloc.construct(new_pos, *(new_pos - 1)); 
                     _alloc.destroy(new_pos);
+                    new_pos--;
                 }
-                _end++;     
+                _alloc.construct(_start + new_start, val);   
+                return (iterator(_start + new_start)); 
             }
-            void insert (iterator position, size_type n, const value_type& val);
+            void insert (iterator position, size_type n, const value_type& val)
+            {
+                difference_type new_start = std::distance(begin(), position);
+                reserve(computeCapacity(n));
+                difference_type dist = std::distance(iterator(new_start), iterator(new_start + n));
+                _end += n;
+                iterator new_pos = (_end - 1);
+                while(new_pos > _start + new_start)
+                {
+                    _alloc.construct(new_pos, *(_start + dist)); 
+                    _alloc.destroy(new_pos);
+                    new_pos--;
+                }
+                for (size_type i = 0; i < n; i++)
+                {
+                    _alloc.construct((_start + new_start + i), val); 
+                }
+            }
             template <class InputIterator>
-            void insert (iterator position, InputIterator first, InputIterator last);
+            void insert (iterator position, InputIterator first, InputIterator last, 
+            typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+            {
+                difference_type dist = std::distance(first, last);
+                difference_type new_start = std::distance(begin(), position);
+                reserve(computeCapacity(dist));
+                _end += dist;
+                iterator new_pos = (_end - 1);
+                while (new_pos > _start + new_start)
+                {
+                    _alloc.construct(new_pos, *(_start + dist)); 
+                    _alloc.destroy(new_pos);
+                    new_pos--;
+                }
+                for (difference_type i = 0; i < dist; i++)
+                {
+                    _alloc.construct((_start + new_start + i), *first);
+                    first++; 
+                }
+            }
 
         // void swap(vector& x)
         // {

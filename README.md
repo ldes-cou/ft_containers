@@ -8,3 +8,4 @@ C++ containers, easy mode.
 + coder les fonctions insert, erase
 + recuperer les iterateurs de la stl pour commencer
 + récupérer le code source
+    + tester insert
