@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/22 16:40:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:24:12 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,30 @@ int main()
     third.clear();
     std::cout << "size: " << third.size() << "\n";
 
-    // std::cout << PINK << "************** TEST RESIZE ****************" << END << std::endl;
-    // ft::vector<int> myvector;
-    // for (int i=1;i<10;i++) myvector.push_back(i);
-    // std::cout << myvector.size() << std::endl;
-
-    // myvector.resize(5);
-    // std::cout << myvector.size() << std::endl;
-    // myvector.resize(8,100);
-    // std::cout << myvector.size() << std::endl;
-    // myvector.resize(12);
-    // std::cout << "end :" << *(myvector.end()) << std::endl;
-    // std::cout << "myvector contains:";
-    // //for (int i=0;i<(int)myvector.size();i++)
-    //   //std::cout << ' ' << myvector[i];
-    //std::cout << '\n'; //va pas chercher la bonne valeur
+    std::cout << PINK << "************** TEST RESIZE ****************" << END << std::endl;
+    ft::vector<int> myvector;
+    for (int i=1;i<10;i++) myvector.push_back(i);
+    std::cout << myvector.size() << std::endl;
+    for (int i=0;i<(int)myvector.size();i++)
+      std::cout << ' ' << myvector[i];
+    std::cout << '\n';
+    myvector.resize(5);
+    std::cout << myvector.size() << std::endl;
+    myvector.resize(8,100);
+    std::cout << myvector.size() << std::endl;
+    myvector.resize(12);
+    std::cout << "end :" << *(myvector.end()) << std::endl;
+    std::cout << "myvector contains:";
+    for (int i=0;i<(int)myvector.size() + 2 ;i++)
+    {
+      try
+      {
+        std::cout << ' ' << myvector.at(i);
+    }
+    catch (const std::out_of_range& oor)
+    {
+    std::cerr << "Out of Range error: " << oor.what() << '\n';
+    }
+    }
+    std::cout << '\n'; //va pas chercher la bonne valeur
 }

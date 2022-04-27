@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/22 16:46:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:26:02 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,39 @@ namespace ft
              /** ************************************************************************** */
 		     /**                                 ELEMENT ACCESS                             */
 		     /** ************************************************************************** */
-
+                reference operator[] (size_type n){return (*(_start + n));}
+                const_reference operator[] (size_type n) const { return (*_start + n);}
+                
+                reference at (size_type n)
+                {
+                    if (n >= size())
+                    {
+                        std::string error("vector::at: n (wich is ");
+                        error += std::to_string(n);
+                        error += std::string(") >= this->size() (wich is ");
+                        error += std::to_string(size());
+                        error += std::string(")");
+                        throw(std::out_of_range(error));
+                    }
+                    return (*(_start + n));
+                }
+                const_reference at (size_type n) const
+                {
+                    if (n >= size())
+                    {
+                        std::string error("vector::at: n (wich is ");
+                        error += std::to_string(n);
+                        error += std::string(") >= this->size() (wich is ");
+                        error += std::to_string(size());
+                        error += std::string(")");
+                        throw(std::out_of_range(error));
+                    }
+                    return (*(_start + n));
+                }
+                reference front(){return (*_start);}
+                const_reference front() const {return (*_start);}
+                reference back(){return (*(_end - 1));}
+                const_reference back() const {return (*(_end - 1));}
              /** ************************************************************************** */
 		     /**                                 CAPACITY                                   */
 		     /** ************************************************************************** */
