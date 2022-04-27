@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 12:24:12 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:03:26 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int main()
     std::cout << myvector.size() << std::endl;
     myvector.resize(12);
     std::cout << "end :" << *(myvector.end()) << std::endl;
+    std::cout << PINK << "************** TEST ELEMENT ACCESS ****************" << END << std::endl;
     std::cout << "myvector contains:";
-    for (int i=0;i<(int)myvector.size() + 2 ;i++)
+    for (int i=0;i<(int)myvector.size();i++)
     {
       try
       {
@@ -70,5 +71,9 @@ int main()
     std::cerr << "Out of Range error: " << oor.what() << '\n';
     }
     }
-    std::cout << '\n'; //va pas chercher la bonne valeur
+    std::cout << '\n';
+    std::cout << "front: "<< myvector.front() << std::endl;
+    std::cout << "back : " << myvector.back() << std::endl;
+    std::cout << PINK << "************** MODIFIERS ****************" << END << std::endl;
+    myvector.insert(3, )
 }

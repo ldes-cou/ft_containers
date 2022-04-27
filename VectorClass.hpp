@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 12:26:02 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:02:21 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,21 @@ namespace ft
                 for (size_type i = 0; i < len; i++)
                     pop_back();
             }
+            iterator insert (iterator position, const value_type& val)
+            {
+                reserve(computeCapacity(1));
+                iterator new_pos = _end;
+                for (int i = 1; i < (new_pos - position); i++)
+                {
+                    _alloc.construct(new_pos, *(new_pos - i)); 
+                    _alloc.destroy(new_pos);
+                }
+                _end++;     
+            }
+            void insert (iterator position, size_type n, const value_type& val);
+            template <class InputIterator>
+            void insert (iterator position, InputIterator first, InputIterator last);
+
         // void swap(vector& x)
         // {
             
