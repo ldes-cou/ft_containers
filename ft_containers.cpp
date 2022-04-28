@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 18:09:27 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/28 15:28:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,19 @@ int main()
     ft::vector<int> first;
     std::cout << "ok" <<std::endl;                                 // empty vector of ints
     ft::vector<int> second (4,100);
-    std::cout << "ok" <<std::endl;                      // four ints with value 100
+    std::cout << "ok" <<std::endl;
+                         // four ints with value 100
     ft::vector<int> third (second.begin(),second.end());  // iterating through second
-    std::cout << "ok" <<std::endl; 
-    //ft::vector<int> fourth (third);                       // a copy of third
+    for (int i=0;i<(int)third.size();i++)
+      std::cout << ' ' << third[i];   
+    /**************************************************************************************************/
+    std::cout << std::endl << "ok" <<std::endl; 
+    ft::vector<int> fourth (third);
+    for (int i=0;i<(int)fourth.size();i++)
+      std::cout << ' ' << fourth[i];
+    std::cout << '\n';
     std::cout << PINK << "************** TEST CAPACITY ****************" << END << std::endl;
-    //ft::vector<int> myvector;
-    // set some content in the vector:
+    
     for (int i=0; i<100; i++) third.push_back(i);
     for (int i=0; i<100; i++) third.push_back(i);
     std::cout << "size: " << third.size() << "\n";
@@ -75,42 +81,108 @@ int main()
     std::cout << "front: "<< myvector.front() << std::endl;
     std::cout << "back : " << myvector.back() << std::endl;
     std::cout << PINK << "************** MODIFIERS ****************" << END << std::endl;
+    std::cout << BLUE2 << "**************  INSERT ****************" << END << std::endl;
     ft::vector<int>::iterator it;
     it = myvector.begin();
+    std::cout << "my vector   :";
     for (int i=0;i<(int)myvector.size();i++)
       std::cout << ' ' << myvector[i];
     std::cout << '\n';
     it = myvector.insert(it, 4);
-    for (int i=0;i<(int)myvector.size();i++)
+    std::cout << "new_content :";
+    for (int i=0;i<(int)myvector.size();i++) // ok
       std::cout << ' ' << myvector[i];
     std::cout << std::endl;
-
-
+  
     
-    ft::vector<int> v(3, 2);
-    ft::vector<int>::iterator t;
+    std::vector<int> v(3, 2);
+    std::vector<int>::iterator t;
     t = v.begin();
+    std::cout << "my vector   :";
     for (int i=0;i<(int)v.size();i++)
       std::cout << ' ' << v[i];
     std::cout << std::endl;
     v.insert(t, 5, 6);
+    std::cout << "new_content :";
     for (int i=0;i<(int)v.size();i++)
       std::cout << ' ' << v[i];
     std::cout << std::endl;
-    std::vector<int> l(5, 8);
-    for (int i=0;i<(int)l.size();i++)
-      std::cout << ' ' << l[i];
-    std::cout << std::endl;
-    
-    l.insert(l.begin(), v.begin(), v.end());
-    for (int i=0;i<(int)l.size();i++)
-      std::cout << ' ' << l[i];
-    std::cout << std::endl;
-    
-    
-    
 
-  
     
-      
+    ft::vector<int> l(5, 8);
+    std::cout << "my vector   :";
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    l.insert(l.begin(), v.begin(), v.end());
+    std::cout << "new_content :";
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    
+    
+    l.clear();
+    std::cout << BLUE2 << "**************  ERASE ****************" << END << std::endl;
+    for (int i = 0; i < 10; i++)
+    {
+      l.push_back(i);
+    }
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    l.erase(l.begin() + 4);
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    l.erase(l.begin(), (l.end() - 2));
+    for (int i=0;i<(int)l.size();i++)
+      std::cout << ' ' << l[i];
+    std::cout << std::endl;
+    std::cout << BLUE2 << "**************  ASSIGN ****************" << END << std::endl;
+    
+    ft::vector<int> f;
+    ft::vector<int> s;
+    ft::vector<int> th;
+
+    f.assign (7,100);    
+             // 7 ints with a value of 100
+    ft::vector<int>::iterator iti;
+    iti=f.begin()+1;
+    s.assign (iti,f.end()-1); // the 5 central values of first
+    int myints[] = {1776,7,4};
+    th.assign (myints,myints+3);   // assigning from array.
+
+    std::cout << "Size of first: " << int (f.size()) << '\n';
+    std::cout << "Size of second: " << int (s.size()) << '\n';
+    std::cout << "Size of third: " << int (th.size()) << '\n';
+    
+    std::cout << BLUE2 << "**************  SWAP  ****************" << END << std::endl;
+
+    ft::vector<int> foo (3,100);   // three ints with a value of 100
+    ft::vector<int> bar (5,200);   // five ints with a value of 200
+
+    foo.swap(bar);
+
+    std::cout << "foo contains:";
+    for (unsigned i=0; i<foo.size(); i++)
+    std::cout << ' ' << foo[i];
+    std::cout << '\n';
+
+    std::cout << "bar contains:";
+    for (unsigned i=0; i<bar.size(); i++)
+    std::cout << ' ' << bar[i];
+    std::cout << '\n';
+    
+    std::cout << BLUE2 << "**************  OPERATOR=  ****************" << END << std::endl;
+    std::vector<int> jet (3,0);
+    std::vector<int> li (5,0);
+
+    li = jet;
+    jet = std::vector<int>();
+
+    std::cout << "Size of jet: " << int(jet.size()) << '\n';
+    std::cout << "Size of li : " << int(li.size()) << '\n';
+    
+    std::cout << PINK << "************** NON MEMBER FONCTION OVERLOADS ****************" << END << std::endl;
+    
 }

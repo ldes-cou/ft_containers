@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/27 18:22:54 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/28 15:31:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,9 @@ namespace ft
 		     /** ************************************************************************** */
              
                  
-                /**
-                 *  Default
-                 * 
-                 * @brief  Creates a %vector with default constructed elements.
-                 * @param  __n  The number of elements to initially create.
-                 * @param  __a  An allocator.
-                 */
+                /*Default
+                    Constructs an empty container, with no elements.
+                */
                 explicit vector (const allocator_type& alloc = allocator_type()):
                     _alloc(alloc),
                     _start(0),
@@ -75,13 +71,8 @@ namespace ft
                  {}
                  
                  
-                 /** fill
-                 *  @brief  Creates a %vector with copies of an exemplar element.
-                 *  @param  __n  The number of elements to initially create.
-                 *  @param  __value  An element to copy.
-                 *  @param  __a  An allocator.
-                 *
-                 *  This constructor fills the %vector with @a __n copies of @a __value.
+                /*fill constructor
+                    Constructs a container with n elements. Each element is a copy of val.
                  */
                  explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()):
                  _alloc(alloc)
@@ -96,17 +87,10 @@ namespace ft
                      }
                  }
                 
-                /** range
-                 *  @brief  %Vector copy constructor.
-                 *  @param  __x  A %vector of identical element and allocator types.
-                 *
-                 *  All the elements of @a __x are copied, but any unused capacity in
-                 *  @a __x  will not be copied
-                 *  (i.e. capacity() == size() in the new %vector).
-                 *
-                 *  The newly-created %vector uses a copy of the allocator object used
-                 *  by @a __x (unless the allocator traits dictate a different object).
-                 */
+                /*range constructor
+                    Constructs a container with as many elements as the range [first,last), 
+                    with each element constructed from its corresponding element in that range, in the same order.
+                */
                 template <class InputIterator>
                 vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
                 typename std::enable_if< !std::is_integral<InputIterator>::value, InputIterator>::type* = 0):
@@ -124,30 +108,28 @@ namespace ft
                     }
                 }
                  
-                 /** copy **/
-                 /**
-                 *  @brief  %Vector copy constructor.
-                 *  @param  __x  A %vector of identical element and allocator types.
-                 *
-                 *  All the elements of @a __x are copied, but any unused capacity in
-                 *  @a __x  will not be copied
-                 *  (i.e. capacity() == size() in the new %vector).
-                 *
-                 *  The newly-created %vector uses a copy of the allocator object used
-                 *  by @a __x (unless the allocator traits dictate a different object).
+                 /*copy constructor
+                    Constructs a container with a copy of each of the elements in x, in the same order. 
                  */
-                //  vector (const vector& x)
-                //  {
-                     
-                //  }
+                 vector (const vector& x):_alloc(x.get_allocator())
+                 {
+                     _start = _alloc.allocate(x.size());
+                     _capacity = _start + x.size();
+                     _end = _start;
+                     assign(x.begin(), x.end()); 
+                 }
                 
                 /*destructor*/
                 ~vector()
                 {
                     this->_alloc.deallocate(this->_start, capacity());
-                    clear();
+                    this->clear();
                 };
-                vector& operator= (const vector& x);
+                vector& operator= (const vector& x)
+                {
+                    this->clear();
+                    this->assign(x.begin(), x.end());
+                }
                  
                  
              /** ************************************************************************** */
@@ -156,7 +138,7 @@ namespace ft
                 iterator begin() {return (this->_start);}
                 iterator begin() const {return (this->_start);}
                 iterator end()  {return (this->_end);}
-                iterator end() const {return (this->_start);}
+                iterator end() const {return (this->_end);}
                 reverse_iterator rbegin() {return  (reverse_iterator(this->_end));}
                 reverse_iterator rbegin() const{return  (reverse_iterator(this->_end));}
                 iterator rend(){return (reverse_iterator(this->_start));}
@@ -323,30 +305,98 @@ namespace ft
                 reserve(computeCapacity(dist));
                 _end += dist;
                 iterator new_pos = (_end - 1);
-                while (new_pos > _start + new_start)
+                while (new_pos > (_start + new_start))
                 {
-                    _alloc.construct(new_pos, *(_start + dist)); 
-                    _alloc.destroy(new_pos);
+                    _alloc.construct(new_pos, new_start + dist); 
+                    _alloc.destroy(iterator(_start + new_start + dist));
                     new_pos--;
                 }
                 for (difference_type i = 0; i < dist; i++)
                 {
-                    _alloc.construct((_start + new_start + i), *first);
-                    first++; 
+                    _alloc.construct((_start + new_start + i), *(first + i));
                 }
             }
-            iterator erase (iterator position);
-            iterator erase (iterator first, iterator last);
-            template <class InputIterator>
-            void assign (InputIterator first, InputIterator last);
-            void assign (size_type n, const value_type& val);
-            // void swap(vector& x)
-            // {
+            iterator erase (iterator position)
+            {
                 
-            // }
-        allocator_type get_allocator() const;
+                while(position != (_end - 1))
+                {
+                    _alloc.destroy(position);
+                    _alloc.construct(position, *(position + 1));
+                    position++;
+                }
+                _end--;
+                return position;
+                
+            }
+            iterator erase (iterator first, iterator last)
+            {
+                difference_type dist = std::distance(last, (_end));
+                iterator tmp_first = first;
+                while(tmp_first < last)
+                {
+                    _alloc.destroy(tmp_first);
+                    tmp_first++;
+                }
+                for (difference_type i = 0; i <= dist; i++)
+                {
+                    _alloc.construct((first + i),*(last + i));
+                }
+                _end -= (last - first);
+                if (this->size() == 0)
+                    return (_end);
+                return (last + 1);
+            }
+            template <class InputIterator>
+            void assign (InputIterator first, InputIterator last, 
+            typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+            {
+                difference_type dist = std::distance(first, last);
+                this->clear();
+                reserve(computeCapacity(dist));
+                for (difference_type i = 0; i < dist; i++)
+                {
+                    _alloc.construct((_start + i), *(first + i));
+                }
+                _end += (last - first);
+            }
+            void assign (size_type n, const value_type& val)
+            {
+                reserve(computeCapacity(n));
+                this->clear();
+                for (size_type i = 0 ; i < n; i++)
+                    _alloc.construct((_start + i), val);
+                _end += n; 
+            }
+            void swap(vector& x)
+            {
+                std::swap(_start, x._start);
+                std::swap(_end, x._end);
+                std::swap(_capacity, x._capacity);
+            }
 
-    };
+            
+            allocator_type get_allocator() const {return (_alloc);}
+
+        };
+            template <class T, class Alloc>
+            bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+
+            template <class T, class Alloc>
+            bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+            
+            template <class T, class Alloc>
+            bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+            template <class T, class Alloc>
+            bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+            template <class T, class Alloc>
+            bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+            template <class T, class Alloc>
+            bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+                
 
 }
 #endif
