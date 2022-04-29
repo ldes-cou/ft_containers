@@ -6,11 +6,12 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/28 15:28:55 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/04/29 16:07:34 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "VectorClass.hpp"
+
 # define GREEN "\x1B[32m"
 # define YELLOW "\x1B[33m"
 # define PINK "\x1B[45;1m"
