@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/09 10:13:46 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:40:37 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main()
     myvector.resize(8,100);
     std::cout << myvector.size() << std::endl;
     myvector.resize(12);
-    std::cout << "end :" << *(myvector.end()) << std::endl;
+    std::cout << "end :" << *((myvector.end()- 1)) << std::endl;
     std::cout << PINK << "************** TEST ELEMENT ACCESS ****************" << END << std::endl;
     std::cout << "myvector contains:";
     for (int i=0;i<(int)myvector.size();i++)

@@ -48,6 +48,7 @@
         "typeinfo": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "random_access_iterator_hpp": "cpp"
     }
 }

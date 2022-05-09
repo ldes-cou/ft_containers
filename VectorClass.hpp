@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/09 10:13:43 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/09 19:06:17 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 #include "equal.hpp"
 #include "is_integral.hpp"
 #include "enable_if.hpp"
-//#include "iterator_traits"
-//#include "reverse_iterator.hpp"git 
+// #include "iterator_base_type.hpp"
+// #include "iterator.hpp"
+#include "random_access_iterator_hpp"
 #include <string.h>
 #include <iostream>
 #include <iomanip>
@@ -26,6 +27,7 @@
 #include <memory>
 #include <stdexcept>
 #include <limits>
+
 namespace ft
 {
     template < class T, class Allocator = std::allocator<T> >
@@ -37,10 +39,12 @@ namespace ft
 				typedef const value_type&						const_reference;
 				typedef typename Allocator::pointer				pointer;
 				typedef typename Allocator::const_pointer		const_pointer;
-				typedef value_type*							    iterator;
-				typedef const value_type*						const_iterator;
-				typedef	std::reverse_iterator<iterator>			reverse_iterator;
-				typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
+				//typedef value_type*                             iterator;
+                //typedef const value_type*                       const_iterator;
+                typedef ft::random_access_iterator<value_type>  iterator;
+				typedef const ft::random_access_iterator<value_type> const_iterator;
+				typedef	ft::reverse_iterator<iterator>			reverse_iterator;
+				typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef typename std::ptrdiff_t					difference_type;
 				typedef	typename std::size_t					size_type;
         
@@ -99,7 +103,7 @@ namespace ft
                 */
                 template <class InputIterator>
                 vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-                typename ft::enable_if< !std::is_integral<InputIterator>::value, InputIterator>::type* = 0):
+                typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator>::type* = 0):
                 _alloc(alloc)
                 {
                     difference_type n = last - first;
@@ -141,10 +145,10 @@ namespace ft
              /** ************************************************************************** */
 		     /**                                     ITERATORS                              */
 		     /** ************************************************************************** */
-                iterator begin() {return (this->_start);}
-                iterator begin() const {return (this->_start);}
-                iterator end()  {return (this->_end);}
-                iterator end() const {return (this->_end);}
+                iterator begin() {return (iterator(this->_start));}
+                iterator begin() const {return (iterator(this->_start));}
+                iterator end()  {return (iterator(this->_end));}
+                iterator end() const {return (iterator(this->_end));}
                 reverse_iterator rbegin() {return  (reverse_iterator(this->_end));}
                 reverse_iterator rbegin() const{return  (reverse_iterator(this->_end));}
                 iterator rend(){return (reverse_iterator(this->_start));}
@@ -304,7 +308,7 @@ namespace ft
             
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last, 
-            typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+            typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
                 difference_type dist = std::distance(first, last);
                 difference_type new_start = std::distance(begin(), position);
@@ -358,7 +362,7 @@ namespace ft
             
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last, 
-            typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+            typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
                 difference_type dist = std::distance(first, last);
                 this->clear();

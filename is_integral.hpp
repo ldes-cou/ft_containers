@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 16:58:17 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/29 17:18:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:29:38 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 		    static const bool	value = is_integral_ret;
 	    };
 
-	template<typename> struct is_integral_t : public is_int<bool, false> {};
+	template<typename T> struct is_integral_t : public is_int<bool, false> {};
     
 	template<> struct is_integral_t<bool> : public is_int<bool, true> {};
 
