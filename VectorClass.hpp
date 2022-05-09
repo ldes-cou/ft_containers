@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/01 19:01:00 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/05/03 10:21:54 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,7 @@ namespace ft
             template <class T, class Alloc>
             bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
-                return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin())));
+                return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
             }
             template <class T, class Alloc>
             bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
@@ -416,7 +416,7 @@ namespace ft
             template <class T, class Alloc>
             bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
-                return (ft::lexicographical_compare(lhs.begin(), rhslhs.end(), rhs.begin(), rhs.end()));
+                return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
             }
 
             template <class T, class Alloc>
@@ -432,7 +432,7 @@ namespace ft
             template <class T, class Alloc>
             bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
-                return (!( lhs < rhs ))
+                return (!( lhs < rhs ));
             }
         
 }

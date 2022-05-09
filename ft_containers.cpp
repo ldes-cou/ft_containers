@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_containers.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/29 16:07:34 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/03 10:30:37 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,15 +175,24 @@ int main()
     std::cout << '\n';
     
     std::cout << BLUE2 << "**************  OPERATOR=  ****************" << END << std::endl;
-    std::vector<int> jet (3,0);
-    std::vector<int> li (5,0);
+    ft::vector<int> jet (3,0);
+    ft::vector<int> li (5,0);
 
     li = jet;
-    jet = std::vector<int>();
+    jet = ft::vector<int>();
 
     std::cout << "Size of jet: " << int(jet.size()) << '\n';
     std::cout << "Size of li : " << int(li.size()) << '\n';
     
     std::cout << PINK << "************** NON MEMBER FONCTION OVERLOADS ****************" << END << std::endl;
+    std::cout << BLUE2 << "**************  RELATIONAL OPERATOR==  ****************" << END << std::endl;
+    std::cout << (jet == li) << std::endl;
+    std::cout << (jet == bar) << std::endl;
+    std::cout << BLUE2 << "**************  RELATIONAL OPERATOR<=  ****************" << END << std::endl;
+    std::cout << (jet <= li) << std::endl;
+    std::cout << (jet <= bar) << std::endl;
+    
+    
+    
     
 }
