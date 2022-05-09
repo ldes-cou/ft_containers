@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   VectorClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/03 10:21:54 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/05/09 10:13:43 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "lexicograpical_compare.hpp"
 #include "equal.hpp"
 #include "is_integral.hpp"
-//#include "enable_if.hpp"
+#include "enable_if.hpp"
 //#include "iterator_traits"
 //#include "reverse_iterator.hpp"git 
 #include <string.h>
@@ -99,7 +99,7 @@ namespace ft
                 */
                 template <class InputIterator>
                 vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-                typename std::enable_if< !std::is_integral<InputIterator>::value, InputIterator>::type* = 0):
+                typename ft::enable_if< !std::is_integral<InputIterator>::value, InputIterator>::type* = 0):
                 _alloc(alloc)
                 {
                     difference_type n = last - first;
@@ -130,14 +130,14 @@ namespace ft
                 {
                     this->_alloc.deallocate(this->_start, capacity());
                     this->clear();
-                };
+                }
                 vector& operator= (const vector& x)
                 {
                     this->clear();
                     this->assign(x.begin(), x.end());
+                    return *this;
                 }
-                 
-                 
+                
              /** ************************************************************************** */
 		     /**                                     ITERATORS                              */
 		     /** ************************************************************************** */
@@ -304,7 +304,7 @@ namespace ft
             
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last, 
-            typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+            typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
                 difference_type dist = std::distance(first, last);
                 difference_type new_start = std::distance(begin(), position);
@@ -358,7 +358,7 @@ namespace ft
             
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last, 
-            typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+            typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
                 difference_type dist = std::distance(first, last);
                 this->clear();
