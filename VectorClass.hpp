@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 12:13:42 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:38:59 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,29 @@
 #include <stdexcept>
 #include <limits>
 
+
+#define out(x) std::cout << x << std::endl; 
+
 namespace ft
 {
-    template < class T, class Allocator = std::allocator<T> >
-    class vector{
-        public:
-                typedef T										value_type;
-				typedef Allocator								allocator_type;
-				typedef value_type&								reference;
-				typedef const value_type&						const_reference;
-				typedef typename Allocator::pointer				pointer;
-				typedef typename Allocator::const_pointer		const_pointer;
-				//typedef value_type*                             iterator;
-                //typedef const value_type*                       const_iterator;
-                typedef ft::random_access_iterator<value_type>  iterator;
-				typedef const ft::random_access_iterator<value_type> const_iterator;
-				typedef	ft::reverse_iterator<iterator>			reverse_iterator;
-				typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-				typedef typename std::ptrdiff_t					difference_type;
-				typedef	typename std::size_t					size_type;
-        
+    template < class T, class Allocator = std::allocator<T> >   
+    class vector{   
+        public: 
+                typedef T										        value_type;
+				typedef Allocator								        allocator_type;
+				typedef value_type&								        reference;
+				typedef const value_type&						        const_reference;
+				typedef typename Allocator::pointer				        pointer;
+				typedef typename Allocator::const_pointer		        const_pointer;
+				// typedef value_type*                                 iterator;
+                // typedef const value_type*                           const_iterator;
+                typedef ft::random_access_iterator<value_type>          iterator;
+				typedef ft::random_access_iterator<const value_type>    const_iterator;
+				typedef	ft::reverse_iterator<iterator>			        reverse_iterator;
+				typedef ft::reverse_iterator<const_iterator>	        const_reverse_iterator;
+				typedef typename std::ptrdiff_t					        difference_type;
+				typedef	typename std::size_t					        size_type;
+                
         private:
             allocator_type  _alloc;
             pointer         _start;
@@ -55,7 +58,9 @@ namespace ft
             size_type	computeCapacity(size_type __n)
 			{
 				if (this->capacity() >= (this->size() + __n))
+                {
 					return (this->capacity());
+                }
 				size_type __len = size() + std::max(size(), __n);
 				return (__len < size() || __len > max_size()) ? max_size() : __len;
 			}   
@@ -105,7 +110,7 @@ namespace ft
                 typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator>::type* = 0):
                 _alloc(alloc)
                 {
-                    difference_type n = last - first;
+                    difference_type n = distance(first, last);
                     _start = _alloc.allocate(n);
                     _end = _start;
                     _capacity = _start + n;
@@ -229,9 +234,10 @@ namespace ft
                     throw std::length_error("vector::reserve");
                 if (n > capacity())
                 {
-                        pointer new_start = this->_alloc.allocate(n);
+                        pointer	new_start = NULL;
+                        new_start = this->_alloc.allocate(n);
                         pointer new_end = new_start;
-                        for (size_type i =0; i < this->size(); i++)
+                        for (size_type i = 0; i < this->size(); i++)
                         {
                             this->_alloc.construct(new_start + i, this->_start[i]);
                             this->_alloc.destroy(&(this->_start[i]));
@@ -272,90 +278,94 @@ namespace ft
             
             iterator insert (iterator position, const value_type& val)
             {
-                difference_type new_start = ft::distance(begin(), position);
+                size_type new_start = ft::distance(begin(), position);
+                size_type i = size();
                 reserve(computeCapacity(1));
-                _end++;
-                iterator new_pos = (_end - 1);
-                while (new_pos > iterator(_start + new_start))
+                while (i > 0 && --i >= new_start)
                 {
-                    _alloc.construct(new_pos, *(new_pos - 1)); 
-                    _alloc.destroy(new_pos);
-                    new_pos--;
+                    _alloc.construct(_start + i + 1, *(_start + i)); 
+                    _alloc.destroy(_start + i);
                 }
                 _alloc.construct(_start + new_start, val);   
+                _end++;
                 return (iterator(_start + new_start)); 
             }
             
             void insert (iterator position, size_type n, const value_type& val)
             {
-                difference_type new_start = ft::distance(begin(), position);
+                size_type new_start = ft::distance(begin(), position);
+                size_type i = size();
                 reserve(computeCapacity(n));
-                difference_type dist = ft::distance(iterator(new_start), iterator(new_start + n));
+                while(i > 0 && i-- >= new_start)
+                {
+                    _alloc.construct(_start + i + n), *(_start + i); 
+                    _alloc.destroy(_start + i);
+                    i--;
+                }
+                for (size_type u = 0; u < n;  u++, new_start++)
+                {
+                    _alloc.construct((_start + new_start), val);
+
+                }
                 _end += n;
-                iterator new_pos = iterator(_end - 1);
-                while(new_pos > _start + new_start)
-                {
-                    _alloc.construct(new_pos, *(_start + dist)); 
-                    _alloc.destroy(new_pos);
-                    new_pos--;
-                }
-                for (size_type i = 0; i < n; i++)
-                {
-                    _alloc.construct((_start + new_start + i), val); 
-                }
             }
             
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last, 
             typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
-                difference_type dist = ft::distance(first, last);
-                difference_type new_start = ft::distance(begin(), position);
+                size_type dist = ft::distance(first, last);
+                size_type new_start = ft::distance(begin(), position);
+                size_type i = size();
                 reserve(computeCapacity(dist));
+                while (i > 0 && i-- >= new_start)
+                {
+                    _alloc.construct(_start + i + dist, *(_start + i)); 
+                    _alloc.destroy((_start + i));
+                }
+                for (size_type i = 0; i < new_start; i++)
+                {
+                    _alloc.construct((_start + new_start), *(first));
+                    first++;
+                }
                 _end += dist;
-                iterator new_pos = (_end - 1);
-                while (new_pos > (_start + new_start))
-                {
-                    _alloc.construct(new_pos, new_start + dist); 
-                    _alloc.destroy(iterator(_start + new_start + dist));
-                    new_pos--;
-                }
-                for (difference_type i = 0; i < dist; i++)
-                {
-                    _alloc.construct((_start + new_start + i), *(first + i));
-                }
             }
             
-            iterator erase (iterator position)
+            iterator erase(iterator position)
             {
-                
-                while(position != (_end - 1))
+                if (size() <= 0)
+                    return (position);
+                size_type i = ft::distance(begin(), position);
+                iterator it = position + 1;
+                while (it != end())
                 {
-                    _alloc.destroy(position);
-                    _alloc.construct(position, *(position + 1));
-                    position++;
+                    _alloc.destroy(_start + i);
+                    _alloc.construct(_start + i, *it);
+                    it++;
+                    i++;
                 }
-                _end--;
-                return position;
-                
+                _alloc.destroy(_start + i);
+                _end -= 1;
+                return (position);
             }
+
             
             iterator erase (iterator first, iterator last)
             {
-                difference_type dist = ft::distance(last, iterator(_end));
-                iterator tmp_first = first;
-                while(tmp_first < last)
-                {
-                    _alloc.destroy(tmp_first);
-                    tmp_first++;
-                }
-                for (difference_type i = 0; i <= dist; i++)
-                {
-                    _alloc.construct((first + i),*(last + i));
-                }
-                _end -= (last - first);
+                size_type dist = ft::distance(last, iterator(_end));
+                size_type  i = ft::distance(iterator(_start), first);
                 if (this->size() == 0)
                     return (_end);
+                while(i <= dist)
+                {
+                    _alloc.destroy(_start + i);
+                    i++;
+                }
+                for (size_type i = 0; i <= dist; i++)
+                {
+                    _alloc.construct((_start + i),*(last + i));
+                }
+                _end -= (last - first);
                 return (last + 1);
             }
             

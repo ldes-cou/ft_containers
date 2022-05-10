@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 13:54:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 11:41:53 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:33:09 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ namespace ft
    template<typename _Tp>
      struct iterator_traits<_Tp*>
      {
-       typedef random_access_iterator_tag iterator_category;
-       typedef _Tp                         value_type;
-       typedef ptrdiff_t                   difference_type;
-       typedef _Tp*                        pointer;
-       typedef _Tp&                        reference;
+       typedef random_access_iterator_tag   iterator_category;
+       typedef _Tp                          value_type;
+       typedef ptrdiff_t                    difference_type;
+       typedef _Tp*                         pointer;
+       typedef _Tp&                         reference;
      };
  
    template<typename _Tp>

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   random_access_iterator_hpp                         :+:      :+:    :+:   */
+/*   random_access_iterator.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:34:24 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 11:08:02 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:43:59 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,6 @@ namespace ft
         inline typename random_access_iterator<Left>::difference_type
         operator-(const random_access_iterator<Left>& __x,
             const random_access_iterator<Right>& __y)
-        { return __y.base() - __x.base(); }
+        { return __x.base() - __y.base(); }
 }
 #endif

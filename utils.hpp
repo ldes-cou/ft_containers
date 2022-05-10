@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:08:47 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 11:58:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:30:58 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <typeinfo>
 #include <iostream>
 #include "random_access_iterator.hpp"
+
 //#include "vector"
 
 namespace ft
@@ -34,7 +35,7 @@ namespace ft
     typename ft::iterator_traits<It>::difference_type 
     distance(It first, It last)
     {
-        return last - first;
+        return (__distance(first, last, typename ft::iterator_traits<It>::iterator_category()));
     }
     template <typename RandomAccessIterator>
 	typename ft::iterator_traits<RandomAccessIterator>::difference_type

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 09:39:15 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:21:24 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ int main()
     ft::vector<int> second (4,100);
     std::cout << "ok" <<std::endl;
                          // four ints with value 100
+    //std::cout << *second.begin() << " " << *second.end() << std::endl;             
     ft::vector<int> third (second.begin(),second.end());  // iterating through second
-    for (int i=0;i<(int)third.size();i++)
-      std::cout << ' ' << third[i];   
+    std::cout << third.size() << std::endl;
+    for (int i=0;i<(int)third.size() - 1;i++)
+      std::cout << ' ' << third[i] << std::endl;   
+    
     /**************************************************************************************************/
     std::cout << std::endl << "ok" <<std::endl; 
     ft::vector<int> fourth (third);
-    for (int i=0;i<(int)fourth.size();i++)
+    
+    for (int i=0;i<(int)fourth.size() - 1;i++)
       std::cout << ' ' << fourth[i];
     std::cout << '\n';
     std::cout << PINK << "************** TEST CAPACITY ****************" << END << std::endl;
@@ -112,7 +116,7 @@ int main()
     
     ft::vector<int> l(5, 8);
     std::cout << "my vector   :";
-    for (int i=0;i<(int)l.size();i++)
+    for (int i=0;i< (int)l.size();i++)
       std::cout << ' ' << l[i];
     std::cout << std::endl;
     l.insert(l.begin(), v.begin(), v.end());

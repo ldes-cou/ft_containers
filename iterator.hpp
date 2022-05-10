@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:35:02 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 11:04:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:32:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ namespace ft
                typename iterator_traits<_Iterator>::value_type,
                typename iterator_traits<_Iterator>::difference_type,
                typename iterator_traits<_Iterator>::pointer,
-                       typename iterator_traits<_Iterator>::reference>
+               typename iterator_traits<_Iterator>::reference>
      {
      protected:
        _Iterator current;
  
      public:
-       typedef _Iterator                        iterator_type;
-       typedef typename iterator_traits<_Iterator>::difference_type difference_type;
-       typedef typename iterator_traits<_Iterator>::reference        reference;
-       typedef typename iterator_traits<_Iterator>::pointer         pointer;
+       typedef _Iterator                                              iterator_type;
+       typedef typename iterator_traits<_Iterator>::difference_type   difference_type;
+       typedef typename iterator_traits<_Iterator>::reference         reference;
+       typedef typename iterator_traits<_Iterator>::pointer           pointer;
  
      public:
        /**
