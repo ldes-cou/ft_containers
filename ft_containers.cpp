@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 17:21:24 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:49:53 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int main()
       std::cout << ' ' << l[i];
     std::cout << std::endl;
     l.insert(l.begin(), v.begin(), v.end());
-    std::cout << "new_content :";
+    std::cout << "new_content caca:";
     for (int i=0;i<(int)l.size();i++)
       std::cout << ' ' << l[i];
     std::cout << std::endl;

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 17:38:59 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 19:37:34 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,12 +318,12 @@ namespace ft
                 size_type new_start = ft::distance(begin(), position);
                 size_type i = size();
                 reserve(computeCapacity(dist));
-                while (i > 0 && i-- >= new_start)
+                while (i > 0 && --i >= new_start)
                 {
                     _alloc.construct(_start + i + dist, *(_start + i)); 
                     _alloc.destroy((_start + i));
                 }
-                for (size_type i = 0; i < new_start; i++)
+                for (size_type i = 0; i < dist; i++, new_start++)
                 {
                     _alloc.construct((_start + new_start), *(first));
                     first++;
