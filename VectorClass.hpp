@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/09 19:06:17 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:13:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 #include "equal.hpp"
 #include "is_integral.hpp"
 #include "enable_if.hpp"
-// #include "iterator_base_type.hpp"
-// #include "iterator.hpp"
-#include "random_access_iterator_hpp"
+#include "utils.hpp"
+//#include "random_access_iterator.hpp"
 #include <string.h>
 #include <iostream>
 #include <iomanip>
@@ -165,9 +164,9 @@ namespace ft
                     if (n >= size())
                     {
                         std::string error("vector::at: n (wich is ");
-                        error += std::to_string(n);
+                        error += ft::to_string(n);
                         error += std::string(") >= this->size() (wich is ");
-                        error += std::to_string(size());
+                        error += ft::to_string(size());
                         error += std::string(")");
                         throw(std::out_of_range(error));
                     }
@@ -178,9 +177,9 @@ namespace ft
                     if (n >= size())
                     {
                         std::string error("vector::at: n (wich is ");
-                        error += std::to_string(n);
+                        error += ft::to_string(n);
                         error += std::string(") >= this->size() (wich is ");
-                        error += std::to_string(size());
+                        error += ft::to_string(size());
                         error += std::string(")");
                         throw(std::out_of_range(error));
                     }
@@ -273,11 +272,11 @@ namespace ft
             
             iterator insert (iterator position, const value_type& val)
             {
-                difference_type new_start = std::distance(begin(), position);
+                difference_type new_start = ft::distance(begin(), position);
                 reserve(computeCapacity(1));
                 _end++;
                 iterator new_pos = (_end - 1);
-                while (new_pos > _start + new_start)
+                while (new_pos > iterator(_start + new_start))
                 {
                     _alloc.construct(new_pos, *(new_pos - 1)); 
                     _alloc.destroy(new_pos);
@@ -289,11 +288,11 @@ namespace ft
             
             void insert (iterator position, size_type n, const value_type& val)
             {
-                difference_type new_start = std::distance(begin(), position);
+                difference_type new_start = ft::distance(begin(), position);
                 reserve(computeCapacity(n));
-                difference_type dist = std::distance(iterator(new_start), iterator(new_start + n));
+                difference_type dist = ft::distance(iterator(new_start), iterator(new_start + n));
                 _end += n;
-                iterator new_pos = (_end - 1);
+                iterator new_pos = iterator(_end - 1);
                 while(new_pos > _start + new_start)
                 {
                     _alloc.construct(new_pos, *(_start + dist)); 
@@ -310,8 +309,8 @@ namespace ft
             void insert (iterator position, InputIterator first, InputIterator last, 
             typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
-                difference_type dist = std::distance(first, last);
-                difference_type new_start = std::distance(begin(), position);
+                difference_type dist = ft::distance(first, last);
+                difference_type new_start = ft::distance(begin(), position);
                 reserve(computeCapacity(dist));
                 _end += dist;
                 iterator new_pos = (_end - 1);
@@ -343,7 +342,7 @@ namespace ft
             
             iterator erase (iterator first, iterator last)
             {
-                difference_type dist = std::distance(last, (_end));
+                difference_type dist = ft::distance(last, iterator(_end));
                 iterator tmp_first = first;
                 while(tmp_first < last)
                 {
@@ -364,7 +363,7 @@ namespace ft
             void assign (InputIterator first, InputIterator last, 
             typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
-                difference_type dist = std::distance(first, last);
+                difference_type dist = ft::distance(first, last);
                 this->clear();
                 reserve(computeCapacity(dist));
                 for (difference_type i = 0; i < dist; i++)

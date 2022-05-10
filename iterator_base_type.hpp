@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 13:54:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/09 16:07:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:41:53 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ namespace ft
 {
     //@{
    /**
-    *  @defgroup iterator_tags Iterator Tags
+    *  iterator_tags Iterator Tags
     *  These are empty types, used to distinguish different iterators.  The
     *  distinction is not made by what they contain, but simply by what they
     *  are.  Different underlying algorithms can then be used based on the
@@ -52,7 +52,7 @@ namespace ft
             typename _Pointer = _Tp*, typename _Reference = _Tp&>
      struct iterator
      {
-       /// One of the @link iterator_tags tag types@endlink.
+       /// One of the iterator_tags tag 
        typedef _Category  iterator_category;
        /// The type "pointed to" by the iterator.
        typedef _Tp        value_type;
