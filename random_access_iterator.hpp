@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:34:24 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 12:22:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:35:31 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ namespace ft
         
         operator random_access_iterator<const T>() const
 		{
-			return (random_access_iterator<const T>(_current)); // cast en const
+			return (random_access_iterator<const T>(this->_current)); // cast en const
 		}
         
-        random_access_iterator  &operator=( const random_access_iterator & src )
-		{
-				if (this != &src)
-						this->_current = src.base();
-				return (*this);
-		}
+        // random_access_iterator  &operator=( const random_access_iterator & src )
+		// {
+		// 		if (this != &src)
+		// 				this->_current = src.base();
+		// 		return (*this);
+		// }
         
         //forward iterator requirements
         reference operator * () const
@@ -71,7 +71,7 @@ namespace ft
 
         pointer operator->() const
         {
-            return _current;
+            return &(this->operator*());
         }
 
         random_access_iterator& operator++()
@@ -94,7 +94,6 @@ namespace ft
 
         random_access_iterator operator--(int)
         {
-            --_current;
             return (random_access_iterator(_current--));
         }
 

@@ -6,12 +6,12 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 12:19:37 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:56:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTORCLASS_HPP
-#define VECTORCLASS_HPP
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 
 #include "lexicograpical_compare.hpp"
 #include "equal.hpp"
@@ -149,10 +149,10 @@ namespace ft
              /** ************************************************************************** */
 		     /**                                     ITERATORS                              */
 		     /** ************************************************************************** */
-                iterator begin() {return iterator(this->_start);}
-                const_iterator begin() const {return const_iterator(this->_start);}
-                iterator end()  {return iterator((this->_end));}
-                const_iterator end() const {return const_iterator((this->_end));}
+                iterator begin() {return (this->_start);}
+                const_iterator begin() const {return (this->_start);}
+                iterator end()  {return ((this->_end));}
+                const_iterator end() const {return ((this->_end));}
                 reverse_iterator rbegin() {return  (reverse_iterator(this->_end));}
                 const_reverse_iterator rbegin() const {return  (reverse_iterator(this->_end));}
                 reverse_iterator rend(){return (reverse_iterator(this->_start));}
@@ -300,7 +300,6 @@ namespace ft
                 {
                     _alloc.construct((_start + i + n), *(_start + i)); 
                     _alloc.destroy(_start + i);
-                    i--;
                 }
                 for (size_type u = 0; u < n;  u++, new_start++)
                 {

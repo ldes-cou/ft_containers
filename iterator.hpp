@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:35:02 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 11:48:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:16:00 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ namespace ft
        template<typename _Iter>
        reverse_iterator(const reverse_iterator<_Iter>& __x): current(__x.base()) { }
  
+     operator reverse_iterator<const _Iterator> () const {
+          return (reverse_iterator<const _Iterator>(this->_current));
+     }
        /**
         *  @return  @c current, the %iterator used for underlying work.
        */
@@ -178,6 +181,18 @@ namespace ft
     inline  bool operator>=(const reverse_iterator<_IteratorL>& __x,
                 const reverse_iterator<_IteratorR>& __y)
     { return !(__x < __y); }
+
+    template <class IteratorL, class IteratorR>
+     inline typename ft::reverse_iterator<IteratorL>::difference_type
+     operator-(	const ft::reverse_iterator<IteratorL> __x,
+                    const ft::reverse_iterator<IteratorR> __y)
+     { return ( __y.base() - __x.base() ); }
+
+     template<class _Iterator>
+     inline reverse_iterator<_Iterator>
+     operator+(	typename reverse_iterator<_Iterator>::difference_type __n,
+                    const reverse_iterator<_Iterator>& __x)
+     { return reverse_iterator<_Iterator>(__x.base() - __n); }
 
  }
  #endif
