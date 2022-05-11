@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 14:56:29 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:25:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ namespace ft
             pointer         _start;
             pointer         _end;
             pointer         _capacity;
+            
             size_type	computeCapacity(size_type __n)
 			{
 				if (this->capacity() >= (this->size() + __n))
@@ -136,13 +137,21 @@ namespace ft
                 /*destructor*/
                 ~vector()
                 {
-                    this->_alloc.deallocate(this->_start, capacity());
                     this->clear();
+                    this->_alloc.deallocate(this->_start, capacity());
                 }
                 vector& operator= (const vector& x)
                 {
-                    this->clear();
-                    this->assign(x.begin(), x.end());
+                    if (this != &x)
+                    {
+                        this->clear();
+                        this->_alloc.deallocate(this->_start, capacity());
+                        this->_alloc = x.get_allocator();
+                        _start = _alloc.allocate(x.size());
+                        _capacity = _start + x.size();
+                        _end = _start;
+                        this->assign(x.begin(), x.end());
+                    }
                     return *this;
                 }
                 
@@ -212,7 +221,7 @@ namespace ft
                 }
                 else if (n > size())
                 {
-                    reserve(n);
+                    reserve(computeCapacity(n));
                     while (size() < n)
                     {
                         _alloc.construct(_end, val);
@@ -228,27 +237,45 @@ namespace ft
             otherwise the function does nothing. reserve() does not change the size of the vector.
             If new_cap is greater than capacity(), all iterators, including the past-the-end iterator, 
             and all references to the elements are invalidated. Otherwise, no iterators or references are invalidated. */
-            void reserve (size_type n)
-            {
-                if (n > max_size())
-                    throw std::length_error("vector::reserve");
-                if (n > capacity())
-                {
-                        pointer	new_start = NULL;
-                        new_start = this->_alloc.allocate(n);
-                        pointer new_end = new_start;
-                        for (size_type i = 0; i < this->size(); i++)
-                        {
-                            this->_alloc.construct(new_start + i, this->_start[i]);
-                            this->_alloc.destroy(&(this->_start[i]));
-                            new_end++;
-                        }
-                        this->_alloc.deallocate(this->_start, this->capacity());
-                        this->_start = new_start;
-                        this->_end = new_end;
-                        this->_capacity = this->_start + n;
-                }
-            }
+            // void reserve (size_type n)
+            // {
+            //     if (n > max_size())
+            //         throw std::length_error("vector::reserve");
+            //     if (n > capacity())
+            //     {
+            //             pointer new_start = this->_alloc.allocate(n, this->_start);
+            //             pointer new_end = new_start;
+            //             for (size_type i = 0; i < this->size(); i++)
+            //             {
+            //                 this->_alloc.construct(new_start + i, this->_start[i]);
+            //                 this->_alloc.destroy(&(this->_start[i]));
+            //                 new_end++;
+            //             }
+            //             this->_alloc.deallocate(this->_start, this->capacity());
+            //             this->_start = new_start;
+            //             this->_end = new_end;
+            //             this->_capacity = this->_start + n;
+            //     }
+            // }
+            void	reserve(size_type n) {
+				if (n > this->max_size())
+					throw std::length_error("vector::reserve");
+				if (this->capacity() < n) {
+					const size_type old_size = this->size();
+					pointer		tmp = this->_alloc.allocate(n, this->_start);
+                    out("n = = : " << n);
+                    out("size = = : " << size());
+					for	(size_type i = 0; i < this->size(); i++) {
+						this->_alloc.construct(tmp + i, this->_start[i]);
+                        out ("i  =" << i);
+						this->_alloc.destroy(&(this->_start[i]));
+					}
+					this->_alloc.deallocate(this->_start, this->capacity());
+					this->_start = tmp;
+					this->_end = tmp + old_size;
+					this->_capacity = this->_start + n;
+				}
+			}
             /** *************************************************************************** */
 		    /**                                 MODIFIERS                                  */
 		    /** ************************************************************************* */
@@ -271,9 +298,8 @@ namespace ft
             
             void clear()
             {
-                size_type len = size();
-                for (size_type i = 0; i < len; i++)
-                    pop_back();
+                if (this->size() != 0)
+                    erase(this->begin(), this->end());
             }
             
             iterator insert (iterator position, const value_type& val)
@@ -319,7 +345,7 @@ namespace ft
                 reserve(computeCapacity(dist));
                 while (i > 0 && --i >= new_start)
                 {
-                    _alloc.construct(_start + i + dist, *(_start + i)); 
+                    _alloc.construct(_start + i + dist, *(_start + i));
                     _alloc.destroy((_start + i));
                 }
                 for (size_type i = 0; i < dist; i++, new_start++)
@@ -330,44 +356,63 @@ namespace ft
                 _end += dist;
             }
             
-            iterator erase(iterator position)
-            {
-                if (size() <= 0)
-                    return (position);
-                size_type i = ft::distance(begin(), position);
-                iterator it = position + 1;
-                while (it != end())
-                {
-                    _alloc.destroy(_start + i);
-                    _alloc.construct(_start + i, *it);
-                    it++;
-                    i++;
-                }
-                _alloc.destroy(_start + i);
-                _end -= 1;
-                return (position);
-            }
+            iterator erase (iterator position) {
+				return (erase(position, position + 1));
+			}
+            
+            // iterator erase(iterator position)
+            // {
+            //     if (size() <= 0)
+            //         return (position);
+            //     size_type i = ft::distance(begin(), position);
+            //     iterator it = position + 1;
+            //     while (it != end())
+            //     {
+            //         _alloc.destroy(_start + i);
+            //         _alloc.construct(_start + i, *it);
+            //         it++;
+            //         i++;
+            //     }
+            //     _alloc.destroy(_start + i);
+            //     _end -= 1;
+            //     return (position);
+            // }
 
             
+            // iterator erase (iterator first, iterator last)
+            // {
+            //     size_type dist = ft::distance(last, iterator(_end));
+            //     size_type  i = ft::distance(iterator(_start), first);
+            //     if (this->size() == 0)
+            //         return (_end);
+            //     while(i <= dist)
+            //     {
+            //         _alloc.destroy(_start + i);
+            //         i++;
+            //     }
+            //     for (size_type i = 0; i <= dist; i++)
+            //     {
+            //         _alloc.construct((_start + i),*(last + i));
+            //     }
+            //     _end -= (last - first);
+            //     return (last + 1);
+            // }
             iterator erase (iterator first, iterator last)
-            {
-                size_type dist = ft::distance(last, iterator(_end));
-                size_type  i = ft::distance(iterator(_start), first);
-                if (this->size() == 0)
-                    return (_end);
-                while(i <= dist)
-                {
-                    _alloc.destroy(_start + i);
-                    i++;
-                }
-                for (size_type i = 0; i <= dist; i++)
-                {
-                    _alloc.construct((_start + i),*(last + i));
-                }
-                _end -= (last - first);
-                return (last + 1);
-            }
-            
+             {
+				if (first != this->end() && first != last) {
+					pointer p_first = &(*first);
+					for (; &(*first) != &(*last); first++)
+						_alloc.destroy(&(*first));
+					for (int i = 0; i < _end - &(*last); i++)
+					{
+						_alloc.construct(p_first + i, *(&(*last) + i));
+						_alloc.destroy(&(*last) + i);
+					}
+					_end -= (&(*last) - p_first);
+					return (iterator(p_first));
+				}
+				return (first);
+			}
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last, 
             typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 13:07:06 by hbaudet           #+#    #+#             */
-/*   Updated: 2022/05/11 15:11:33 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:29:26 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int main()
 	BOB.resize(bob_resize);
 	std::cout << "BOB is empty now ? " << BOB.empty() << '\n';
 	MIKE.resize(mike_resize, test);
+	
 	std::cout << "Size of JOHN " << JOHN.size() << std::endl;
 	if (JOHN.capacity() >= JOHN.size())
 		std::cout << "Capacity of JOHN is sufficient\n";
@@ -218,21 +219,27 @@ int main()
 	for (int i = 0; i < 15; i++)
 	{
 		std_insert_in_me.push_back(test);
-		std::cout << std_insert_in_me.at(i).front() << std::endl;
+		//std::cout << std_insert_in_me.at(i).front() << std::endl;
 	}
-	for (size_t i = 0; i < std_insert_in_me.size(); i++)
+	for (size_t i = 0; i < std_insert_in_me.size(); i+=1)
 		std::cout << std_insert_in_me.at(i).front() << ' ';
-	std::cout << '\n';
+	std::cout << std::endl;
 
+	out(std_insert_in_me.size())
 	vector<vector<int> >::iterator	std_tmp;
 	std_tmp = std_insert_in_me.begin() + 4;
-	std_insert_in_me.insert(std_tmp, 8, test);
+	out(std_insert_in_me.size())
+	out(std_insert_in_me.capacity())
+	std_insert_in_me.insert(std_tmp, 8, test); //cest la  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	out(std_insert_in_me.size())
+	out(std_insert_in_me.capacity())
+	std::cout << "ici ?" << std::endl;
 	for (size_t i = 0; i < std_insert_in_me.size(); i++)
-		std::cout << std_insert_in_me.at(i).back() << ' ';
+		std::cout  << std_insert_in_me.at(i).back() << ' ' << "\n";//puis la
 	std::cout << '\n';
 
 
-	//INSERT RANGE
+	// //INSERT RANGE
 	std::cout << "\nINSERT RANGE\n";
 	vector<vector<int> >	insert_bis;
 	for (int i = 0; i < 7; i++)
@@ -250,7 +257,7 @@ int main()
 	std::cout << '\n';
 
 
-	//ERASE
+	// //ERASE
 	std::cout << "\nERASE\n";
 	vector<vector<int> >	erase_in_me;
 	for (int i = 0; i < 15; i++)
@@ -386,7 +393,7 @@ int main()
 		std::cout << (*it).front() << " ";
 	std::cout << '\n';
 
-	std::cout << std::endl;
+	// std::cout << std::endl;
 	return (0);
 }
 

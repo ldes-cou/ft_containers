@@ -1,4 +1,6 @@
 self assignation test
+n = = : 4
+size = = : 0
 true
 BOB(5, test(test, 5)) : 
 3 3 3 
@@ -22,6 +24,13 @@ Capacity of BOB is sufficient
 Size of MIKE 5
 Capacity of MIKE is sufficient
 BOB is empty now ? true
+n = = : 14
+size = = : 5
+i  =0
+i  =1
+i  =2
+i  =3
+i  =4
 Size of JOHN 0
 Capacity of JOHN is sufficient
 Size of BOB 0
@@ -64,8 +73,15 @@ front() of MIKE : 3
 back() of MIKE : 3
 
 ASSIGN
+n = = : 6
+size = = : 3
+i  =0
+i  =1
+i  =2
 
 ASSIGN RANGE
+n = = : 8
+size = = : 0
 
 EMPTY
 BOB is empty ? false
@@ -76,6 +92,31 @@ last elem of BOB : 42
 last elem of BOB : 17
 
 INSERT
+n = = : 1
+size = = : 0
+n = = : 2
+size = = : 1
+i  =0
+n = = : 4
+size = = : 2
+i  =0
+i  =1
+n = = : 8
+size = = : 4
+i  =0
+i  =1
+i  =2
+i  =3
+n = = : 16
+size = = : 8
+i  =0
+i  =1
+i  =2
+i  =3
+i  =4
+i  =5
+i  =6
+i  =7
 0 0 
 1 1 
 2 2 
@@ -91,6 +132,27 @@ INSERT
 12 12 
 13 13 
 14 14 
+n = = : 25
+size = = : 2
+i  =0
+i  =1
+n = = : 30
+size = = : 15
+i  =0
+i  =1
+i  =2
+i  =3
+i  =4
+i  =5
+i  =6
+i  =7
+i  =8
+i  =9
+i  =10
+i  =11
+i  =12
+i  =13
+i  =14
 0 0 
 1 1 
 2 2 
@@ -118,18 +180,52 @@ Const it.front() :
 0
 
 INSERT
-19
-19
-19
-19
-19
-19
-19
-19
-19
-19
-19
-19
-19
-19
-19
+n = = : 1
+size = = : 0
+n = = : 2
+size = = : 1
+i  =0
+n = = : 4
+size = = : 2
+i  =0
+i  =1
+n = = : 8
+size = = : 4
+i  =0
+i  =1
+i  =2
+i  =3
+n = = : 16
+size = = : 8
+i  =0
+i  =1
+i  =2
+i  =3
+i  =4
+i  =5
+i  =6
+i  =7
+19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 
+15
+15
+16
+n = = : 30
+size = = : 15
+i  =0
+i  =1
+i  =2
+i  =3
+i  =4
+i  =5
+i  =6
+i  =7
+i  =8
+i  =9
+i  =10
+i  =11
+i  =12
+i  =13
+i  =14
+23
+30
+ici ?
