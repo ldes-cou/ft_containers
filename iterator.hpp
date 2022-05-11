@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:35:02 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 13:32:16 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:48:40 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ namespace ft
        /**
         *  This %iterator will move in the opposite direction that @p x does.
        */
-       explicit
        reverse_iterator(iterator_type __x) : current(__x) { }
  
        /**
         *  The copy constructor is random_access.
        */
+      
        reverse_iterator(const reverse_iterator& __x)
        : current(__x.current) { }
  
@@ -150,38 +150,32 @@ namespace ft
     *
    */
     template<typename _IteratorL, typename _IteratorR>
-    inline  bool
-    operator==(const reverse_iterator<_IteratorL>& __x,
+    inline  bool operator==(const reverse_iterator<_IteratorL>& __x,
                const reverse_iterator<_IteratorR>& __y)
     { return __x.base() == __y.base(); }
     
     template<typename _IteratorL, typename _IteratorR>
-    inline  bool
-    operator<(const reverse_iterator<_IteratorL>& __x,
+    inline  bool operator<(const reverse_iterator<_IteratorL>& __x,
               const reverse_iterator<_IteratorR>& __y)
     { return __y.base() < __x.base(); }
     
     template<typename _IteratorL, typename _IteratorR>
-    inline  bool
-    operator!=(const reverse_iterator<_IteratorL>& __x,
+    inline  bool operator!=(const reverse_iterator<_IteratorL>& __x,
                 const reverse_iterator<_IteratorR>& __y)
     { return !(__x == __y); }
     
     template<typename _IteratorL, typename _IteratorR>
-    inline  bool
-    operator>(const reverse_iterator<_IteratorL>& __x,
+    inline  bool operator>(const reverse_iterator<_IteratorL>& __x,
               const reverse_iterator<_IteratorR>& __y)
     { return __y < __x; }
     
     template<typename _IteratorL, typename _IteratorR>
-    inline  bool
-    operator<=(const reverse_iterator<_IteratorL>& __x,
+    inline  bool operator<=(const reverse_iterator<_IteratorL>& __x,
                 const reverse_iterator<_IteratorR>& __y)
     { return !(__y < __x); }
     
     template<typename _IteratorL, typename _IteratorR>
-    inline  bool
-    operator>=(const reverse_iterator<_IteratorL>& __x,
+    inline  bool operator>=(const reverse_iterator<_IteratorL>& __x,
                 const reverse_iterator<_IteratorR>& __y)
     { return !(__x < __y); }
 

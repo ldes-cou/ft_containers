@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   VectorClass.hpp                                    :+:      :+:    :+:   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 19:37:34 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:19:37 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,14 +149,14 @@ namespace ft
              /** ************************************************************************** */
 		     /**                                     ITERATORS                              */
 		     /** ************************************************************************** */
-                iterator begin() {return (iterator(this->_start));}
-                iterator begin() const {return (iterator(this->_start));}
-                iterator end()  {return (iterator(this->_end));}
-                iterator end() const {return (iterator(this->_end));}
+                iterator begin() {return iterator(this->_start);}
+                const_iterator begin() const {return const_iterator(this->_start);}
+                iterator end()  {return iterator((this->_end));}
+                const_iterator end() const {return const_iterator((this->_end));}
                 reverse_iterator rbegin() {return  (reverse_iterator(this->_end));}
-                reverse_iterator rbegin() const{return  (reverse_iterator(this->_end));}
-                iterator rend(){return (reverse_iterator(this->_start));}
-                iterator rend()const {return (reverse_iterator(this->_start));}
+                const_reverse_iterator rbegin() const {return  (reverse_iterator(this->_end));}
+                reverse_iterator rend(){return (reverse_iterator(this->_start));}
+                const_reverse_iterator rend() const {return (reverse_iterator(this->_start));}
             
              /** ************************************************************************** */
 		     /**                                 ELEMENT ACCESS                             */
@@ -221,7 +221,7 @@ namespace ft
                 }
              }
             size_type capacity() const{return (size_type(const_iterator(this->_capacity) - this->begin()));}
-            
+            bool empty() const{ return (size() == 0);}
             /*Increase the capacity of the vector (the total number of elements that the vector can hold 
             without requiring reallocation) to a value that's greater or equal to new_cap. 
             If new_cap is greater than the current capacity(), new storage is allocated, 
@@ -298,7 +298,7 @@ namespace ft
                 reserve(computeCapacity(n));
                 while(i > 0 && i-- >= new_start)
                 {
-                    _alloc.construct(_start + i + n), *(_start + i); 
+                    _alloc.construct((_start + i + n), *(_start + i)); 
                     _alloc.destroy(_start + i);
                     i--;
                 }

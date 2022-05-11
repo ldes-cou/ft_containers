@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:34:24 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 16:43:59 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:22:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft
 		/** ************************************************************************** */
         public:
         /*default constructor*/
-        random_access_iterator(void): _current(0) {}
+        random_access_iterator(): _current(0) {}
 
         /*constructor from a pointer*/
         random_access_iterator(pointer ptr) : _current(ptr) {}
@@ -44,11 +44,24 @@ namespace ft
 
         /*destructor*/
         ~random_access_iterator() {}
+        
 
 
         /** **************************************************************************   */
 		/**                                 OPERATORS                                   */
 		/** ************************************************************************** */
+        
+        operator random_access_iterator<const T>() const
+		{
+			return (random_access_iterator<const T>(_current)); // cast en const
+		}
+        
+        random_access_iterator  &operator=( const random_access_iterator & src )
+		{
+				if (this != &src)
+						this->_current = src.base();
+				return (*this);
+		}
         
         //forward iterator requirements
         reference operator * () const
