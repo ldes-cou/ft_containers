@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 18:25:51 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:31:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ namespace ft
 				typedef	ft::reverse_iterator<iterator>			        reverse_iterator;
 				typedef ft::reverse_iterator<const_iterator>	        const_reverse_iterator;
 				typedef typename std::ptrdiff_t					        difference_type;
-				typedef	typename std::size_t					        size_type;
+				// typedef	typename std::size_t					        size_type;
+                typedef typename	allocator_type::size_type						size_type;
                 
         private:
             allocator_type  _alloc;
@@ -145,11 +146,6 @@ namespace ft
                     if (this != &x)
                     {
                         this->clear();
-                        this->_alloc.deallocate(this->_start, capacity());
-                        this->_alloc = x.get_allocator();
-                        _start = _alloc.allocate(x.size());
-                        _capacity = _start + x.size();
-                        _end = _start;
                         this->assign(x.begin(), x.end());
                     }
                     return *this;
@@ -319,10 +315,12 @@ namespace ft
             
             void insert (iterator position, size_type n, const value_type& val)
             {
+                if (n==0)
+                    return ;
                 size_type new_start = ft::distance(begin(), position);
-                size_type i = size();
+                ptrdiff_t i = size();
                 reserve(computeCapacity(n));
-                while(i > 0 && i-- >= new_start)
+                while(i > 0 && --i >= static_cast<ptrdiff_t>(new_start))
                 {
                     _alloc.construct((_start + i + n), *(_start + i)); 
                     _alloc.destroy(_start + i);
@@ -340,6 +338,8 @@ namespace ft
             typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
                 size_type dist = ft::distance(first, last);
+                if (dist == 0)
+                    return ;
                 size_type new_start = ft::distance(begin(), position);
                 size_type i = size();
                 reserve(computeCapacity(dist));
@@ -356,6 +356,8 @@ namespace ft
                 _end += dist;
             }
             
+    
+
             iterator erase (iterator position) {
 				return (erase(position, position + 1));
 			}
