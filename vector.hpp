@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/12 11:31:16 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:17:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,9 @@ namespace ft
              size_type max_size() const{return (_alloc.max_size());}
              void resize (size_type n, value_type val = value_type())
              {
-                if (n < size())
+                if (n > max_size())
+					throw std::length_error("vector::resize");
+                else if (n < size())
                 {
                     while (size() > n)
                     {
@@ -218,11 +220,8 @@ namespace ft
                 else if (n > size())
                 {
                     reserve(computeCapacity(n));
-                    while (size() < n)
-                    {
-                        _alloc.construct(_end, val);
-                        _end++;
-                    }
+                    this->reserve(n);
+					this->insert(this->end(), (n - this->size()), val);
                 }
              }
             size_type capacity() const{return (size_type(const_iterator(this->_capacity) - this->begin()));}
@@ -259,11 +258,8 @@ namespace ft
 				if (this->capacity() < n) {
 					const size_type old_size = this->size();
 					pointer		tmp = this->_alloc.allocate(n, this->_start);
-                    out("n = = : " << n);
-                    out("size = = : " << size());
 					for	(size_type i = 0; i < this->size(); i++) {
 						this->_alloc.construct(tmp + i, this->_start[i]);
-                        out ("i  =" << i);
 						this->_alloc.destroy(&(this->_start[i]));
 					}
 					this->_alloc.deallocate(this->_start, this->capacity());

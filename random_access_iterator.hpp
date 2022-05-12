@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:34:24 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 14:35:31 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:03:57 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ namespace ft
         template<typename Left, typename Right>
         inline bool operator<(const random_access_iterator<Left> &__x,
                 const random_access_iterator<Right>& __y)
-        { return __y.base() < __x.base(); }
+        { return __x.base() < __y.base(); }
         
         template<typename Left, typename Right>
         inline bool operator!=(const random_access_iterator<Left>& __x,
