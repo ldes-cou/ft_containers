@@ -6,13 +6,17 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/12 12:17:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:16:05 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+
+//tester
+// #include "base.hpp"
+// #include "common.hpp"
 #include "lexicograpical_compare.hpp"
 #include "equal.hpp"
 #include "is_integral.hpp"
@@ -22,7 +26,7 @@
 #include <string.h>
 #include <iostream>
 #include <iomanip>
-#include <vector>
+//#include <vector>
 #include <memory>
 #include <stdexcept>
 #include <limits>
@@ -59,7 +63,7 @@ namespace ft
             
             size_type	computeCapacity(size_type __n)
 			{
-				if (this->capacity() >= (this->size() + __n))
+				if (this->capacity() > (this->size() + __n))
                 {
 					return (this->capacity());
                 }
@@ -112,7 +116,7 @@ namespace ft
                 typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator>::type* = 0):
                 _alloc(alloc)
                 {
-                    difference_type n = distance(first, last);
+                    difference_type n = ft::distance(first, last);
                     _start = _alloc.allocate(n);
                     _end = _start;
                     _capacity = _start + n;
@@ -219,12 +223,11 @@ namespace ft
                 }
                 else if (n > size())
                 {
-                    reserve(computeCapacity(n));
-                    this->reserve(n);
-					this->insert(this->end(), (n - this->size()), val);
+                    reserve(n);
+					insert(this->end(), (n - this->size()), val);
                 }
              }
-            size_type capacity() const{return (size_type(const_iterator(this->_capacity) - this->begin()));}
+            size_type capacity() const{return ((this->_capacity - this->_start));}
             bool empty() const{ return (size() == 0);}
             /*Increase the capacity of the vector (the total number of elements that the vector can hold 
             without requiring reallocation) to a value that's greater or equal to new_cap. 
@@ -232,42 +235,42 @@ namespace ft
             otherwise the function does nothing. reserve() does not change the size of the vector.
             If new_cap is greater than capacity(), all iterators, including the past-the-end iterator, 
             and all references to the elements are invalidated. Otherwise, no iterators or references are invalidated. */
-            // void reserve (size_type n)
-            // {
-            //     if (n > max_size())
-            //         throw std::length_error("vector::reserve");
-            //     if (n > capacity())
-            //     {
-            //             pointer new_start = this->_alloc.allocate(n, this->_start);
-            //             pointer new_end = new_start;
-            //             for (size_type i = 0; i < this->size(); i++)
-            //             {
-            //                 this->_alloc.construct(new_start + i, this->_start[i]);
-            //                 this->_alloc.destroy(&(this->_start[i]));
-            //                 new_end++;
-            //             }
-            //             this->_alloc.deallocate(this->_start, this->capacity());
-            //             this->_start = new_start;
-            //             this->_end = new_end;
-            //             this->_capacity = this->_start + n;
-            //     }
-            // }
-            void	reserve(size_type n) {
-				if (n > this->max_size())
-					throw std::length_error("vector::reserve");
-				if (this->capacity() < n) {
-					const size_type old_size = this->size();
-					pointer		tmp = this->_alloc.allocate(n, this->_start);
-					for	(size_type i = 0; i < this->size(); i++) {
-						this->_alloc.construct(tmp + i, this->_start[i]);
-						this->_alloc.destroy(&(this->_start[i]));
-					}
-					this->_alloc.deallocate(this->_start, this->capacity());
-					this->_start = tmp;
-					this->_end = tmp + old_size;
-					this->_capacity = this->_start + n;
-				}
-			}
+            void reserve (size_type n)
+            {
+                if (n > max_size())
+                    throw std::length_error("vector::reserve");
+                if (n > capacity())
+                {
+                        pointer new_start = this->_alloc.allocate(n, this->_start);
+                        pointer new_end = new_start;
+                        for (size_type i = 0; i < this->size(); i++)
+                        {
+                            this->_alloc.construct(new_start + i, this->_start[i]);
+                            this->_alloc.destroy(&(this->_start[i]));
+                            new_end++;
+                        }
+                        this->_alloc.deallocate(this->_start, this->capacity());
+                        this->_start = new_start;
+                        this->_end = new_end;
+                        this->_capacity = this->_start + n;
+                }
+            }
+            // void	reserve(size_type n) {
+			// 	if (n > this->max_size())
+			// 		throw std::length_error("vector::reserve");
+			// 	if (this->capacity() < n) {
+			// 		const size_type old_size = this->size();
+			// 		pointer		tmp = this->_alloc.allocate(n, this->_start);
+			// 		for	(size_type i = 0; i < this->size(); i++) {
+			// 			this->_alloc.construct(tmp + i, this->_start[i]);
+			// 			this->_alloc.destroy(&(this->_start[i]));
+			// 		}
+			// 		this->_alloc.deallocate(this->_start, this->capacity());
+			// 		this->_start = tmp;
+			// 		this->_end = tmp + old_size;
+			// 		this->_capacity = this->_start + n;
+			// 	}
+			//}
             /** *************************************************************************** */
 		    /**                                 MODIFIERS                                  */
 		    /** ************************************************************************* */
@@ -420,9 +423,11 @@ namespace ft
                 reserve(computeCapacity(dist));
                 for (difference_type i = 0; i < dist; i++)
                 {
-                    _alloc.construct((_start + i), *(first + i));
+                    //_alloc.construct((_start + i), *(first + i));
+                    _alloc.construct((_start + i), *(first));
+                    first++;
                 }
-                _end += (last - first);
+                _end += (dist);
             }
             
             void assign (size_type n, const value_type& val)

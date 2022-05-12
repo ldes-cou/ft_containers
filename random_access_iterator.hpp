@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:34:24 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/12 12:03:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:12:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ namespace ft
         
         random_access_iterator operator-(difference_type __n) const
         {
-            return random_access_iterator(_current - __n);
+            return (random_access_iterator(_current - __n));
         } 
         
         pointer base() const
@@ -165,16 +165,24 @@ namespace ft
                 const random_access_iterator<Right>& __y)
         { return !(__x < __y); }
         
-        // template<typename _Iterator>
-        // inline typename random_access_iterator<_Iterator>::difference_type
-        // operator-(const random_access_iterator<_Iterator>& __x,
-        //     const random_access_iterator<_Iterator>& __y)
-        // { return __y.base() - __x.base(); }
+        template <typename T>
+        inline typename ft::random_access_iterator<T>
+        operator+(	typename ft::random_access_iterator<T>::difference_type n,
+                const ft::random_access_iterator<T> __y)
+        {
+            return ( random_access_iterator<T>( __y.base() + n) );
+        }
         
         template<typename Left, typename Right>
         inline typename random_access_iterator<Left>::difference_type
         operator-(const random_access_iterator<Left>& __x,
             const random_access_iterator<Right>& __y)
+        { return __x.base() - __y.base(); }
+        
+        template<typename _Iterator>
+        inline typename random_access_iterator<_Iterator>::difference_type
+        operator-(const random_access_iterator<_Iterator>& __x,
+            const random_access_iterator<_Iterator>& __y)
         { return __x.base() - __y.base(); }
 }
 #endif
