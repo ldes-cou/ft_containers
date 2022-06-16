@@ -8,5 +8,5 @@ VECTOR_SOURCES	+=            		\
 # MAP_SOURCES		+=					\
 # 		srcs/test_map.cpp			\
 
-# STACK_SOURCES	+=					\
-# 		srcs/test_stack.cpp			\
+STACK_SOURCES	+=					\
+		srcs/main_stack.cpp			\

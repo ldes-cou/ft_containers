@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 16:26:07 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/04/29 16:43:26 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:36:03 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ namespace ft
         {
             if (first2==last2 || comp(*first2,*first1)) 
                 return false;
-            else if (comp(*first1, *first2)) // ou l'inverse ?
+            else if (comp(*first1, *first2))
                 return true;
             ++first1; ++first2;
         }

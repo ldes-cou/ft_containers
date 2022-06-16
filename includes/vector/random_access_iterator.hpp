@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:34:24 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/12 15:12:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:40:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define RANDOM_ACCESS_ITERATOR_HPP
 #include "iterator.hpp"
 #include "iterator_base_type.hpp"
+
 namespace ft 
 {
     template<typename T>
@@ -39,7 +40,6 @@ namespace ft
         random_access_iterator(pointer ptr) : _current(ptr) {}
 
         /*copy constructor */
-        
         random_access_iterator(const random_access_iterator & src) : _current(src._current) {}
 
         /*destructor*/

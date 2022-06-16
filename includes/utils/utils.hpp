@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:08:47 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/10 16:30:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/16 11:03:38 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 #include <sstream>
 #include <typeinfo>
 #include <iostream>
-#include "random_access_iterator.hpp"
-
-//#include "vector"
+#include "../vector/random_access_iterator.hpp"
 
 namespace ft
 {

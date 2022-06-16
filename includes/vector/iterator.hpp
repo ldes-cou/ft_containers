@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:35:02 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/11 15:16:00 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/16 11:01:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,13 @@ namespace ft
  
      public:
        /**
-        *  The default constructor default-initializes member @p current.
+        *  The default constructor default-initializes member current.
         *  If it is a pointer, that means it is zero-initialized.
        */
-       // _GLIBCXX_RESOLVE_LIB_DEFECTS
-       // 235 No specification of default ctor for reverse_iterator
        reverse_iterator() : current() { }
  
        /**
-        *  This %iterator will move in the opposite direction that @p x does.
+        *  This %iterator will move in the opposite direction that x does.
        */
        reverse_iterator(iterator_type __x) : current(__x) { }
  
@@ -82,7 +80,7 @@ namespace ft
           return (reverse_iterator<const _Iterator>(this->_current));
      }
        /**
-        *  @return  @c current, the %iterator used for underlying work.
+        *  @return  @current, the %iterator used for underlying work.
        */
        iterator_type base() const
        { return current; }
@@ -145,7 +143,6 @@ namespace ft
        { return *(*this + __n); }
      };
  
-   //{
    /**
     *
     *  Reverse iterators forward many operations to their underlying base()
