@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/16 11:02:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:40:22 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 //tester
 // #include "base.hpp"
 // #include "common.hpp"
-#include "../utils/lexicograpical_compare.hpp"
-#include "../utils/equal.hpp"
-#include "../utils/is_integral.hpp"
-#include "../utils/enable_if.hpp"
-#include "../utils/utils.hpp"
+#include "lexicograpical_compare.hpp"
+#include "equal.hpp"
+#include "is_integral.hpp"
+#include "enable_if.hpp"
+#include "utils.hpp"
 //#include "random_access_iterator.hpp"
 #include <string.h>
 #include <iostream>
