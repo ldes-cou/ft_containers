@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:17:55 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/17 11:56:17 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/17 14:47:53 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "vector/vector.hpp"
 #include <iostream>  
+
 
 namespace ft
 {
@@ -63,11 +64,7 @@ namespace ft
 			template <class U, class C>
 			friend bool operator== (const stack<U,C>& lhs, const stack<U,C>& rhs);
 			template <class U, class C>
-			friend bool operator<  (const stack<U,C>& lhs, const stack<U,C>& rhs);
-			template <class U, class C>
-			friend bool operator>  (const stack<U,C>& lhs, const stack<U,C>& rhs);
-			
-			
+			friend bool operator<  (const stack<U,C>& lhs, const stack<U,C>& rhs);		
 	};
 				 /********************************************************/
 				/*				RELATIONAL OPERATORS		   			*/
@@ -95,18 +92,18 @@ namespace ft
 		template <class U, class C>
 		bool operator>  (const stack<U,C>& lhs, const stack<U,C>& rhs)
 		{
-			return (rhs._c > lhs._c);
+			return (rhs < lhs);
 		}
 		template <class U, class C>
 		bool operator<= (const stack<U,C>& lhs, const stack<U,C>& rhs)
 		{
-			return !(rhs._c < lhs._c);
+			return !(rhs < lhs);
 		}
 			
 		template <class U, class C>
 		bool operator>= (const stack<U,C>& lhs, const stack<U,C>& rhs)
 		{
-			return !(lhs._c < rhs._c);
+			return !(lhs < rhs);
 		}
 }
 #endif

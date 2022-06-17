@@ -8,6 +8,17 @@
 # define END "\033[0m"
 # define SIZE 42
 
-#include "map.hpp"
+#include "../includes/tests.hpp"
+#include "map/map.hpp"
 #include <map>
+
+#ifndef NAMESPACE
+# define NAMESPACE std
+
+int main()
+{
+    test_map();
+    return 0;
+}
+#endif
 

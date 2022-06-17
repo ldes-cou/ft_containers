@@ -5,7 +5,7 @@ endif
 
 VECTOR_TARGET		:= _vector
 STACK_TARGET		:= _stack
-#MAP_TARGET			:= _map
+MAP_TARGET			:= _map
 
 BUILD				:= release
 
@@ -20,7 +20,7 @@ DEPEXT				:= d
 OBJEXT				:= o
 
 VECTOR_OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(VECTOR_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-#MAP_OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(MAP_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+MAP_OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(MAP_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 STACK_OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(STACK_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 cflags.release		:= -Wall -Werror -Wextra
@@ -49,13 +49,13 @@ ECHO				:= echo
 ES_ERASE			:= "\033[1A\033[2K\033[1A"
 ERASE				:= $(ECHO) $(ES_ERASE)
 
-all: vector.ft stack.ft #map.ft  vector.std map.std stack.std
+all: vector.ft stack.ft vector.std stack.std map.ft   map.std 
 
 vector.%:
 	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(VECTOR_TARGET)
 
-# map.%:
-# 	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(MAP_TARGET)
+map.%:
+	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(MAP_TARGET)
 
 stack.%:
 	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(STACK_TARGET)
@@ -75,16 +75,16 @@ clean:
 
 
 -include $(VECTOR_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
-# -include $(MAP_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
+-include $(MAP_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 -include $(STACK_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 
 $(TARGETDIR)/%$(VECTOR_TARGET): $(VECTOR_OBJECTS)
 	@mkdir -p $(TARGETDIR)
 	$(CXX) -o $(TARGETDIR)/$(VERSION)$(VECTOR_TARGET) $^ $(LIB)
 
-# $(TARGETDIR)/%$(MAP_TARGET): $(MAP_OBJECTS)
-# 	@mkdir -p $(TARGETDIR)
-# 	$(CXX) -o $(TARGETDIR)/$(VERSION)$(MAP_TARGET) $^ $(LIB)
+$(TARGETDIR)/%$(MAP_TARGET): $(MAP_OBJECTS)
+	@mkdir -p $(TARGETDIR)
+	$(CXX) -o $(TARGETDIR)/$(VERSION)$(MAP_TARGET) $^ $(LIB)
 
 $(TARGETDIR)/%$(STACK_TARGET): $(STACK_OBJECTS)
 	@mkdir -p $(TARGETDIR)

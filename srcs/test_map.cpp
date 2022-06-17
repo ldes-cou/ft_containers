@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node.hpp                                           :+:      :+:    :+:   */
+/*   test_map.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/16 11:06:09 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/17 17:46:49 by ldes-cou         ###   ########.fr       */
+/*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
+/*   Updated: 2022/06/17 17:45:03 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RB_NODE_HPP
-#define RB_NODE_HPP
+#include "../includes/map/map.hpp"
+#include "../includes/map/rbtree.hpp"
+#include <map>
 
-#define BLACK 0
-#define RED 1
+//using namespace ft;
 
-#ifndef VALUE_TYPE 
-#define VALUE_TYPE int
-namespace ft
-{
-	template <typename T>
-	struct Node 
-	{
-		public:
-			int         color;
-			Node        *parent;
-			Node     	*left_child;
-			Node     	*right_child;
-			VALUE_TYPE  key;
-		
-			
-	}   
+void test_map()
+ {
+  RedBlackTree bst;
+  bst.insert(55);
+  bst.insert(40);
+  bst.insert(65);
+  bst.insert(60);
+  bst.insert(75);
+  bst.insert(57);
+
+  bst.printTree();
+  std::cout << std::endl
+     << "After deleting" << std::endl;
+ // bst.deleteNode(40);
+  bst.printTree();
 }
-#endif
