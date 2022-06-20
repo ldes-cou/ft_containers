@@ -9,7 +9,7 @@
 # define SIZE 42
 
 #include "../includes/tests.hpp"
-#include "map/map.hpp"
+//#include "map/map.hpp"
 #include <map>
 
 #ifndef NAMESPACE

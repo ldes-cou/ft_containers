@@ -24,14 +24,14 @@ MAP_OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(MAP_SOURCES:.$
 STACK_OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(STACK_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 cflags.release		:= -Wall -Werror -Wextra
-cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
-cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
+#cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
+#cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
 CFLAGS				:= $(cflags.$(BUILD))
 CPPFLAGS			:= $(cflags.$(BUILD)) -DNS=$(VERSION) -std=c++98
 
 lib.release			:=
-lib.valgrind		:= $(lib.release)
-lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
+# lib.valgrind		:= $(lib.release)
+# lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
 LIB					:= $(lib.$(BUILD))
 
 INC					:= -I$(INCDIR) -I/usr/local/include
@@ -73,6 +73,8 @@ clean:
 	# @$(RM) -rf $(TARGETDIR)/ft$(STACK_TARGET)
 	# @$(RM) -rf $(TARGETDIR)/std$(STACK_TARGET)
 
+re: fclean all
+	@$(MAKE) all
 
 -include $(VECTOR_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 -include $(MAP_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
@@ -101,3 +103,62 @@ $(BUILDDIR)$(VERSION)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@sed -e 's|.*:|$(BUILDDIR)$(VERSION)/$*.$(OBJEXT):|' < $(BUILDDIR)$(VERSION)/$*.$(DEPEXT).tmp > $(BUILDDIR)$(VERSION)/$*.$(DEPEXT)
 	@sed -e 's/.*://' -e 's/\\$$//' < $(BUILDDIR)$(VERSION)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(BUILDDIR)$(VERSION)/$*.$(DEPEXT)
 	@rm -f $(VERSION)$(BUILDDIR)/$*.$(DEPEXT).tmp
+
+# NAME        ?=    Containers_test
+
+# MAKE        += --no-print-directory
+
+# CXX            =    c++
+
+# ifndef CXXFLAGS
+# CXXFLAGS        =    -std=c++98 -Wall -Wextra -Werror
+# CXXFLAGS        +=    -g
+# CXXFLAGS        +=    -fsanitize=address
+# endif
+
+# SRC_DIR        =    srcs/
+# INCDIR		   =	includes/
+# OBJ_DIR        =    objs/
+
+# include sources.mk
+
+# INC_FLAGS    =    -iquote map/ -iquote set/ -iquote stack -iquote vector -iquote iterator/ -iquote .
+
+# SRC_LIST    =    \
+#                 main.cpp\
+
+# SRC            =    $(addprefix $(OBJ_DIR), $(SRC_IST))
+# OBJ            =    $(addprefix $(OBJ_DIR), $(SRC_LIST:.cpp=.o))
+# DIR            =    $(sort $(dir $(OBJ)))
+
+# all:
+# 	$(MAKE) -j $(NAME)
+
+# $(NAME):        $(OBJ) Makefile $(LIB_DIR)$(LIB_LIB)
+# 	$(CXX) $(CXXFLAGS) -MMD $(OBJ) -o $@ $(INC_FLAGS)
+
+# $(OBJ_DIR)%.o:    $(SRC_DIR)%.cpp Makefile | $(DIR)
+# 	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@ $(INC_FLAGS)
+
+# $(DIR):
+# 	@mkdir -p $@
+
+# clean:
+# 	rm -rf $(OBJ_DIR)
+# 	rm *output
+
+# fclean: clean
+# 	rm -rf $(NAME)
+# 	rm mine std
+
+# re: fclean
+# 	@$(MAKE) all
+
+# test:
+# 	@$(MAKE) mine NAME="mine"
+# 	@rm $(OBJ)
+# 	@$(MAKE) std NAME="std" CXXFLAGS="-std=c++98 -Wall -Wextra -Werror -D STD -fsanitize=address"
+# 	@rm $(OBJ)
+# 	@./mine > mine_output
+# 	@./std > std_output
+# 	diff mine_output std_output
