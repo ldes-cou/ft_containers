@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_map.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/20 15:20:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:58:57 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void test_map()
   bst.printTree();
   // std::cout << std::endl
   //    << "After deleting" << std::endl;
- // bst.deleteNode(40);
+  // bst.deleteNode(40);
   //bst.printTree();
 }

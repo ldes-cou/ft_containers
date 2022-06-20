@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rbtree.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/20 17:23:14 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/20 20:58:41 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ class RBTree
     private:
     
         Node    *root;
-        //Node     *Tnill;
+        Node    *Tnill;
 
     public:
     
@@ -228,13 +228,6 @@ class RBTree
         }
 
         /************************************ TOOLS *****************************************/
-        Node *maximum(Node *node) 
-        {
-            while (node->right != NULL) {
-            node = node->right;
-            }
-            return node;
-        }
 
         Node *successor(Node *x) 
         {
@@ -363,7 +356,10 @@ class RBTree
                 x->color = 0;
             }
         }
-
+        void deleteNode(int data)
+        {
+            deleteNodeHelper(this->root, data);
+        }
         void deleteNodeHelper(Node* node, int key)
         {
             Node *z = NULL;
@@ -418,7 +414,7 @@ class RBTree
             delete z;
             if (y_original_color == 0) 
             {
-                //deleteFix(x);
+                deleteFix(x);
             }
         }
         /***********************************   PRINT  ***************************************/
