@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/17 17:45:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/20 11:45:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void test_map()
  {
-  RedBlackTree bst;
+  RBTree bst;
   bst.insert(55);
   bst.insert(40);
   bst.insert(65);
@@ -27,8 +27,8 @@ void test_map()
   bst.insert(57);
 
   bst.printTree();
-  std::cout << std::endl
-     << "After deleting" << std::endl;
+  // std::cout << std::endl
+  //    << "After deleting" << std::endl;
  // bst.deleteNode(40);
-  bst.printTree();
+  //bst.printTree();
 }
