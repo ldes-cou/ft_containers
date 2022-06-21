@@ -3,9 +3,15 @@ C++ containers, easy mode.
 
 ## VECTOR
 
- **coucou**
- 
-+ coder les fonctions insert, erase
-+ recuperer les iterateurs de la stl pour commencer
-+ récupérer le code source
-    + tester insert
++ code insert, erase, assign, clear
++ work with stl iterators at first
++ code interators
+
+## STACK 
+
++ code stack with vector as hidden container
+   
+## MAP
+
++ code rbt algorithm to work with int
++ 
