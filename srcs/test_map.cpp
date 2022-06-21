@@ -6,13 +6,14 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/21 11:35:25 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:59:27 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/map/map.hpp"
-#include "../includes/map/rbtree.hpp"
-#include <map>
+# include "../includes/map/map.hpp"
+# include "../includes/map/RB_tree.hpp"
+# include <map>
+# include <utility>
 
 //using namespace ft;
 
