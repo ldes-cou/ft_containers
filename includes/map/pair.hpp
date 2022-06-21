@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:40 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/21 17:02:38 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:04:21 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ namespace ft
         
     };
     
-    /*  Make_pair constructs a pair object with its first element set to 
-        x and its second element set to y.
+    /****************************************** MAKE_PAIR ***********************************************/
+        
+    /*  Constructs a pair object with its first element set to x and its second element set to y.
         The template types can be implicitly deduced from the arguments passed to make_pair.*/
         
     template <class T1, class T2>
