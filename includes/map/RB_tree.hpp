@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/23 12:41:46 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/23 15:23:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,19 +196,26 @@ template <typename T>
 	};
 
 template <typename T>
-
+// 	template < class Key,                                     // map::key_type
+// 			class T,                                       		// map::mapped_type
+// 			class Compare = std::less<Key>,                     // map::key_compare
+// 			class Alloc = std::allocator<std::pair<const Key,T> > >    // map::allocator_type
 class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 {
 	typedef T 							value_type;
 	typedef RB_Node<T>					Node;
 	typedef RB_Node<T>*     			Node_ptr;
-	// typedef	RB_Node*					_Base_ptr;
-	// typedef const RB_Node*				_Const_Base_ptr;
 	typedef	std::allocator<Node>		allocator_type;
 	typedef allocator_type				_alloc;
 	
 	Node *root;
 
+	public:
+	// constructor
+	Node *getRoot() { return root; }
+	// initialize root
+	RBTree() { root = NULL; }
+	
 	// left rotates the given node
 	void leftRotate(Node *x) {
 		// new parent will be node's right child
@@ -217,7 +224,6 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 		// update root if current node is root
 		if (x == root)
 		root = nParent;
-
 		x->moveDown(nParent);
 
 		// connect x with new parent's left element
@@ -474,50 +480,45 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 	}
 
 	// prints level order for given node
-	void levelOrder(Node *x) {
-		if (x == NULL)
-		// return if node is null
-		return;
+	// void levelOrder(Node *x) {
+	// 	if (x == NULL)
+	// 	// return if node is null
+	// 	return;
 
-		// queue for level order
-		queue<Node *> q;
-		Node *curr;
+	// 	// queue for level order
+	// 	queue<Node *> q;
+	// 	Node *curr;
 
-		// push x
-		q.push(x);
+	// 	// push x
+	// 	q.push(x);
 
-		while (!q.empty()) {
-		// while q is not empty
-		// dequeue
-		curr = q.front();
-		q.pop();
+	// 	while (!q.empty()) {
+	// 	// while q is not empty
+	// 	// dequeue
+	// 	curr = q.front();
+	// 	q.pop();
 
-		// print node value
-		cout << curr->data << " ";
+	// 	// print node value
+	// 	cout << curr->data << " ";
 
-		// push children to queue
-		if (curr->left != NULL)
-			q.push(curr->left);
-		if (curr->right != NULL)
-			q.push(curr->right);
-		}
-	}
+	// 	// push children to queue
+	// 	if (curr->left != NULL)
+	// 		q.push(curr->left);
+	// 	if (curr->right != NULL)
+	// 		q.push(curr->right);
+	// 	}
+	// }
 
-	// prints inorder recursively
-	void inorder(Node *x) {
-		if (x == NULL)
-		return;
-		inorder(x->left);
-		cout << x->data << " ";
-		inorder(x->right);
-	}
+	// // prints inorder recursively
+	// void inorder(Node *x) {
+	// 	if (x == NULL)
+	// 	return;
+	// 	inorder(x->left);
+	// 	cout << x->data << " ";
+	// 	inorder(x->right);
+	// }
 
-	public:
-	// constructor
-	// initialize root
-	RBTree() { root = NULL; }
 
-	Node *getRoot() { return root; }
 
 	// searches for given value
 	// if found returns the node (used for delete)
@@ -591,25 +592,25 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 		deleteNode(v);
 	}
 
-	// prints inorder of the tree
-	void printInOrder() {
-		cout << "Inorder: " << endl;
-		if (root == NULL)
-		cout << "Tree is empty" << endl;
-		else
-		inorder(root);
-		cout << endl;
-	}
+	// // prints inorder of the tree
+	// void printInOrder() {
+	// 	cout << "Inorder: " << endl;
+	// 	if (root == NULL)
+	// 	cout << "Tree is empty" << endl;
+	// 	else
+	// 	inorder(root);
+	// 	cout << endl;
+	// }
 
-	// prints level order of the tree
-	void printLevelOrder() {
-		cout << "Level order: " << endl;
-		if (root == NULL)
-		cout << "Tree is empty" << endl;
-		else
-		levelOrder(root);
-		cout << endl;
-	}
+	// // prints level order of the tree
+	// void printLevelOrder() {
+	// 	cout << "Level order: " << endl;
+	// 	if (root == NULL)
+	// 	cout << "Tree is empty" << endl;
+	// 	else
+	// 	levelOrder(root);
+	// 	cout << endl;
+	// }
 		void print(Node *root, std::string indent, bool last)
 		{
 			if (root != NULL)
