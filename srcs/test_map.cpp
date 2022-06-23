@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/21 16:59:27 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:47:21 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void test_map()
  {
-  RBTree tree;
+  RBTree<char> tree;
   // bst.insert(55);
   // bst.insert(40);
   // bst.insert(65);
@@ -33,32 +33,32 @@ void test_map()
   // bst.deleteNode(40);
   //bst.printTree();
 
-tree.insert(7);
-tree.insert(3);
-tree.insert(18);
-tree.insert(10);
-tree.insert(22);
-tree.insert(8);
-tree.insert(11);
-tree.insert(26);
-tree.insert(2);
-tree.insert(6);
-tree.insert(13);
+tree.insert('7');
+tree.insert('3');
+// tree.insert('18');
+// tree.insert('10');
+// tree.insert('22');
+tree.insert('8');
+// tree.insert('11');
+// tree.insert('26');
+tree.insert('2');
+tree.insert('6');
+// tree.insert('13');
 
 tree.printTree();
 
 // tree.printInOrder();
 // tree.printLevelOrder();
 
-cout<<endl<<"Deleting 18, 11, 3, 10, 22"<<endl;
+// cout<<endl<<"Deleting 18, 11, 3, 10, 22"<<endl;
 
-tree.deleteByVal(18);
-tree.deleteByVal(11);
-tree.deleteByVal(3);
-tree.deleteByVal(10);
-tree.deleteByVal(22);
+// tree.deleteByVal(18);
+// tree.deleteByVal(11);
+// tree.deleteByVal(3);
+// tree.deleteByVal(10);
+// tree.deleteByVal(22);
 
-tree.printTree();
+// tree.printTree();
 // tree.printInOrder();
 // tree.printLevelOrder();
 return ;

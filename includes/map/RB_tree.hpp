@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/23 12:00:43 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:41:46 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@
 
 #include <iostream>
 #include <queue>
-#include "RB_tree_iterator.hpp"
+//#include "RB_tree_iterator.hpp"
 
-using namespace ft;
+using namespace std;
 
 // class Node {
 // public:
-// int val;
+// int data;
 // int color;
 // Node *left, *right, *parent;
 
@@ -62,41 +62,48 @@ using namespace ft;
 #define RED 1
 
 template <typename T>
-	struct RBNode
+	struct RB_Node
 	{
 		typedef T 							value_type;
-		typedef	Node*						_Base_ptr;
-		typedef const Node*					_Const_Base_ptr;
-		typedef Node<value_type>*     		_Node_type;
-		typedef	std::allocator<_Node_type>	allocator_type;
+		typedef RB_Node<T>					Node;
+		typedef RB_Node<T>*     			Node_ptr;
+		typedef const RB_Node*				_Const_Base_ptr;
+		typedef	std::allocator<Node>		allocator_type;
 		typedef allocator_type				_alloc;
 		
 	/******************************** MEMBER VARIABLES**********************************/
-			_Base_ptr		left;
-			_Base_ptr		right;
-			_Base_ptr		parent;
+			Node_ptr		left;
+			Node_ptr		right;
+			Node_ptr		parent;
 			value_type		data;
 			int 			color;
 
 	/********************************** CONSTRUCTOR **********************************/
 
-	Node (): parent(0), left(0), right(0), color(RED), data(T())
-	{		
-	}
-	
-	Node(_Base_ptr parent = 0 _Base_ptr left = 0, _Base_ptr right = 0, color = RED) : data(T())
+	RB_Node(void): data(T())
 	{
+		this->color = BLACK;
+		left = right = parent = NULL;
 	}
+	RB_Node(value_type data)
+    {
+        this->data = data;
+        left = right = parent = NULL;
+        this->color = RED;
+    }
+	// Node(_Base_ptr parent  = 0 _Base_ptr left = 0, _Base_ptr right = 0, color = RED) : data(T())
+	// {;
+	// }
 	
-	Node& Node(const &Node cpy) : 
-		parent(cpy.parent), 
-		left(cpy.left), 
-		right(cpy.right), 
-		data(cpy.data),
-		color(cpy.color) // not sure for the color
-	{}
+	// Node(const &Node cpy) : 
+	// 	parent(cpy.parent), 
+	// 	left(cpy.left), 
+	// 	right(cpy.right), 
+	// 	data(cpy.data),
+	// 	color(cpy.color) // not sure for the color
+	// {}
 	// returns pointer to uncle
-	Node *uncle() {
+	RB_Node *uncle() {
 		// If no parent or grandparent, then no uncle
 		if (parent == NULL or parent->parent == NULL)
 			return NULL;
@@ -130,7 +137,7 @@ template <typename T>
 
 		static Node* Rb_tree_decrement(Node* __x) throw ()
 		{
-			if (__x->_M_color == _S_red
+			if (__x->_M_color == RED
 				&& __x->_M_parent->_M_parent == __x)
 			__x = __x->_M_right;
 			else if (__x->_M_left != 0)
@@ -181,7 +188,8 @@ template <typename T>
 			parent = nParent;
 		}
 
-		bool hasRedChild() {
+		bool hasRedChild()
+		{
 			return (left != NULL and left->color == RED) or
 				(right != NULL and right->color == RED);
 		}
@@ -189,8 +197,16 @@ template <typename T>
 
 template <typename T>
 
-class RBTree : public Node<T>, public _Rb_tree_iterator
+class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 {
+	typedef T 							value_type;
+	typedef RB_Node<T>					Node;
+	typedef RB_Node<T>*     			Node_ptr;
+	// typedef	RB_Node*					_Base_ptr;
+	// typedef const RB_Node*				_Const_Base_ptr;
+	typedef	std::allocator<Node>		allocator_type;
+	typedef allocator_type				_alloc;
+	
 	Node *root;
 
 	// left rotates the given node
@@ -245,9 +261,9 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 
 	void swapValues(Node *u, Node *v) {
 		int temp;
-		temp = u->val;
-		u->val = v->val;
-		v->val = temp;
+		temp = u->data;
+		u->data = v->data;
+		v->data = temp;
 	}
 
 	// fix red red at given node
@@ -365,7 +381,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 		// v has 1 child
 		if (v == root) {
 			// v is root, assign the value of u to v, and delete u
-			v->val = u->val;
+			v->data = u->data;
 			v->left = v->right = NULL;
 			delete u;
 		} else {
@@ -477,7 +493,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 		q.pop();
 
 		// print node value
-		cout << curr->val << " ";
+		cout << curr->data << " ";
 
 		// push children to queue
 		if (curr->left != NULL)
@@ -492,7 +508,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 		if (x == NULL)
 		return;
 		inorder(x->left);
-		cout << x->val << " ";
+		cout << x->data << " ";
 		inorder(x->right);
 	}
 
@@ -509,12 +525,12 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 	Node *search(int n) {
 		Node *temp = root;
 		while (temp != NULL) {
-		if (n < temp->val) {
+		if (n < temp->data) {
 			if (temp->left == NULL)
 			break;
 			else
 			temp = temp->left;
-		} else if (n == temp->val) {
+		} else if (n == temp->data) {
 			break;
 		} else {
 			if (temp->right == NULL)
@@ -528,7 +544,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 	}
 
 	// inserts the given value to tree
-	void insert(int n) {
+	void insert(value_type n) {
 		Node *newNode = new Node(n);
 		if (root == NULL) {
 		// when root is null
@@ -538,7 +554,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 		} else {
 		Node *temp = search(n);
 
-		if (temp->val == n) {
+		if (temp->data == n) {
 			// return if value already exists
 			return;
 		}
@@ -549,7 +565,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 		// connect new node to correct node
 		newNode->parent = temp;
 
-		if (n < temp->val)
+		if (n < temp->data)
 			temp->left = newNode;
 		else
 			temp->right = newNode;
@@ -560,14 +576,14 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 	}
 
 	// utility function that deletes the node with given value
-	void deleteByVal(int n) {
+	void deleteByVal(value_type n) {
 		if (root == NULL)
 		// Tree is empty
 		return;
 
 		Node *v = search(n);
 
-		if (v->val != n) {
+		if (v->data != n) {
 		cout << "No node found to delete with value:" << n << endl;
 		return;
 		}
@@ -620,7 +636,7 @@ class RBTree : public Node<T>, public _Rb_tree_iterator
 					sColor = "\x1b[30m";
 					//out("LA");
 				}
-				std::cout << sColor << "(" << root->val  << ")" << END << std::endl;
+				std::cout << sColor << "(" << root->data  << ")" << END << std::endl;
 				print(root->left, indent,false);
 				print(root->right, indent, true);
 			}
