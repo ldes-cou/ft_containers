@@ -6,14 +6,14 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/21 16:26:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:06:28 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RB_TREE_HPP
 #define RB_TREE_HPP
-#include "RB_tree_iterator.hpp"
 #include "RB_tree.hpp"
+#include "../vector/iterator.hpp"
 
 namespace ft
 {
@@ -27,15 +27,19 @@ namespace ft
 		typedef bidirectional_iterator_tag		iterator_category;
 		typedef ptrdiff_t		          		difference_type;
 		typedef _Rb_tree_iterator<_Tp>	        _Self;
-		typedef _Rb_tree_node_base::_Base_ptr   _Base_ptr;
-		typedef _Rb_tree_node<_Tp>*	            _Link_type;
-
+		typedef typename RBNode::_Base_ptr   				_Base_ptr;
+		typedef typename RBNode<_Tp>*	            		_Link_type;
+		
+		public:
 		/***************************** CONSTRUCTORS ***********************************/
 		_Rb_tree_iterator() : _M_node() { }
 
 		explicit
 		_Rb_tree_iterator(_Base_ptr __x) : _M_node(__x) { }
 
+		
+		
+		
 		/****************************** OPERATORS ************************************/
 		
 		reference operator*() const 
@@ -92,8 +96,8 @@ namespace ft
 		typedef bidirectional_iterator_tag 			iterator_category;
 		typedef ptrdiff_t			 				difference_type;
 		typedef _Rb_tree_const_iterator<_Tp>		_Self;
-		typedef _Rb_tree_node_base::_Const_Base_ptr	_Base_ptr;
-		typedef const _Rb_tree_node<_Tp>*			_Link_type;
+		typedef Node::_Const_Base_ptr				_Base_ptr;
+		typedef const Node<_Tp>*					_Link_type;
 		
 		_Rb_tree_const_iterator() : _M_node() { }
 		
