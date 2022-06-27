@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pair.hpp                                           :+:      :+:    :+:   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:40 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/21 17:04:21 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/27 21:01:42 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef PAIR_HPP
-#define PAIR_HPP
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
 namespace ft
 {
+    
+    // static class nullptr_t
+    // {
+    // public:
+    
+    //     template<class T>
+    //     operator T*() const { return (0); }
+
+    //     template<class C, class T>
+    //     operator T C::*() const { return (0); }
+
+    // private:
+    //     void operator&() const;
+
+    // } u_nullptr = {};
     
     template <class T1, class T2>
     struct pair
@@ -29,13 +44,13 @@ namespace ft
         /*********************************** CONSTRUCTORS *******************************************/
         
             pair(): first(T1()), second(T2())
-            {;}
+            {}
             
             template<class U, class V> pair (const pair<U,V>& pr) : first(pr.first), second(pr.second) 
-            {;}
+            {}
             
             pair (const first_type& a, const second_type& b): first(a), second(b)
-            {;}
+            {}
         
         /*********************************** OVERLOAD OPERATOR *******************************************/
         pair& operator= (const pair& pr)

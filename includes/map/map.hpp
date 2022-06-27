@@ -15,7 +15,7 @@
 // #include <iostream>
 // // #include "RB_tree.hpp"
 // // #include "RB_tree_iterator.hpp"
-// //#include "pair.hpp"
+// //#include "utils.hpp"
 
 // namespace ft
 // {
@@ -32,7 +32,18 @@
 // 			typedef T												mapped_type;                    //The second template parameter (T)	
 // 			typedef typename std::pair<const key_type,mapped_type>	value_type;                                       //pair<const key_type,mapped_type>	
 // 			typedef Compare											key_compare;	//The third template parameter (Compare)	defaults to: less<key_type>
-// 			typedef value_compare	                                    			//Nested function class to compare elements	see value_comp
+            // class value_compare : std::binary_function<value_type, value_type, bool>
+			// {
+			// 	friend class map<key_type, mapped_type, key_compare, Alloc>;
+				
+			// 	protected:
+			// 		Compare comp;
+			// 		value_compare (Compare c) : comp(c) {}
+				
+			// 	public:
+			// 		bool operator() (const value_type& x, const value_type& y) const
+			// 		{ return (comp(x.first, y.first)); }
+			// };                              			//Nested function class to compare elements	see value_comp
 // 			typedef Alloc<value_type>								allocator_type;                                    			//The fourth template parameter (Alloc)	defaults to: allocator<value_type>
 // 			typedef	Alloc::reference								reference;											            			//for the default allocator: value_type&
 // 			typedef Alloc::const_reference							const_reference;									 			//for the default allocator: const value_type&
@@ -50,7 +61,12 @@
 // 		public :
 // 			/* default */
 // 			explicit map (const key_compare& comp = key_compare(),
-// 						const allocator_type& alloc = allocator_type());
+			// 	const allocator_type& alloc = allocator_type())
+			// :
+			// 	_alloc(alloc),
+			// 	_comp(comp),
+			// 	_rbtree();
+			// {}
 // 			/* range */  
 // 			template <class InputIterator>
 // 			map (InputIterator first, InputIterator last,
