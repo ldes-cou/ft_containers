@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/23 15:23:51 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/27 11:26:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,7 @@
 #include <queue>
 //#include "RB_tree_iterator.hpp"
 
-using namespace std;
-
-// class Node {
-// public:
-// int data;
-// int color;
-// Node *left, *right, *parent;
+//using namespace std;
 
 #define BLACK 0
 #define RED 1
@@ -69,7 +63,7 @@ template <typename T>
 		typedef RB_Node<T>*     			Node_ptr;
 		typedef const RB_Node*				_Const_Base_ptr;
 		typedef	std::allocator<Node>		allocator_type;
-		typedef allocator_type				_alloc;
+		typedef typename allocator_type::template rebind<Node>::other			_alloc;
 		
 	/******************************** MEMBER VARIABLES**********************************/
 			Node_ptr		left;
@@ -103,7 +97,8 @@ template <typename T>
 	// 	color(cpy.color) // not sure for the color
 	// {}
 	// returns pointer to uncle
-	RB_Node *uncle() {
+	RB_Node *uncle()
+	{
 		// If no parent or grandparent, then no uncle
 		if (parent == NULL or parent->parent == NULL)
 			return NULL;
@@ -119,7 +114,7 @@ template <typename T>
 			{
 				__x = __x->_M_right;
 				while (__x->_M_left != 0)
-				__x = __x->_M_left;
+					__x = __x->_M_left;
 			}
 			else
 			{
@@ -202,22 +197,75 @@ template <typename T>
 // 			class Alloc = std::allocator<std::pair<const Key,T> > >    // map::allocator_type
 class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 {
-	typedef T 							value_type;
-	typedef RB_Node<T>					Node;
-	typedef RB_Node<T>*     			Node_ptr;
-	typedef	std::allocator<Node>		allocator_type;
-	typedef allocator_type				_alloc;
+	typedef T 																value_type;
+	typedef RB_Node<T>														Node;
+	typedef RB_Node<T>*     												Node_ptr;
+	typedef	std::allocator<Node>											allocator_type;
+	//typedef typename allocator_type::template rebind<Node>::other			_alloc;
 	
 	Node *root;
+	Node *nullptr_left;
+	Node *nullptr_right;
 
 	public:
 	// constructor
 	Node *getRoot() { return root; }
 	// initialize root
-	RBTree() { root = NULL; }
-	
+	RBTree()
+	{
+
+		root = NULL;
+		nullptr_left = NULL;
+		nullptr_right = NULL;
+		//setLeafs();
+	}
+	// bool _comp(value_type a, value_type b, Compare u = Compare())
+	// {
+	// 	return u(a.first, b.first);
+	// }
+	void	setLeafs()
+	{
+		Node *min = minimum(root);
+		Node *max = maximum(root);
+
+		nullptr_left->parent = min;
+		min->left->parent->left = nullptr_left;
+		nullptr_right->parent = max;
+		max->right->parent->right = nullptr_right;
+	}
+	void	unsetLeafs()
+	{
+		if (nullptr_left->parent)
+			nullptr_left->parent->left = NULL;
+		if (nullptr_right->parent)
+			nullptr_right->parent->right = NULL;
+		
+		
+		//delete (nullptr_left);
+		// min->left = NULL;
+		// //delete (nullptr_right);
+		// max->right = NULL;
+	}
+	Node *minimum(Node *node)
+	{
+		if (node == NULL)
+			return (node);
+    	while (node->left != NULL)
+      		node = node->left;
+    	return node;
+  	}
+
+  	Node *maximum(Node *node)
+	{
+		if (node == NULL)
+			return (node);
+		while (node->right != NULL)
+			node = node->right;
+    	return node;
+	}
 	// left rotates the given node
-	void leftRotate(Node *x) {
+	void leftRotate(Node *x)
+	{
 		// new parent will be node's right child
 		Node *nParent = x->right;
 
@@ -257,7 +305,7 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 		// connect new parent with x
 		nParent->right = x;
 	}
-
+	
 	void swapColors(Node *x1, Node *x2) {
 		int temp;
 		temp = x1->color;
@@ -318,15 +366,14 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 		}
 		}
 	}
-
+	
 	// find node that do not have a left child
 	// in the subtree of the given node
 	Node *successor(Node *x) {
 		Node *temp = x;
 
 		while (temp->left != NULL)
-		temp = temp->left;
-
+			temp = temp->left;
 		return temp;
 	}
 
@@ -351,6 +398,7 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 	void deleteNode(Node *v) {
 		Node *u = BSTreplace(v);
 
+		//unsetLeafs();
 		// True when u and v are both black
 		bool uvBlack = ((u == NULL or u->color == BLACK) and (v->color == BLACK));
 		Node *parent = v->parent;
@@ -380,6 +428,7 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 			}
 		}
 		delete v;
+		//setLeafs();
 		return;
 		}
 
@@ -479,46 +528,6 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 		}
 	}
 
-	// prints level order for given node
-	// void levelOrder(Node *x) {
-	// 	if (x == NULL)
-	// 	// return if node is null
-	// 	return;
-
-	// 	// queue for level order
-	// 	queue<Node *> q;
-	// 	Node *curr;
-
-	// 	// push x
-	// 	q.push(x);
-
-	// 	while (!q.empty()) {
-	// 	// while q is not empty
-	// 	// dequeue
-	// 	curr = q.front();
-	// 	q.pop();
-
-	// 	// print node value
-	// 	cout << curr->data << " ";
-
-	// 	// push children to queue
-	// 	if (curr->left != NULL)
-	// 		q.push(curr->left);
-	// 	if (curr->right != NULL)
-	// 		q.push(curr->right);
-	// 	}
-	// }
-
-	// // prints inorder recursively
-	// void inorder(Node *x) {
-	// 	if (x == NULL)
-	// 	return;
-	// 	inorder(x->left);
-	// 	cout << x->data << " ";
-	// 	inorder(x->right);
-	// }
-
-
 
 	// searches for given value
 	// if found returns the node (used for delete)
@@ -585,63 +594,43 @@ class RBTree : public RB_Node<T>//, public _Rb_tree_iterator
 		Node *v = search(n);
 
 		if (v->data != n) {
-		cout << "No node found to delete with value:" << n << endl;
+		std::cout << "No node found to delete with value:" << n << std::endl;
 		return;
 		}
 
 		deleteNode(v);
 	}
-
-	// // prints inorder of the tree
-	// void printInOrder() {
-	// 	cout << "Inorder: " << endl;
-	// 	if (root == NULL)
-	// 	cout << "Tree is empty" << endl;
-	// 	else
-	// 	inorder(root);
-	// 	cout << endl;
-	// }
-
-	// // prints level order of the tree
-	// void printLevelOrder() {
-	// 	cout << "Level order: " << endl;
-	// 	if (root == NULL)
-	// 	cout << "Tree is empty" << endl;
-	// 	else
-	// 	levelOrder(root);
-	// 	cout << endl;
-	// }
-		void print(Node *root, std::string indent, bool last)
+	void print(Node *root, std::string indent, bool last)
+	{
+		if (root != NULL)
 		{
-			if (root != NULL)
+			std::cout << indent;
+			if (last)
 			{
-				std::cout << indent;
-				if (last)
-				{
-					std::cout << "R----";
-					indent += "    ";
-				}
-				else
-				{
-					std::cout << "L----";
-					indent += "|   ";
-				}
-				std::string sColor;
-				if (root->color == RED)
-				{
-					sColor = "\x1b[31m";
-					//out("ICI");
-				}
-				else
-				{
-					sColor = "\x1b[30m";
-					//out("LA");
-				}
-				std::cout << sColor << "(" << root->data  << ")" << END << std::endl;
-				print(root->left, indent,false);
-				print(root->right, indent, true);
+				std::cout << "R----";
+				indent += "    ";
 			}
+			else
+			{
+				std::cout << "L----";
+				indent += "|   ";
+			}
+			std::string sColor;
+			if (root->color == RED)
+			{
+				sColor = "\x1b[31m";
+				//out("ICI");
+			}
+			else
+			{
+				sColor = "\x1b[30m";
+				//out("LA");
+			}
+			std::cout << sColor << "(" << root->data  << ")" << END << std::endl;
+			print(root->left, indent,false);
+			print(root->right, indent, true);
 		}
+	}
 	void printTree()
 			{
 				//out("THERE");

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/23 15:06:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/27 11:08:54 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void test_map()
   //    << "After deleting" << std::endl;
   // bst.deleteNode(40);
   //bst.printTree();
-
+//std::cout << tree.maximum(tree.getRoot()) << std::endl;
 tree.insert(7);
+//std::cout << tree.maximum(tree.getRoot()) << std::endl;
 tree.insert(3);
 tree.insert(18);
 tree.insert(10);
@@ -44,7 +45,7 @@ tree.printTree();
 // tree.printInOrder();
 // tree.printLevelOrder();
 
-cout<<endl<<"Deleting 18, 11, 3, 10, 22"<<endl;
+std::cout << std::endl <<"Deleting 18, 11, 3, 10, 22"<< std::endl;
 
 tree.deleteByVal(18);
 tree.deleteByVal(11);
