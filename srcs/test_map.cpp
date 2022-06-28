@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/27 11:08:54 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/28 11:52:38 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 # include <map>
 # include <utility>
 
-//using namespace ft;
+using namespace ft;
 
 void test_map()
  {
-  RBTree<int> tree;
+  RBTree<int, char> tree;
 
   //bst.printTree();
   // std::cout << std::endl
