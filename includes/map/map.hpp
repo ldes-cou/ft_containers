@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/28 12:06:10 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:08:20 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
+#include "../vector/iterator_base_type.hpp"
+#include "../vector/iterator.hpp"
 #include "utils.hpp"
 
 namespace ft
@@ -50,11 +52,11 @@ namespace ft
 			typedef typename Alloc::const_reference							const_reference;									 			//for the default allocator: const value_type&
 			typedef typename Alloc::pointer									pointer;	                    				                //for the default allocator: value_type*
 			typedef typename Alloc::const_pointer							const_pointer;		    										//for the default allocator: const value_type*
-			typedef ft::bidirectional_iterator<value_type>					iterator;														//convertible to const_iterator
-			typedef ft::bidirectional_iterator<constvalue_type> 			const_iterator;													//a bidirectional iterator to const value_type	
+			typedef ft::_Rb_tree_iterator<value_type>						iterator;														//convertible to const_iterator
+			typedef ft::_Rb_tree_iterator<const value_type> 				const_iterator;													//a bidirectional iterator to const value_type	
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;												//reverse_iterator<iterator>
 			typedef ft::reverse_iterator<const iterator>					const_reverse_iterator;											//reverse_iterator<const_iterator>	
-			typedef	iterator_traits<iterator>::difference_type				difference_type;												//a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
+			typedef	typename iterator_traits<iterator>::difference_type		difference_type;												//a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef typename allocator_type::size_type						size_type;
 
 			private:
@@ -71,11 +73,12 @@ namespace ft
 			:
 				_alloc(alloc),
 				_comp(comp),
-				_rbtree();
+				_rbtree()
 			{}
 			/* range */  
 			template <class InputIterator>
-			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _rbtree()
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), 
+				const allocator_type& alloc = allocator_type()): _rbtree(), _comp(comp), _alloc(alloc)
 			{
 				insert(first, last);
 			}
@@ -86,7 +89,7 @@ namespace ft
 				*this = x;
 			}
 			
-			map& operator=(const &x)
+			map& operator=(const map& x)
 			{
 				if (x != this)
 				{

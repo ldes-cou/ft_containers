@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:40 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/27 21:01:42 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/28 14:58:23 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ namespace ft
     struct pair
     {
         private:
-            T1 first;
-            T2 second;
+            typedef T1 first_type;
+            typedef T2 second_type;
+            
+            first_type first;
+            second_type second;
         
         public:
 
@@ -59,6 +62,7 @@ namespace ft
             pr.second = this->second;
             return (pr);
         }
+    };
         /*********************************** RELATIONAL OPERATOR *******************************************/
         
         template <class T1, class T2>
@@ -85,7 +89,6 @@ namespace ft
         bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
         { return !(lhs < rhs); }
         
-    };
     
     /****************************************** MAKE_PAIR ***********************************************/
         

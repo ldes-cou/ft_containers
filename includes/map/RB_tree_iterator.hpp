@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RB_tree_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/28 12:29:25 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/28 14:52:41 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,29 @@ namespace ft
 		typedef _Tp*                      		        pointer;
 		typedef bidirectional_iterator_tag		        iterator_category;
 		typedef ptrdiff_t		          		        difference_type;
-		typedef _Rb_tree_iterator<_Tp>	                _Self;
-		typedef ft::RB_Node*          				    _Base_ptr;
-		typedef ft::RB_Node<_Tp>*	            	    _Link_type;
+		typedef _Rb_tree_iterator<_Tp>	                		_Self;
+		typedef typename	ft::RB_Node<_Tp>::Node_ptr	         _Base_ptr;
 		
-		public:
-            //member variables
-            Rb_tree_iterator    
-            Node_ptr         _M_node;
-            pointer          _Base_ptr;
+        private:
+			_Base_ptr        _M_node;
             
 		/***************************** CONSTRUCTORS ***********************************/
+		public:
 		_Rb_tree_iterator() : _M_node() { }
 
 		explicit
 		_Rb_tree_iterator(_Base_ptr __x) : _M_node(__x) { }
 
 		
-		
+		//_Rb_tree_iterator(const iterator& __it) : _M_node(__it._M_node) { }
 		
 		/****************************** OPERATORS ************************************/
 		
 		reference operator*() const 
-		{ return *static_cast<_Link_type>(_M_node)->_M_valptr(); }
+		{ return (_M_node->data); }
 
 		pointer operator->() const
-		{ return static_cast<_Link_type> (_M_node)->_M_valptr(); }
+		{ return (&(_M_node->data)); }
 		
 		_Self&  operator++()
 		{ 
@@ -87,7 +84,7 @@ namespace ft
 		{
 			return _M_node != __x._M_node;
 		}
-		//_Base_ptr _M_node;
+
 	};
 	
 	template<typename _Tp>
@@ -95,14 +92,20 @@ namespace ft
     struct _Rb_tree_const_iterator
     {
 		typedef _Tp									 value_type;
-		typedef const 								_Tp& reference;
-		typedef const 								_Tp* pointer;
+		typedef const _Tp& 							reference;
+		typedef const _Tp* 							pointer;
 		typedef _Rb_tree_iterator<_Tp> 				iterator;
 		typedef bidirectional_iterator_tag 			iterator_category;
 		typedef ptrdiff_t			 				difference_type;
 		typedef _Rb_tree_const_iterator<_Tp>		_Self;
-		typedef Node::_Const_Base_ptr				_Base_ptr;
-		typedef const Node<_Tp>*					_Link_type;
+		typedef typename ft::RB_Node<_Tp>::Node_ptr			_Base_ptr;
+
+		private:
+			_Base_ptr _M_node;
+		
+		public:
+
+		/***************************** CONSTRUCTORS ***********************************/
 		
 		_Rb_tree_const_iterator() : _M_node() { }
 		
@@ -110,15 +113,17 @@ namespace ft
 		_Rb_tree_const_iterator(_Base_ptr __x) : _M_node(__x) { }
 		
 		_Rb_tree_const_iterator(const iterator& __it) : _M_node(__it._M_node) { }
+
+		/****************************** OPERATORS ************************************/
 		
 		iterator _M_const_cast() const
 		{ return iterator(const_cast<typename iterator::_Base_ptr>(_M_node)); }
 		
 		reference operator*() const
-		{ return *static_cast<_Link_type>(_M_node)->_M_valptr(); }
+		{ return (_M_node->data); }
 		
 		pointer operator->() const
-		{ return static_cast<_Link_type>(_M_node)->_M_valptr(); }
+		{ return (&(_M_node->data)) ; }
 		
 		_Self& operator++()
 		{
@@ -151,7 +156,6 @@ namespace ft
 		bool operator!=(const _Self& __x) const
 		{ return _M_node != __x._M_node; }
 		
-		_Base_ptr _M_node;
 };		
 	template<typename _Val> inline bool
     operator==(const _Rb_tree_iterator<_Val>& __x,  const _Rb_tree_const_iterator<_Val>& __y)
