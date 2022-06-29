@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   RB_tree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/28 11:58:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/29 13:51:02 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RBTREE_HPP
-#define RBTREE_HPP
-
-// #define BLACK 0
-// #define RED 1
+#ifndef RB_TREE_HPP
+#define RB_TREE_HPP
 #define B = "\x1b[30m"
 #define R = "\x1b[31m"
 # define END "\033[0m"
@@ -25,53 +22,35 @@
 
 #define out(x) std::cout << x << std::endl;
 
-//set a T.nil sentinel to deal with iterators
-
-//template<typename T>
-// struct Node 
-// {
-//     int data;
-//     Node *parent;
-//     Node *left;
-//     Node *right;
-//     bool color;
-
-//     Node(int data)
-//     {
-//         this->data = data;
-//         left = right = parent = NULL;
-//         this->color = RED;
-//     }
-//     ~Node()
-//     {;}
-    
-
 #include <iostream>
 #include <queue>
 #define BLACK 0
 #define RED 1
-//#include "RB_tree_iterator.hpp"
+#include "RB_tree_iterator.hpp"
 
+template <typename T>
+class map;
 namespace ft
 {
-	
-
 	template <typename T>
 		struct RB_Node
 		{
-			typedef T 																value_type;
-			typedef RB_Node<T>														Node;
-			typedef RB_Node<T>*     												Node_ptr;
-			typedef const RB_Node*													_Const_Base_ptr;
-			typedef	std::allocator<Node>											allocator_type;
-			typedef typename allocator_type::template rebind<Node>::other			node_alloc;
-			
-		/******************************** MEMBER VARIABLES**********************************/
-				Node_ptr		left;
-				Node_ptr		right;
-				Node_ptr		parent;
-				value_type		data;
-				int 			color;
+			public :
+				typedef T 																value_type;
+				typedef RB_Node<T>														Node;
+				typedef RB_Node<T>*     												Node_ptr;
+				typedef const RB_Node*													_Const_Base_ptr;
+				typedef	std::allocator<Node>											allocator_type;
+				typedef typename allocator_type::template rebind<Node>::other			node_alloc;
+				
+			/******************************** MEMBER VARIABLES**********************************/
+				//private:
+					
+					Node_ptr		left;
+					Node_ptr		right;
+					Node_ptr		parent;
+					value_type		data;
+					int 			color;
 
 		/********************************** CONSTRUCTOR **********************************/
 
@@ -86,6 +65,8 @@ namespace ft
 			left = right = parent = NULL;
 			this->color = RED;
 		}
+		~RB_Node()
+		{}
 		// Node(_Base_ptr parent  = 0 _Base_ptr left = 0, _Base_ptr right = 0, color = RED) : data(T())
 		// {;
 		// }
@@ -191,52 +172,72 @@ namespace ft
 			}
 		};
 
-	template <class Key, class T, class Compare = std::less<Key> >              			// map::key_compare			
-	//template <typename T>
-	class RBTree //: //public RB_Node<T>//, public _Rb_tree_iterator
+	
+	template <class Key, class T, class Compare = std::less<Key> >              		
+	class RBTree// : //public RB_Node<T>//, public _Rb_tree_iterator
 	{
-		typedef T 																value_type;
+		typedef T																value_type;
 		typedef RB_Node<T>														Node;
 		typedef RB_Node<T>*     												Node_ptr;
 		typedef	std::allocator<Node>											allocator_type;
 		typedef typename allocator_type::template rebind<Node>::other			node_alloc;
-		
-		//Node *nullptr_left;
-		//Node *nullptr_right;
-		Node 		*root;
-		Node 		*Tnil;
-		node_alloc	_alloc;
+		/******************************** MEMBER VARIABLES**********************************/
+			
+		private:
+			Node 		*root;
+			Node 		*Tnil;
+			node_alloc	_alloc;
+			size_t		t_size;
 
 		public:
-		// constructor
+		
 		Node *getRoot() { return root; }
-		// initialize root
+		
 		bool comp(value_type a, value_type b, Compare u = Compare())
 		{
 			return u(a.first, b.first);
 		}
+		
+		/********************************** CONSTRUCTOR **********************************/
+
 		RBTree()
 		{
 			Node tmp;
 			
 			root = NULL;
-			Tnil = _alloc.allocate(1);
-			_alloc.construct(Tnil, tmp);
-			Tnil->parent = Tnil;
-			Tnil->left = Tnil;
-			Tnil->right = Tnil;
-			Tnil->parent->left = Tnil;
-			Tnil->parent->right = Tnil;
-			
+			this->Tnil = _alloc.allocate(1);
+			_alloc.construct(this->Tnil, tmp);
+			Tnil->parent = this->Tnil;
+			Tnil->left = this->Tnil;
+			Tnil->right = this->Tnil;
+			Tnil->parent->left = this->Tnil;
+			Tnil->parent->right = this->Tnil;
+			this->t_size = 0;
+		}
+		RBTree(const value_type& x)
+		{
+			Node tmp;
+			//iterator it;
+			if (x != *this)
+			{
+				this->_alloc = x._alloc;
+				Tnil = _alloc.allocate(1);
+				_alloc.construct(this->Tnil, tmp);
+				this->t_size = x.t_size;
+				root = NULL;
+			}
+
+			//insert all the element of  x
+			return (tmp);
 		}
 		void	setNilLeaf()
 		{
 			Node *max = maximum(root);
 
 			Tnil->parent = max;
-			max->right = Tnil;
-			Tnil->parent->left = Tnil;
-			Tnil->parent->right = Tnil;
+			max->right = this->Tnil;
+			Tnil->parent->left = this->Tnil;
+			Tnil->parent->right = this->Tnil;
 			
 		}
 		void	unsetNilLeaf()
@@ -245,21 +246,11 @@ namespace ft
 			
 			if (Tnil->parent == max)
 			{
-				Tnil->parent = Tnil;
+				Tnil->parent = this->Tnil;
 				max->right = NULL;
-				Tnil->right = Tnil;
+				Tnil->right = this->Tnil;
 			}
 			
-			// if (nullptr_left->parent)
-			// 	nullptr_left->parent->left = NULL;
-			// if (nullptr_right->parent)
-			// 	nullptr_right->parent->right = NULL;
-			
-			
-			//delete (nullptr_left);
-			// min->left = NULL;
-			// //delete (nullptr_right);
-			// max->right = NULL;
 		}
 		Node *minimum(Node *node)
 		{
@@ -323,6 +314,7 @@ namespace ft
 		
 		void swapColors(Node *x1, Node *x2) {
 			int temp;
+			
 			temp = x1->color;
 			x1->color = x2->color;
 			x2->color = temp;
@@ -444,6 +436,7 @@ namespace ft
 			}
 			delete v;
 			setNilLeaf();
+			this->t_size -= 1;
 			return;
 			}
 
@@ -472,6 +465,7 @@ namespace ft
 				}
 				setNilLeaf();
 			}
+			this->t_size -= 1;
 			return;
 			}
 
@@ -600,6 +594,7 @@ namespace ft
 			fixRedRed(newNode);
 			setNilLeaf();
 			}
+			this->t_size += 1;
 		}
 
 		// utility function that deletes the node with given value

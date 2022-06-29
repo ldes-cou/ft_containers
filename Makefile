@@ -24,14 +24,14 @@ MAP_OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(MAP_SOURCES:.$
 STACK_OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(STACK_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 cflags.release		:= -Wall -Werror -Wextra
-#cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
-#cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
+# cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -lldb
+cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -g3 -fsanitize=address -fno-omit-frame-pointer
 CFLAGS				:= $(cflags.$(BUILD))
 CPPFLAGS			:= $(cflags.$(BUILD)) -DNS=$(VERSION) -std=c++98
 
 lib.release			:=
-# lib.valgrind		:= $(lib.release)
-# lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
+lib.valgrind		:= $(lib.release)
+lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
 LIB					:= $(lib.$(BUILD))
 
 INC					:= -I$(INCDIR) -I/usr/local/include

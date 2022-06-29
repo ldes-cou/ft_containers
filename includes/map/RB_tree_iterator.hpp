@@ -6,28 +6,32 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/28 14:52:41 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/29 14:05:43 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RB_TREE_HPP
-#define RB_TREE_HPP
+#ifndef RB_ITERATOR_HPP
+#define RB_ITERATOR_HPP
 #include "RB_tree.hpp"
 #include "../vector/iterator.hpp"
 
+template <typename _Tp>
+struct RB_Node;
+// template <typename _Tp>
+// class map;
 namespace ft
 {
 	
 	template<typename _Tp>
-	struct _Rb_tree_iterator
+	struct _Rb_tree_iterator 
 	{
 		typedef _Tp                       		        value_type;
 		typedef _Tp&                      		        reference;
 		typedef _Tp*                      		        pointer;
 		typedef bidirectional_iterator_tag		        iterator_category;
 		typedef ptrdiff_t		          		        difference_type;
-		typedef _Rb_tree_iterator<_Tp>	                		_Self;
-		typedef typename	ft::RB_Node<_Tp>::Node_ptr	         _Base_ptr;
+		typedef _Rb_tree_iterator<_Tp>	                _Self;
+		typedef	typename RB_Node<_Tp>::Node_ptr	        		_Base_ptr;
 		
         private:
 			_Base_ptr        _M_node;
@@ -98,7 +102,7 @@ namespace ft
 		typedef bidirectional_iterator_tag 			iterator_category;
 		typedef ptrdiff_t			 				difference_type;
 		typedef _Rb_tree_const_iterator<_Tp>		_Self;
-		typedef typename ft::RB_Node<_Tp>::Node_ptr			_Base_ptr;
+		typedef typename RB_Node<_Tp>::Node_ptr			_Base_ptr;
 
 		private:
 			_Base_ptr _M_node;

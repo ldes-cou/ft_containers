@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/28 15:08:20 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/29 14:12:26 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "../vector/iterator_base_type.hpp"
 #include "../vector/iterator.hpp"
 #include "utils.hpp"
+
 
 namespace ft
 {
@@ -33,7 +34,8 @@ namespace ft
 			typedef T												mapped_type;                    //The second template parameter (T)	
 			typedef typename std::pair<const key_type,mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
 			typedef Compare											key_compare;					//The third template parameter (Compare)	defaults to: less<key_type>
-            
+            friend class RBTree<key_type, mapped_type, key_compare>;
+			friend struct RB_Node<value_type>;
 			class value_compare : std::binary_function<value_type, 	value_type, bool>				//Nested function class to compare elements	see value_comp
 			{
 				friend class map<key_type, mapped_type, key_compare, Alloc>;	
