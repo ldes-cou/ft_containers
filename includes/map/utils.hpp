@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:40 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/28 14:58:23 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:18:35 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 namespace ft
 {
     
-    // static class nullptr_t
+    // class nullptr_t
     // {
     // public:
     
@@ -35,7 +35,7 @@ namespace ft
     template <class T1, class T2>
     struct pair
     {
-        private:
+       // private:
             typedef T1 first_type;
             typedef T2 second_type;
             
@@ -56,11 +56,11 @@ namespace ft
             {}
         
         /*********************************** OVERLOAD OPERATOR *******************************************/
-        pair& operator= (const pair& pr)
+        pair& operator=(const pair& pr)
         {
-            pr.first = this->first;
-            pr.second = this->second;
-            return (pr);
+            this->first = pr.first;
+            this->second = pr.second;
+            return (*this);
         }
     };
         /*********************************** RELATIONAL OPERATOR *******************************************/

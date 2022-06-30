@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/29 13:51:02 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 16:11:09 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,161 +26,21 @@
 #include <queue>
 #define BLACK 0
 #define RED 1
+#include "Node.hpp"
 #include "RB_tree_iterator.hpp"
 
-template <typename T>
-class map;
 namespace ft
 {
-	template <typename T>
-		struct RB_Node
-		{
-			public :
-				typedef T 																value_type;
-				typedef RB_Node<T>														Node;
-				typedef RB_Node<T>*     												Node_ptr;
-				typedef const RB_Node*													_Const_Base_ptr;
-				typedef	std::allocator<Node>											allocator_type;
-				typedef typename allocator_type::template rebind<Node>::other			node_alloc;
-				
-			/******************************** MEMBER VARIABLES**********************************/
-				//private:
-					
-					Node_ptr		left;
-					Node_ptr		right;
-					Node_ptr		parent;
-					value_type		data;
-					int 			color;
-
-		/********************************** CONSTRUCTOR **********************************/
-
-		RB_Node(void): data(T())
-		{
-			this->color = BLACK;
-			left = right = parent = NULL;
-		}
-		RB_Node(value_type data)
-		{
-			this->data = data;
-			left = right = parent = NULL;
-			this->color = RED;
-		}
-		~RB_Node()
-		{}
-		// Node(_Base_ptr parent  = 0 _Base_ptr left = 0, _Base_ptr right = 0, color = RED) : data(T())
-		// {;
-		// }
-		
-		// Node(const &Node cpy) : 
-		// 	parent(cpy.parent), 
-		// 	left(cpy.left), 
-		// 	right(cpy.right), 
-		// 	data(cpy.data),
-		// 	color(cpy.color) // not sure for the color
-		// {}
-		// returns pointer to uncle
-		RB_Node *uncle()
-		{
-			// If no parent or grandparent, then no uncle
-			if (parent == NULL or parent->parent == NULL)
-				return NULL;
-			if (parent->isOnLeft())
-				return parent->parent->right;
-			else
-				return parent->parent->left;
-		}
-		/****************************** INCREMENT ************************************/
-		static Node* Rb_tree_increment(Node* __x) throw ()
-			{
-				if (__x->_M_right != 0)
-				{
-					__x = __x->_M_right;
-					while (__x->_M_left != 0)
-						__x = __x->_M_left;
-				}
-				else
-				{
-					Node* __y = __x->_M_parent;
-					while (__x == __y->_M_right)
-					{
-						__x = __y;
-						__y = __y->_M_parent;
-					}
-					if (__x->_M_right != __y)
-					__x = __y;
-				}
-				return __x;
-			}
-
-			static Node* Rb_tree_decrement(Node* __x) throw ()
-			{
-				if (__x->_M_color == RED
-					&& __x->_M_parent->_M_parent == __x)
-				__x = __x->_M_right;
-				else if (__x->_M_left != 0)
-				{
-					Node* __y = __x->_M_left;
-					while (__y->_M_right != 0)
-					__y = __y->_M_right;
-					__x = __y;
-				}
-				else
-				{
-					Node* __y = __x->_M_parent;
-					while (__x == __y->_M_left)
-					{
-						__x = __y;
-						__y = __y->_M_parent;
-					}
-					__x = __y;
-				}
-				return __x;
-			}
-			
-	// check if node is left child of parent
-			bool isOnLeft() { return this == parent->left; }
-
-			// returns pointer to sibling
-			Node *sibling() {
-				// sibling null if no parent
-				if (parent == NULL)
-				return NULL;
-
-				if (isOnLeft())
-				return parent->right;
-
-				return parent->left;
-			}
-
-			// moves node down and moves given node in its place
-			void moveDown(Node *nParent) {
-				if (parent != NULL) {
-				if (isOnLeft()) {
-					parent->left = nParent;
-				} else {
-					parent->right = nParent;
-				}
-				}
-				nParent->parent = parent;
-				parent = nParent;
-			}
-
-			bool hasRedChild()
-			{
-				return (left != NULL and left->color == RED) or
-					(right != NULL and right->color == RED);
-			}
-		};
-
-	
 	template <class Key, class T, class Compare = std::less<Key> >              		
-	class RBTree// : //public RB_Node<T>//, public _Rb_tree_iterator
+	class RBTree//: public RB_Node<T>
 	{
 		typedef T																value_type;
 		typedef RB_Node<T>														Node;
 		typedef RB_Node<T>*     												Node_ptr;
 		typedef	std::allocator<Node>											allocator_type;
 		typedef typename allocator_type::template rebind<Node>::other			node_alloc;
+		typedef	ft::_Rb_tree_iterator<T>										iterator;
+		
 		/******************************** MEMBER VARIABLES**********************************/
 			
 		private:
@@ -192,6 +52,7 @@ namespace ft
 		public:
 		
 		Node *getRoot() { return root; }
+		Node *getNil() {return Tnil;}
 		
 		bool comp(value_type a, value_type b, Compare u = Compare())
 		{
@@ -226,10 +87,22 @@ namespace ft
 				this->t_size = x.t_size;
 				root = NULL;
 			}
+			~RBTree ( void )
+			{
+				// delete_tree(this->_root);
+				// _alloc.destroy(this->_Tnil);
+				// _alloc.deallocate(this->_Tnil, 1);
+				// _alloc.destroy(this->_Tnil);
+				// _alloc.deallocate(this->_Tnil, 1);
+				// _alloc.destroy(this->_Tnil);
+				// _alloc.deallocate(this->_Tnil, 1);
+			}
 
 			//insert all the element of  x
 			return (tmp);
 		}
+		
+		
 		void	setNilLeaf()
 		{
 			Node *max = maximum(root);
@@ -542,10 +415,10 @@ namespace ft
 		// searches for given value
 		// if found returns the node (used for delete)
 		// else returns the last node while traversing (used in insert)
-		Node *search(int n) {
+		Node *search(value_type n) {
 			Node *temp = root;
 			while (temp != NULL) {
-			if (n < temp->data) {
+			if (comp(n, temp->data)) {
 				if (temp->left == NULL)
 				break;
 				else
@@ -564,8 +437,12 @@ namespace ft
 		}
 
 		// inserts the given value to tree
+		//allocate  Nodes
 		void insert(value_type n) {
-			Node *newNode = new Node(n);
+			
+			Node *newNode(n);
+			_alloc.allocate(1);
+			
 			if (root == NULL) {
 			// when root is null
 			// simply insert value at root
@@ -585,7 +462,7 @@ namespace ft
 			// connect new node to correct node
 			newNode->parent = temp;
 
-			if (n < temp->data)
+			if (comp(n, temp->data))
 				temp->left = newNode;
 			else
 				temp->right = newNode;
@@ -652,8 +529,17 @@ namespace ft
 						//out(this->root->key);
 					}
 				}
+			
+			
 		};
-}
+		// template<typename T1, typename T2>
+		// 	std::ostream& operator<<(std::ostream &stream, ft::RB_Node::value_type var)
+		// 	{
+		// 		std::string str = var.second;
+    	// 		return stream << str;
+		// 	}
+	};
+
 
 
 #endif

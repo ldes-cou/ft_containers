@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/29 14:12:26 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 12:39:53 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ namespace ft
 	template < class Key,                                     			// map::key_type
 			class T,                                       				// map::mapped_type
 			class Compare = std::less<Key>,                     		// map::key_compare
-			class Alloc = std::allocator<std::pair<const Key,T> > >    	// map::allocator_type
-	class map// : public RB_Tree
+			class Alloc = std::allocator<ft::pair<const Key,T> > >    	// map::allocator_type
+	class map
 	{
 		public :
 			typedef Key												key_type;	                    //The first template parameter (Key)	
 			typedef T												mapped_type;                    //The second template parameter (T)	
-			typedef typename std::pair<const key_type,mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
+			typedef typename ft::pair<const key_type,mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
 			typedef Compare											key_compare;					//The third template parameter (Compare)	defaults to: less<key_type>
             friend class RBTree<key_type, mapped_type, key_compare>;
 			friend struct RB_Node<value_type>;
@@ -57,14 +57,14 @@ namespace ft
 			typedef ft::_Rb_tree_iterator<value_type>						iterator;														//convertible to const_iterator
 			typedef ft::_Rb_tree_iterator<const value_type> 				const_iterator;													//a bidirectional iterator to const value_type	
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;												//reverse_iterator<iterator>
-			typedef ft::reverse_iterator<const iterator>					const_reverse_iterator;											//reverse_iterator<const_iterator>	
+			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;											//reverse_iterator<const_iterator>	
 			typedef	typename iterator_traits<iterator>::difference_type		difference_type;												//a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef typename allocator_type::size_type						size_type;
 
 			private:
 				allocator_type									_alloc;
 				Compare											_comp;
-				ft::RBTree<key_type, value_type, key_compare>	_rbtree;
+				RBTree<key_type, value_type, key_compare>			_rbtree;
 				
 		/********************************************** CONSTRUCTORS ****************************************/
 		
@@ -99,9 +99,81 @@ namespace ft
 					assign(this->begin, this->end);
 				}
 				return (*this);
-			}			
+			}
+			template< class InputIt >
+			void insert( InputIt first, InputIt last )
+			{
+				for (InputIt a = first; a != last; a++)
+					_rbtree.insert(ft::make_pair<key_type, mapped_type>(a->first, a->second));
+			}
 			
-	};										
+			ft::pair<iterator, bool> insert( const value_type& value )
+			{
+				iterator it;
+				
+				_rbtree.insert(value);
+				it = iterator(_rbtree.search(value));
+				if (it != this->end())
+					return (ft::make_pair(it, true));
+				return (ft::make_pair(it, false));
+			}
+			iterator insert (iterator position, const value_type& val)
+			{
+				(void)position;
+				return (iterator(_rbtree.insert(val)));
+			}
+			iterator begin()
+			{
+				return (iterator(_rbtree.minimum(_rbtree.getRoot())));
+			}
+			
+			const_iterator begin() const
+			{
+				return (const_iterator(_rbtree.minimum(_rbtree.getRoot())));
+			}
+			
+			iterator end()
+			{
+				return (iterator(_rbtree.getNil()));
+			}
+			
+			const_iterator end() const
+			{
+				return (const_iterator(_rbtree.getNil()));
+			}
+			
+			reverse_iterator rbegin()
+			{
+				return (iterator(_rbtree.getNil()));
+			}
+			
+			const_reverse_iterator rbegin() const
+			{	
+				return (const_iterator(_rbtree.getNil()));
+			}
+			
+			reverse_iterator rend()
+			{
+				return (iterator(_rbtree.minimum(_rbtree.getRoot())));
+			}
+			
+			const_reverse_iterator rend() const
+			{
+				return (const_iterator(_rbtree.minimum(_rbtree.getRoot())));
+			}
+			
+			bool empty() const
+			{
+				if (this->_rbtree.t_size == 0)
+					return (true);
+				return (false);
+			}
+			size_type max_size() const
+			{
+				return (_alloc.max_size());
+			}
+	};		
+			
 
 
 };

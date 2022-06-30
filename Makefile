@@ -1,6 +1,6 @@
 CXX					:= c++
 ifeq ($(shell uname -s), Darwin)
-	CXX				:= g++
+	CXX				:= c++
 endif
 
 VECTOR_TARGET		:= _vector

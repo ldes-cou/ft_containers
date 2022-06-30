@@ -6,17 +6,18 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/29 14:05:43 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:21:26 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RB_ITERATOR_HPP
 #define RB_ITERATOR_HPP
 #include "RB_tree.hpp"
+#include "Node.hpp"
 #include "../vector/iterator.hpp"
 
-template <typename _Tp>
-struct RB_Node;
+// template <typename _Tp>
+// struct RB_Node;
 // template <typename _Tp>
 // class map;
 namespace ft
@@ -45,7 +46,52 @@ namespace ft
 
 		
 		//_Rb_tree_iterator(const iterator& __it) : _M_node(__it._M_node) { }
-		
+		_Base_ptr _Rb_tree_increment(_Base_ptr __x) throw ()
+			{
+				if (__x->right != 0)
+				{
+					__x = __x->right;
+					while (__x->left != 0)
+						__x = __x->left;
+				}
+				else
+				{
+					_Base_ptr __y = __x->parent;
+					while (__x == __y->right)
+					{
+						__x = __y;
+						__y = __y->parent;
+					}
+					if (__x->right != __y)
+					__x = __y;
+				}
+				return __x;
+			}
+
+			_Base_ptr _Rb_tree_decrement(_Base_ptr __x) throw ()
+			{
+				if (__x->_M_color == RED
+					&& __x->parent->parent == __x)
+				__x = __x->right;
+				else if (__x->left != 0)
+				{
+					_Base_ptr __y = __x->left;
+					while (__y->right != 0)
+					__y = __y->right;
+					__x = __y;
+				}
+				else
+				{
+					_Base_ptr __y = __x->parent;
+					while (__x == __y->left)
+					{
+						__x = __y;
+						__y = __y->parent;
+					}
+					__x = __y;
+				}
+				return __x;
+			}
 		/****************************** OPERATORS ************************************/
 		
 		reference operator*() const 
@@ -160,7 +206,7 @@ namespace ft
 		bool operator!=(const _Self& __x) const
 		{ return _M_node != __x._M_node; }
 		
-};		
+};
 	template<typename _Val> inline bool
     operator==(const _Rb_tree_iterator<_Val>& __x,  const _Rb_tree_const_iterator<_Val>& __y)
     { return __x._M_node == __y._M_node; }

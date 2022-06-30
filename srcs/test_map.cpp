@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/29 14:11:41 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:26:33 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # include "../includes/map/RB_tree.hpp"
 //# include <map>
 # include <utility>
+#include <tuple>
+#include <iostream>
 
 #define out(x) std::cout << x << std::endl; 
 using namespace ft;
@@ -21,7 +23,29 @@ using namespace ft;
 void test_map()
  {
    //out("here")
-  ft::map<int, char*> tree;
+  ft::map<char,int> mymap;
+  // first insert function version (single parameter):
+  mymap.insert (ft::pair<char,int>('a',100) );
+  std::cout << mymap.begin()->second << std::endl;
+  //ft::map<char,int>::iterator it = mymap.begin();
+  //std::cout << mymap.begin() << std::endl;
+  // for (ft::map<char,int>::iterator it = mymap.begin(); it < mymap.end(); it++)
+  //   std::cout << *it << std::endl;
+  
+  //_mymap._rbtree.printTree();
+  //it++;
+  //std::cout << mymap.begin()->second << std::endl;
+  mymap.insert (ft::pair<char,int>('z',200) );
+  std::cout << mymap.end()->second << std::endl;
+  
+  // ft::pair<ft::map<char,int>::iterator, bool> ret;
+  // // ft::pair<map<char,int>::iterator,bool> ret;
+  // ret = mymap.insert (ft::pair<char,int>('z',500) );
+  // if (ret.second == false) {
+  //   std::cout << "element 'z' already existed";
+  //   std::cout << " with a value of " << ret.first->second << '\n';
+  // }
+ }
 //   tree.printTree();
 
 //   //bst.printTree();
@@ -32,7 +56,7 @@ void test_map()
 // //std::cout << tree.maximum(tree.getRoot()) << std::endl;
 // tree.insert(7);
 // //std::cout << tree.maximum(tree.getRoot()) << std::endl;
-// tree.insert(3);
+  //it = tree.insert(ft::pair<int 2, char *"caca">);
 // tree.insert(18);
 // tree.insert(10);
 // tree.insert(22);
@@ -59,5 +83,5 @@ void test_map()
 // tree.printTree();
 // // tree.printInOrder();
 // // tree.printLevelOrder();
-return ;
-}
+// return ;
+// }
