@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:35:45 by lucrece           #+#    #+#             */
-/*   Updated: 2022/06/30 14:47:09 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:15:49 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
 				typedef	std::allocator<Node>											allocator_type;
 				typedef typename allocator_type::template rebind<Node>::other			node_alloc;
 
-			/******************************** MEMBER VARIABLES**********************************/
+			/******************************** MEMBER VARIABLES **********************************/
 				//private:
 					
 					Node_ptr		left;
@@ -38,7 +38,7 @@ namespace ft
 					value_type		data;
 					int 			color;
 
-		/********************************** CONSTRUCTOR **********************************/
+		    /************************************ CONSTRUCTOR ************************************/
 
 		RB_Node(void): data(T())
 		{

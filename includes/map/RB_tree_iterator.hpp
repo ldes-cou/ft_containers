@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 15:21:26 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:08:03 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft
 
 			_Base_ptr _Rb_tree_decrement(_Base_ptr __x) throw ()
 			{
-				if (__x->_M_color == RED
+				if (__x->color == RED
 					&& __x->parent->parent == __x)
 				__x = __x->right;
 				else if (__x->left != 0)

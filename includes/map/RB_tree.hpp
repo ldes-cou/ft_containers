@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 16:11:09 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:18:38 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ namespace ft
 			
 		private:
 			Node 		*root;
-			Node 		*Tnil;
+			Node 		*Rnil;
+			Node		*Lnil; 
 			node_alloc	_alloc;
 			size_t		t_size;
 
@@ -75,7 +76,12 @@ namespace ft
 			Tnil->parent->right = this->Tnil;
 			this->t_size = 0;
 		}
-		RBTree(const value_type& x)
+
+		// RBTree(const value_type &x)
+		// {
+			
+		// }
+		RBTree(const RBTree& x)
 		{
 			Node tmp;
 			//iterator it;
@@ -87,7 +93,9 @@ namespace ft
 				this->t_size = x.t_size;
 				root = NULL;
 			}
-			~RBTree ( void )
+			return (tmp);
+		}
+			~RBTree ()
 			{
 				// delete_tree(this->_root);
 				// _alloc.destroy(this->_Tnil);
@@ -99,8 +107,6 @@ namespace ft
 			}
 
 			//insert all the element of  x
-			return (tmp);
-		}
 		
 		
 		void	setNilLeaf()
@@ -307,7 +313,9 @@ namespace ft
 				parent->right = NULL;
 				}
 			}
-			delete v;
+			_alloc.destroy(v);
+			_alloc.deallocate(v, 1);
+			//delete v;
 			setNilLeaf();
 			this->t_size -= 1;
 			return;
@@ -319,7 +327,9 @@ namespace ft
 				// v is root, assign the value of u to v, and delete u
 				v->data = u->data;
 				v->left = v->right = NULL;
-				delete u;
+				//delete u;
+				_alloc.destroy(u);
+				_alloc.deallocate(u, 1);
 			} else {
 				// Detach v from tree and move u up
 				if (v->isOnLeft()) {
@@ -327,7 +337,9 @@ namespace ft
 				} else {
 				parent->right = u;
 				}
-				delete v;
+				_alloc.destroy(v);
+				_alloc.deallocate(v, 1);
+				//delete v;
 				u->parent = parent;
 				if (uvBlack) {
 				// u and v both black, fix double black at u
@@ -408,8 +420,8 @@ namespace ft
 					parent->color = BLACK;
 				}
 			}
-			}
 		}
+	}
 
 
 		// searches for given value
@@ -440,9 +452,11 @@ namespace ft
 		//allocate  Nodes
 		void insert(value_type n) {
 			
-			Node *newNode(n);
-			_alloc.allocate(1);
-			
+			Node tmp(n);
+			Node *newNode;
+			//Node *newNode(n);
+			newNode = _alloc.allocate(1);
+			_alloc.construct(newNode, tmp);
 			if (root == NULL) {
 			// when root is null
 			// simply insert value at root

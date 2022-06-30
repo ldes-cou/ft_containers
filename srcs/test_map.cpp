@@ -6,7 +6,7 @@
 /*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 15:26:33 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:07:23 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void test_map()
   // first insert function version (single parameter):
   mymap.insert (ft::pair<char,int>('a',100) );
   std::cout << mymap.begin()->second << std::endl;
-  //ft::map<char,int>::iterator it = mymap.begin();
+  ft::map<char,int>::iterator it = mymap.end();
   //std::cout << mymap.begin() << std::endl;
   // for (ft::map<char,int>::iterator it = mymap.begin(); it < mymap.end(); it++)
   //   std::cout << *it << std::endl;
   
   //_mymap._rbtree.printTree();
-  //it++;
+  it--;
   //std::cout << mymap.begin()->second << std::endl;
   mymap.insert (ft::pair<char,int>('z',200) );
   std::cout << mymap.end()->second << std::endl;
