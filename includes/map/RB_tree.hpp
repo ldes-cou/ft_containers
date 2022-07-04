@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/04 13:55:37 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:03:53 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft
 
 		public:
 		
-		size_t		t_size;
+			size_t		t_size;
 		Node *getRoot() { return root; }
 		Node *getNil() {return Tnil;}
 		
@@ -97,19 +97,25 @@ namespace ft
 				root = NULL;
 			}
 		}
-			~RBTree ()
-			{
-				// delete_tree(this->_root);
-				// _alloc.destroy(this->_Tnil);
-				// _alloc.deallocate(this->_Tnil, 1);
-				// _alloc.destroy(this->_Tnil);
-				// _alloc.deallocate(this->_Tnil, 1);
-				// _alloc.destroy(this->_Tnil);
-				// _alloc.deallocate(this->_Tnil, 1);
-			}
-
-			//insert all the element of  x
+		// void delete_nodes(Node *node)
+		// {
+		// 	if (node->right != Tnil && node != Tnil && node != NULL)
+		// 	{
+		// 		Node *right = node->right;
+		// 		Node *left = node->left;
+		// 		_alloc.destroy(node);
+		// 		_alloc.deallocate(node, 1);
+		// 		delete_nodes(left);
+		// 		delete_nodes(right);
+		// 	}
+		// }
 		
+		~RBTree ()
+		{
+			//delete_nodes(root);
+			_alloc.destroy(Tnil);
+			_alloc.deallocate(Tnil, 1);
+		}
 		
 		void	setNilLeaf()
 		{
@@ -117,8 +123,9 @@ namespace ft
 
 			Tnil->parent = max;
 			max->right = this->Tnil;
-			Tnil->parent->left = this->Tnil;
+			//Tnil->parent->left = this->Tnil;
 			Tnil->parent->right = this->Tnil;
+			Tnil->right = NULL;
 			
 		}
 		void	unsetNilLeaf()
@@ -146,7 +153,7 @@ namespace ft
 		{
 			if (node == NULL)
 				return (node);
-			while (node->right != NULL)
+			while (node->right != Tnil && node->right != NULL)
 				node = node->right;
 			return node;
 		}
@@ -317,6 +324,7 @@ namespace ft
 			}
 			_alloc.destroy(v);
 			_alloc.deallocate(v, 1);
+			//delete v;
 			setNilLeaf();
 			this->t_size -= 1;
 			return;
@@ -455,7 +463,6 @@ namespace ft
 			
 			Node tmp(n);
 			Node *newNode;
-			unsetNilLeaf();
 			//Node *newNode(n);
 			newNode = _alloc.allocate(1);
 			_alloc.construct(newNode, tmp);
@@ -468,6 +475,7 @@ namespace ft
 			}
 			else
 			{
+				unsetNilLeaf();
 				Node *temp = search(n);
 				if (temp->data == n)
 				{
@@ -486,8 +494,8 @@ namespace ft
 
 				// fix red red voilaton if exists
 				fixRedRed(newNode);
-				setNilLeaf();
 			}
+			setNilLeaf();
 			this->t_size += 1;
 		}
 

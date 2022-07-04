@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Node.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:35:45 by lucrece           #+#    #+#             */
-/*   Updated: 2022/06/30 17:15:49 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:05:25 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ namespace ft
 			/******************************** MEMBER VARIABLES **********************************/
 				//private:
 					
+					Node_ptr		parent;
 					Node_ptr		left;
 					Node_ptr		right;
-					Node_ptr		parent;
 					value_type		data;
 					int 			color;
 
@@ -58,17 +58,14 @@ namespace ft
         }
 		~RB_Node()
 		{}
-		// Node(_Base_ptr parent  = 0 _Base_ptr left = 0, _Base_ptr right = 0, color = RED) : data(T())
-		// {;
-		// }
 		
-		// Node(const &Node cpy) : 
-		// 	parent(cpy.parent), 
-		// 	left(cpy.left), 
-		// 	right(cpy.right), 
-		// 	data(cpy.data),
-		// 	color(cpy.color) // not sure for the color
-		// {}
+		RB_Node(const RB_Node &cpy) : 
+			parent(cpy.parent), 
+			left(cpy.left), 
+			right(cpy.right), 
+			data(cpy.data),
+			color(cpy.color) // not sure for the color
+		{}
 		// returns pointer to uncle
 		RB_Node *uncle()
 		{
