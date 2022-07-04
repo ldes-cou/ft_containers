@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:40 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 15:18:35 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:37:47 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef UTILS_HPP
 #define UTILS_HPP
+#include <ostream>
+#include <iostream>
 
 namespace ft
 {
@@ -99,6 +101,13 @@ namespace ft
     pair<T1,T2> make_pair (T1 x, T2 y)
     {
         return ( pair<T1,T2>(x,y) );
+    }
+    /**************************************** OSTREAM OVERLOAD *******************************************/
+    template <class T1, class T2>
+    std::ostream& operator<<(std::ostream &stream, pair<T1, T2> var)
+    {
+        stream << var.second ;
+        return (stream);
     }
 };
 

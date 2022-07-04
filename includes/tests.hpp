@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:39:17 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/17 16:51:18 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/04 13:29:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,9 @@ namespace ft
 {
 	static std::ostream& 									cout = std::cout;
 	typedef std::string										string;
-
-
-// # ifndef TO_STRING
-// #  define TO_STRING
-// 	string	to_string(size_t n)
-// 	{
-// 		std::stringstream tmp;
-
-// 		tmp << n;
-
-// 		return tmp.str();
-// 	}
-// # endif
 }
+
+
 void test_stack_ft();
 void test_stack_std();
 void test_vector_ft();

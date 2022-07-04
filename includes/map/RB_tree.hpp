@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RB_tree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 17:18:38 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:55:37 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define END "\033[0m"
 #include <cstddef>
 #include <iostream>
+// #include "map_display.hpp"
 // #ifndef VALUE_TYPE 
 // #define VALUE_TYPE int
 
@@ -46,14 +47,16 @@ namespace ft
 		private:
 			Node 		*root;
 			Node 		*Rnil;
-			Node		*Lnil; 
+			Node		*Lnil;
+			Node 		*Tnil;
 			node_alloc	_alloc;
-			size_t		t_size;
 
 		public:
 		
+		size_t		t_size;
 		Node *getRoot() { return root; }
 		Node *getNil() {return Tnil;}
+		
 		
 		bool comp(value_type a, value_type b, Compare u = Compare())
 		{
@@ -93,7 +96,6 @@ namespace ft
 				this->t_size = x.t_size;
 				root = NULL;
 			}
-			return (tmp);
 		}
 			~RBTree ()
 			{
@@ -315,7 +317,6 @@ namespace ft
 			}
 			_alloc.destroy(v);
 			_alloc.deallocate(v, 1);
-			//delete v;
 			setNilLeaf();
 			this->t_size -= 1;
 			return;
@@ -454,36 +455,38 @@ namespace ft
 			
 			Node tmp(n);
 			Node *newNode;
+			unsetNilLeaf();
 			//Node *newNode(n);
 			newNode = _alloc.allocate(1);
 			_alloc.construct(newNode, tmp);
-			if (root == NULL) {
+			if (root == NULL)
+			{
 			// when root is null
 			// simply insert value at root
-			newNode->color = BLACK;
-			root = newNode;
-			} else {
-			Node *temp = search(n);
-
-			if (temp->data == n) {
-				// return if value already exists
-				return;
+				newNode->color = BLACK;
+				root = newNode;
 			}
-
-			// if value is not found, search returns the node
-			// where the value is to be inserted
-
-			// connect new node to correct node
-			newNode->parent = temp;
-
-			if (comp(n, temp->data))
-				temp->left = newNode;
 			else
-				temp->right = newNode;
+			{
+				Node *temp = search(n);
+				if (temp->data == n)
+				{
+					// return if value already exists
+					return;
+					
+				}
+				// if value is not found, search returns the node
+				// where the value is to be inserted
+				// connect new node to correct node
+				newNode->parent = temp;
+				if (comp(n, temp->data))
+					temp->left = newNode;
+				else
+					temp->right = newNode;
 
-			// fix red red voilaton if exists
-			fixRedRed(newNode);
-			setNilLeaf();
+				// fix red red voilaton if exists
+				fixRedRed(newNode);
+				setNilLeaf();
 			}
 			this->t_size += 1;
 		}

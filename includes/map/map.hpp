@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 12:39:53 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:26:22 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ namespace ft
 			typedef	typename iterator_traits<iterator>::difference_type		difference_type;												//a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef typename allocator_type::size_type						size_type;
 
+			allocator_type									_alloc;
+			Compare											_comp;
+			RBTree<key_type, value_type, key_compare>		_rbtree;
 			private:
-				allocator_type									_alloc;
-				Compare											_comp;
-				RBTree<key_type, value_type, key_compare>			_rbtree;
 				
 		/********************************************** CONSTRUCTORS ****************************************/
 		
