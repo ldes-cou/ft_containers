@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:35:45 by lucrece           #+#    #+#             */
-/*   Updated: 2022/07/04 17:05:25 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/05 10:27:58 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ namespace ft
 
 			/******************************** MEMBER VARIABLES **********************************/
 				//private:
-					
 					Node_ptr		parent;
 					Node_ptr		left;
 					Node_ptr		right;
 					value_type		data;
+					Node_ptr		T_nil;
 					int 			color;
+					
 
 		    /************************************ CONSTRUCTOR ************************************/
 
@@ -45,8 +46,9 @@ namespace ft
 			this->color = BLACK;
 			left = right = parent = NULL;
 		}
-		RB_Node(value_type data) :
-            data(data)
+		RB_Node(value_type data, Node_ptr const &Tnil) :
+            data(data),
+			T_nil(Tnil)
 		{
 			// this->dat/a = data;
 			left = right = parent = NULL;

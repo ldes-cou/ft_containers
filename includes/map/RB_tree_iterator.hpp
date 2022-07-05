@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RB_tree_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/30 17:08:03 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/05 10:45:47 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@
 #include "Node.hpp"
 #include "../vector/iterator.hpp"
 
-// template <typename _Tp>
-// struct RB_Node;
-// template <typename _Tp>
-// class map;
+template<typename _Tp>
+class RBTree;
+
 namespace ft
 {
 	
 	template<typename _Tp>
 	struct _Rb_tree_iterator 
 	{
+		//friend class									RBTree;
 		typedef _Tp                       		        value_type;
 		typedef _Tp&                      		        reference;
 		typedef _Tp*                      		        pointer;
 		typedef bidirectional_iterator_tag		        iterator_category;
 		typedef ptrdiff_t		          		        difference_type;
 		typedef _Rb_tree_iterator<_Tp>	                _Self;
-		typedef	typename RB_Node<_Tp>::Node_ptr	        		_Base_ptr;
+		typedef	typename RB_Node<_Tp>::Node_ptr	        _Base_ptr;
 		
         private:
 			_Base_ptr        _M_node;
-            
+			// friend			typename RBTree<_Tp>.Tnil		Tnil;
 		/***************************** CONSTRUCTORS ***********************************/
 		public:
 		_Rb_tree_iterator() : _M_node() { }
@@ -48,10 +48,10 @@ namespace ft
 		//_Rb_tree_iterator(const iterator& __it) : _M_node(__it._M_node) { }
 		_Base_ptr _Rb_tree_increment(_Base_ptr __x) throw ()
 			{
-				if (__x->right != 0)
+				if (__x->right != __x->T_nil && __x->right != NULL)
 				{
 					__x = __x->right;
-					while (__x->left != 0)
+					while (__x->left != NULL)
 						__x = __x->left;
 				}
 				else
@@ -73,10 +73,10 @@ namespace ft
 				if (__x->color == RED
 					&& __x->parent->parent == __x)
 				__x = __x->right;
-				else if (__x->left != 0)
+				else if (__x->left != NULL)
 				{
 					_Base_ptr __y = __x->left;
-					while (__y->right != 0)
+					while (__y->right != __x->T_nil)
 					__y = __y->right;
 					__x = __y;
 				}

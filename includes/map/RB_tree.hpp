@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/04 18:03:53 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/05 13:44:13 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ namespace ft
 		public:
 		
 			size_t		t_size;
-		Node *getRoot() { return root; }
-		Node *getNil() {return Tnil;}
+			Node *getRoot() { return root; }
+			Node *getNil() {return Tnil;}
 		
 		
 		bool comp(value_type a, value_type b, Compare u = Compare())
@@ -72,6 +72,7 @@ namespace ft
 			root = NULL;
 			this->Tnil = _alloc.allocate(1);
 			_alloc.construct(this->Tnil, tmp);
+			//root->parent = this->Tnil;
 			Tnil->parent = this->Tnil;
 			Tnil->left = this->Tnil;
 			Tnil->right = this->Tnil;
@@ -120,8 +121,11 @@ namespace ft
 		void	setNilLeaf()
 		{
 			Node *max = maximum(root);
+			//Node *min = minimum(root);
 
 			Tnil->parent = max;
+			root->parent = Tnil;
+			//min->left = Tnil;
 			max->right = this->Tnil;
 			//Tnil->parent->left = this->Tnil;
 			Tnil->parent->right = this->Tnil;
@@ -131,15 +135,21 @@ namespace ft
 		void	unsetNilLeaf()
 		{
 			Node *max = maximum(root);
-			
+			//Node *min = minimum(root);
 			if (Tnil->parent == max)
 			{
 				Tnil->parent = this->Tnil;
 				max->right = NULL;
 				Tnil->right = this->Tnil;
 			}
+			root->parent = NULL;
+			// if (min->left == Tnil)
+			// {
+			// 	min->left = NULL;
+			// }
 			
 		}
+		//Node *create_node(Node *)
 		Node *minimum(Node *node)
 		{
 			if (node == NULL)
@@ -289,17 +299,14 @@ namespace ft
 			return x->right;
 		}
 
-		// deletes the given node
 		void deleteNode(Node *v) {
 			Node *u = BSTreplace(v);
 
 			unsetNilLeaf();
-			// True when u and v are both black
 			bool uvBlack = ((u == NULL or u->color == BLACK) and (v->color == BLACK));
 			Node *parent = v->parent;
 
 			if (u == NULL) {
-			// u is NULL therefore v is leaf
 			if (v == root) {
 				// v is root, making root null
 				root = NULL;
@@ -461,15 +468,13 @@ namespace ft
 		//allocate  Nodes
 		void insert(value_type n) {
 			
-			Node tmp(n);
+			Node tmp(n, Tnil);
 			Node *newNode;
 			//Node *newNode(n);
 			newNode = _alloc.allocate(1);
 			_alloc.construct(newNode, tmp);
 			if (root == NULL)
 			{
-			// when root is null
-			// simply insert value at root
 				newNode->color = BLACK;
 				root = newNode;
 			}
@@ -478,28 +483,18 @@ namespace ft
 				unsetNilLeaf();
 				Node *temp = search(n);
 				if (temp->data == n)
-				{
-					// return if value already exists
 					return;
-					
-				}
-				// if value is not found, search returns the node
-				// where the value is to be inserted
-				// connect new node to correct node
 				newNode->parent = temp;
 				if (comp(n, temp->data))
 					temp->left = newNode;
 				else
 					temp->right = newNode;
-
-				// fix red red voilaton if exists
 				fixRedRed(newNode);
 			}
 			setNilLeaf();
+			newNode->T_nil = Tnil;
 			this->t_size += 1;
 		}
-
-		// utility function that deletes the node with given value
 		void deleteByVal(value_type n) {
 			if (root == NULL)
 			// Tree is empty
@@ -557,12 +552,6 @@ namespace ft
 			
 			
 		};
-		// template<typename T1, typename T2>
-		// 	std::ostream& operator<<(std::ostream &stream, ft::RB_Node::value_type var)
-		// 	{
-		// 		std::string str = var.second;
-    	// 		return stream << str;
-		// 	}
 	};
 
 

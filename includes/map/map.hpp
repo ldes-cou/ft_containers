@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/04 13:26:22 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/05 14:56:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ namespace ft
 			template< class InputIt >
 			void insert( InputIt first, InputIt last )
 			{
-				for (InputIt a = first; a != last; a++)
-					_rbtree.insert(ft::make_pair<key_type, mapped_type>(a->first, a->second));
+				for (;first != last; first++)
+					insert(*first);
 			}
 			
 			ft::pair<iterator, bool> insert( const value_type& value )
@@ -172,6 +172,88 @@ namespace ft
 			{
 				return (_alloc.max_size());
 			}
+			size_type	size() const
+			{
+				return (_rbtree.t_size);
+			}
+			// void erase (iterator position)
+			// {
+			// 	iterator it = _rbtree.search(*position);
+			// 	if (it != this->end())
+			// 		_rbtree.deleteNode(*position);
+			// }
+			// size_type erase (const key_type& k)
+			// {
+			// 	iterator it = _rbtree.search(k);
+			// 	if (it != end())
+			// 	{
+			// 		_rbtree.deleteNode(it);
+			// 		return (1);
+			// 	}
+			// 	return (0);
+			// }
+     		void erase (iterator first, iterator last)
+			{
+				iterator tmp;
+				while( first != last )
+				{
+					tmp = first++;
+					erase(tmp);
+				}
+			}
+			void swap (map& x)
+			{
+				
+			}
+			void clear()
+			{}
+			iterator find (const key_type& k)
+			{
+				value_type toFind = ft::make_pair(k, mapped_type());
+				return (iterator(_rbtree.search(toFind)));
+			}
+			const_iterator find (const key_type& k) const
+			{
+				value_type toFind = ft::make_pair(k, mapped_type());
+				return (iterator(_rbtree.search(toFind)));
+			}
+			size_type count (const key_type& k) const
+			{
+				RB_Node<T> *temp;
+				temp = _rbtree.search(k);
+				if (temp == k)
+					return (1);
+				return (0);
+			}
+			// iterator lower_bound (const key_type& k)
+			// {
+			// 	iterator it;
+			// 	Node *temp = search(k);
+			// 	it = iterator(temp);
+			// 	if (temp == k)
+			// 		return (it);
+			// 	it++;
+			// 	return (it);
+			// }
+			// const_iterator lower_bound (const key_type& k) 
+			// {
+			// 	const_iterator it;
+			// 	Node *temp = search(k);
+			// 	it = const_iterator(temp);
+			// 	if (temp == k)
+			// 		return (it);
+			// 	it++;
+			// 	return (it);
+			// }
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			{}
+			pair<iterator,iterator>             equal_range (const key_type& k)
+			{}
+			allocator_type get_allocator() const
+			{
+				return (_alloc);
+			}
+
 	};		
 			
 
