@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/05 13:44:13 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/05 21:11:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,11 +218,15 @@ namespace ft
 			x2->color = temp;
 		}
 
-		void swapValues(Node *u, Node *v) {
-			int temp;
-			temp = u->data;
-			u->data = v->data;
-			v->data = temp;
+		void swapValues(Node *u, Node *v)
+		{
+			std::swap(u->data, v->data);
+			Node *temp_u = u;
+			Node *temp_v = v;
+			
+			value_type temp = u->data;
+			temp_u->data = v->data;
+			temp_v->data = temp;
 		}
 
 		// fix red red at given node
@@ -495,19 +499,20 @@ namespace ft
 			newNode->T_nil = Tnil;
 			this->t_size += 1;
 		}
-		void deleteByVal(value_type n) {
+		bool deleteByVal(value_type n) {
 			if (root == NULL)
 			// Tree is empty
-			return;
+			return(false);
 
 			Node *v = search(n);
 
-			if (v->data != n) {
-			std::cout << "No node found to delete with value:" << n << std::endl;
-			return;
+			if (v->data != n)
+			{
+				return (false);
 			}
 
 			deleteNode(v);
+			return (true);
 		}
 		void print(Node *root, std::string indent, bool last)
 		{

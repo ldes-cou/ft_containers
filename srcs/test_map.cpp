@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/05 14:57:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/05 20:01:52 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ void test_map()
         std::cout  << it->first 
              << "|" << it->second << '\n';
      }
-    //it =  marks.begin(); it !=  marks.end(); it++) { 
-        std::cout  << it->first 
-             << "|" << it->second << '\n';
+     marks.erase(164);
+      // for (it =  marks.begin(); it !=  marks.end(); it++) { 
+      //   std::cout  << it->first 
+      //        << "|" << it->second << '\n';
     //marks._rbtree.printTree();
-    }
+    // }
  }
   //    it = marks.begin();
   //    std::cout << it->second << std::endl;
