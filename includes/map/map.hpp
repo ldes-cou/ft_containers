@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/06 15:38:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:54:00 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,12 @@ namespace ft
 			{
 				iterator it;
 				
+				it = iterator(_rbtree.search(value));
+				if (it == this->end())
+					return (ft::make_pair(it, false));
 				_rbtree.insert(value);
 				it = iterator(_rbtree.search(value));
-				if (it != this->end())
-					return (ft::make_pair(it, true));
-				return (ft::make_pair(it, false));
+				return (ft::make_pair(it, true));
 			}
 			iterator insert (iterator position, const value_type& val)
 			{

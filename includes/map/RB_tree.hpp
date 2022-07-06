@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/06 15:44:16 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:50:52 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -510,7 +510,7 @@ namespace ft
 				{
 					unsetNilLeaf();
 					Node *temp = search(n);
-					if (temp->data == n)
+					if (temp->data.first == n.first)
 						return;
 					newNode->parent = temp;
 					if (comp(n, temp->data))

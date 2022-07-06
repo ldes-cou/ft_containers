@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/06 15:41:17 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:54:24 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void test_map()
      marks.insert(pair<int, int>(164, 31)); 
      marks.insert(pair<int, int>(165, 12));
      marks.insert(pair<int, int>(166, 34));
+     marks.insert(pair<int, int>(166, 34));
     //  out("                          ")
     //  out("max  ")
     //  out(marks._rbtree.getRoot()->data.first);
@@ -50,10 +51,10 @@ void test_map()
     //  out("root  ")
     //  out(marks._rbtree.maximum(marks._rbtree.getRoot())->data.first);
     //  out(marks._rbtree.maximum(marks._rbtree.getRoot())->data.second);
-     for (it =  marks.begin(); it !=  marks.end(); it++) { 
-        std::cout  << it->first 
-             << "|" << it->second << '\n';
-     }
+    //  for (it =  marks.begin(); it !=  marks.end(); it++) { 
+    //     std::cout  << it->first 
+    //          << "|" << it->second << '\n';
+    //  }
      out ("   ")
      
      out((marks._rbtree.search(pair<int, int>(165, 12)))->data.first)
