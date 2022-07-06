@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_map.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/06 17:54:24 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/06 22:11:24 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@ void test_map()
      //std::cout << it->second << std::endl;
     marks.insert(pair<int, int>(159, 30));
       map<int, int>::iterator it = marks.begin();
-      out(it->second)
+      //out(it->second)
      it++;
-     out(it->second)
+      map<int, int>::iterator itr = marks.end();
+     //out(it->second)
+     
+     itr--; //faire un cas special pour les iterateurs --
+     //out(itr->second)
      marks.insert(pair<int, int>(163, 50));
      marks.insert(pair<int, int>(164, 31)); 
      marks.insert(pair<int, int>(165, 12));
@@ -57,8 +61,9 @@ void test_map()
     //  }
      out ("   ")
      
-     out((marks._rbtree.search(pair<int, int>(165, 12)))->data.first)
+     out((marks._rbtree.search(pair<int, int>(165, 12)))->data.first)// embrouille dans les search
      it = marks.find(164);
+     it--;
      out(it->first)
     //  out((marks._rbtree.search(pair<int, int>(164, 31)))->data.first)
     //  out((marks._rbtree.search(pair<int, int>(164, 31)))->data.first)
