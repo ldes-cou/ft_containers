@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/05 20:41:26 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:40:58 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ namespace ft
 
 			allocator_type									_alloc;
 			Compare											_comp;
-			RBTree<key_type, value_type, key_compare>		_rbtree;
+			RBTree<key_type, value_type, mapped_type, key_compare>		_rbtree;
 			private:
 				
 		/********************************************** CONSTRUCTORS ****************************************/
@@ -194,12 +194,12 @@ namespace ft
 					erase(tmp);
 				}
 			}
-			void swap (map& x)
-			{
+			// void swap (map& x)
+			// {
 				
-			}
-			void clear()
-			{}
+			// }
+			// void clear()
+			// {}
 			iterator find (const key_type& k)
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
@@ -238,10 +238,10 @@ namespace ft
 			// 	it++;
 			// 	return (it);
 			// }
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-			{}
-			pair<iterator,iterator>             equal_range (const key_type& k)
-			{}
+			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			// {}
+			// pair<iterator,iterator>             equal_range (const key_type& k)
+			// {}
 			allocator_type get_allocator() const
 			{
 				return (_alloc);

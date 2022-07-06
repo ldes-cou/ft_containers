@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/05 21:11:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:54:46 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define END "\033[0m"
 #include <cstddef>
 #include <iostream>
+#include "utils.hpp"
 // #include "map_display.hpp"
 // #ifndef VALUE_TYPE 
 // #define VALUE_TYPE int
@@ -32,13 +33,13 @@
 
 namespace ft
 {
-	template <class Key, class T, class Compare = std::less<Key> >              		
+	template <typename Key, typename T, typename T2, typename Compare = std::less<Key> >              		
 	class RBTree//: public RB_Node<T>
 	{
 		typedef T																value_type;
 		typedef RB_Node<T>														Node;
 		typedef RB_Node<T>*     												Node_ptr;
-		typedef	std::allocator<Node>											allocator_type;
+		typedef	std::allocator<Node>											allocator_type; // regarder alloc map
 		typedef typename allocator_type::template rebind<Node>::other			node_alloc;
 		typedef	ft::_Rb_tree_iterator<T>										iterator;
 		
@@ -98,26 +99,30 @@ namespace ft
 				root = NULL;
 			}
 		}
-		// void delete_nodes(Node *node)
-		// {
-		// 	if (node->right != Tnil && node != Tnil && node != NULL)
-		// 	{
-		// 		Node *right = node->right;
-		// 		Node *left = node->left;
-		// 		_alloc.destroy(node);
-		// 		_alloc.deallocate(node, 1);
-		// 		delete_nodes(left);
-		// 		delete_nodes(right);
-		// 	}
-		// }
-		
+		void delete_nodes(Node *node)
+		{
+			if (node->right != Tnil && node != Tnil && node != NULL)
+			{
+				Node *right = node->right;
+				Node *left = node->left;
+				destroyNode(node);
+				delete_nodes(left);
+				delete_nodes(right);
+			}
+		}
+	
 		~RBTree ()
 		{
 			//delete_nodes(root);
-			_alloc.destroy(Tnil);
-			_alloc.deallocate(Tnil, 1);
+			destroyNode(Tnil);
 		}
-		
+		void	destroyNode(Node *node)
+		{
+			_alloc.destroy(node);
+			_alloc.deallocate(node, 1);
+			t_size--;
+			
+		}
 		void	setNilLeaf()
 		{
 			Node *max = maximum(root);
@@ -220,13 +225,23 @@ namespace ft
 
 		void swapValues(Node *u, Node *v)
 		{
-			std::swap(u->data, v->data);
-			Node *temp_u = u;
-			Node *temp_v = v;
+			Key *tmp;
+			Key* temp_u = const_cast<Key *>(&u->data.first);
+			Key* temp_v = const_cast<Key *>(&v->data.first);
+			T2 temp;
 			
-			value_type temp = u->data;
-			temp_u->data = v->data;
-			temp_v->data = temp;
+			tmp = temp_u; 
+			temp_u = temp_v;
+			temp_v = tmp;
+
+			temp = u->data.second;
+			u->data.second = v->data.second;
+			v->data.second = temp;
+			
+			
+
+			//swap les second
+			
 		}
 
 		// fix red red at given node
@@ -335,7 +350,6 @@ namespace ft
 			}
 			_alloc.destroy(v);
 			_alloc.deallocate(v, 1);
-			//delete v;
 			setNilLeaf();
 			this->t_size -= 1;
 			return;
@@ -345,7 +359,7 @@ namespace ft
 			// v has 1 child
 			if (v == root) {
 				// v is root, assign the value of u to v, and delete u
-				v->data = u->data;
+				swapValues(u, v);//v->data = u->data;
 				v->left = v->right = NULL;
 				//delete u;
 				_alloc.destroy(u);
