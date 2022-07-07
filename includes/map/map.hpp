@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/06 15:38:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:14:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,15 @@ namespace ft
 			ft::pair<iterator, bool> insert( const value_type& value )
 			{
 				iterator it;
-				
-				_rbtree.insert(value);
-				it = iterator(_rbtree.search(value));
+				it = iterator(_rbtree.find(value));
 				if (it != this->end())
+					return (ft::make_pair(it, false));
+				else
+				{
+					_rbtree.insert(value);
+					it = iterator(_rbtree.find(value));
 					return (ft::make_pair(it, true));
-				return (ft::make_pair(it, false));
+				}
 			}
 			iterator insert (iterator position, const value_type& val)
 			{
@@ -134,22 +137,22 @@ namespace ft
 			
 			iterator end()
 			{
-				return (iterator(_rbtree.getNil()));
+				return (iterator(_rbtree.geRnil()));
 			}
 			
 			const_iterator end() const
 			{
-				return (const_iterator(_rbtree.getNil()));
+				return (const_iterator(_rbtree.geRnil()));
 			}
 			
 			reverse_iterator rbegin()
 			{
-				return (iterator(_rbtree.getNil()));
+				return (iterator(_rbtree.geRnil()));
 			}
 			
 			const_reverse_iterator rbegin() const
 			{	
-				return (const_iterator(_rbtree.getNil()));
+				return (const_iterator(_rbtree.geRnil()));
 			}
 			
 			reverse_iterator rend()

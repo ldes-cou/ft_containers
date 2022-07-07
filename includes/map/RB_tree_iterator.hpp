@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/05 10:45:47 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:14:52 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 		
         private:
 			_Base_ptr        _M_node;
-			// friend			typename RBTree<_Tp>.Tnil		Tnil;
+			// friend			typename RBTree<_Tp>.Rnil		Rnil;
 		/***************************** CONSTRUCTORS ***********************************/
 		public:
 		_Rb_tree_iterator() : _M_node() { }
