@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:31:50 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/06 17:50:52 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:22:37 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,15 @@ namespace ft
 
 			private:
 			Node 		*root;
+			Node 		*root_parent;
 			Node 		*Rnil;
-			Node		*Lnil;
-			Node 		*Tnil;
 			node_alloc	_alloc;
 
 			public:
 
 			size_t		t_size;
 			Node *getRoot() { return root; }
-			Node *getNil() {return Tnil;}
+			Node *geRnil() {return Rnil;}
 
 
 			bool comp(value_type a, value_type b, Compare u = Compare())
@@ -71,14 +70,12 @@ namespace ft
 				Node tmp;
 
 				root = NULL;
-				this->Tnil = _alloc.allocate(1);
-				_alloc.construct(this->Tnil, tmp);
-				//root->parent = this->Tnil;
-				Tnil->parent = this->Tnil;
-				Tnil->left = this->Tnil;
-				Tnil->right = this->Tnil;
-				Tnil->parent->left = this->Tnil;
-				Tnil->parent->right = this->Tnil;
+				
+				this->Rnil = _alloc.allocate(1);
+				_alloc.construct(this->Rnil, tmp);
+				this->root_parent = _alloc.allocate(1);
+				_alloc.construct(this->root_parent, tmp);
+				
 				this->t_size = 0;
 			}
 
@@ -89,19 +86,22 @@ namespace ft
 			RBTree(const RBTree& x)
 			{
 				Node tmp;
-				//iterator it;
 				if (x != *this)
 				{
 					this->_alloc = x._alloc;
-					Tnil = _alloc.allocate(1);
-					_alloc.construct(this->Tnil, tmp);
+					Rnil = _alloc.allocate(1);
+					_alloc.construct(this->Rnil, tmp);
+					this->root_parent = _alloc.allocate(1);
+					_alloc.construct(this->root_parent, tmp);
+					
+					root_parent = 0;
 					this->t_size = x.t_size;
 					root = NULL;
 				}
 			}
 			void delete_nodes(Node *node)
 			{
-				if (node->right != Tnil && node != Tnil && node != NULL)
+				if (node->right != Rnil && node != Rnil && node != NULL)
 				{
 					Node *right = node->right;
 					Node *left = node->left;
@@ -114,7 +114,7 @@ namespace ft
 			~RBTree ()
 			{
 				//delete_nodes(root);
-				destroyNode(Tnil);
+				destroyNode(Rnil);
 			}
 			void	destroyNode(Node *node)
 			{
@@ -123,38 +123,35 @@ namespace ft
 				t_size--;
 
 			}
-			void	setNilLeaf()
+			
+			/********************** SETTING AND UNSETTING NIL_LEAFS ***************/
+			void	setRnilLeaf()
 			{
 				Node *max = maximum(root);
 				//Node *min = minimum(root);
 
-				Tnil->parent = max;
-				root->parent = Tnil;
-				//min->left = Tnil;
-				max->right = this->Tnil;
-				//Tnil->parent->left = this->Tnil;
-				Tnil->parent->right = this->Tnil;
-				Tnil->right = NULL;
+				Rnil->parent = max;
+				max->right = this->Rnil;
+				Rnil->parent->right = this->Rnil;
 
+				root->parent = root_parent;
 			}
-			void	unsetNilLeaf()
+			void	unsetRnilLeaf()
 			{
-				Node *max = maximum(root);
-				//Node *min = minimum(root);
-				if (Tnil->parent == max)
-				{
-					Tnil->parent = this->Tnil;
-					max->right = NULL;
-					Tnil->right = this->Tnil;
-				}
-				root->parent = NULL;
-				// if (min->left == Tnil)
+
+				// if (Rnil->parent)
+				// 	this->Rnil->parent->right = root_parent;
+				// Rnil->parent = this->Rnil;
+				// max->right = NULL;
+				// Rnil->right = this->Rnil;
+				// root->parent = NULL;
+				// if (min->left == Rnil)
 				// {
 				// 	min->left = NULL;
 				// }
 
 			}
-			//Node *create_node(Node *)
+			
 			Node *minimum(Node *node)
 			{
 				if (node == NULL)
@@ -168,11 +165,173 @@ namespace ft
 			{
 				if (node == NULL)
 					return (node);
-				while (node->right != Tnil && node->right != NULL)
+				while (node->right != Rnil && node->right != NULL)
 					node = node->right;
 				return node;
 			}
 			// left rotates the given node
+			
+
+
+			/************************** SEARCH AND FIND *******************************/
+			
+			Node *search(value_type n) {
+				Node *temp = root;
+				while (temp != NULL)
+				{
+					if (comp(n, temp->data))
+					{
+						if (temp->left == NULL)
+							break;
+						else
+							temp = temp->left;
+					} 
+					else if (n.first == temp->data.first)
+						break;
+					 else 
+					 {
+						if (temp->right == NULL)
+							break;
+						else
+							temp = temp->right;
+					}
+				}
+				return (temp);
+			}
+			Node *find(value_type n)
+			{
+				Node *toFind = search(n);
+				if (toFind == NULL)
+					return (Rnil);
+				if (toFind->data == n)
+					return (toFind);
+				return (Rnil);
+			}
+			
+	/*********************************** INSERT **********************************/
+			void insert(value_type n) {
+
+				Node tmp(n, Rnil);
+				Node *newNode;
+				//Node *newNode(n);
+				newNode = _alloc.allocate(1);
+				_alloc.construct(newNode, tmp);
+				if (root == NULL)
+				{
+					newNode->color = BLACK;
+					root = newNode;
+				}
+				else
+				{
+					unsetRnilLeaf();
+					Node *temp = search(n);
+					if (temp->data.first == n.first)
+						return;
+					newNode->parent = temp;
+					if (comp(n, temp->data))
+						temp->left = newNode;
+					else
+						temp->right = newNode;
+					fixRedRed(newNode);
+				}
+				setRnilLeaf();
+				newNode->T_nil = Rnil;
+				this->t_size += 1;
+			}
+			
+	/*********************************** DELETE FUNCTIONS **********************************/
+			void deleteNode(Node *v)
+			{
+				Node *u = BSTreplace(v);
+				bool uvBlack = ((u == NULL or u->color == BLACK) and (v->color == BLACK));
+				Node *parent = v->parent;
+				if (u == NULL) {
+					if (v == root) {
+						// v is root, making root null
+						root = NULL;
+					}
+					else
+					{
+						if (uvBlack) {
+							// u and v both black
+							// v is leaf, fix double black at v
+							fixDoubleBlack(v);
+						}
+						else
+						{
+							// u or v is red
+							if (v->sibling() != NULL)
+								// sibling is not null, make it red"
+								v->sibling()->color = RED;
+						}
+						// delete v from the tree
+						if (v->isOnLeft())
+						{
+							parent->left = NULL;
+						}
+						else
+						{
+							parent->right = NULL;
+						}
+					}
+					destroyNode(v);
+					return;
+				}
+
+				if (v->left == NULL or v->right == NULL) {
+					// v has 1 child
+					if (v == root) {
+						// v is root, assign the value of u to v, and delete u
+						swapValues(u, v);//v->data = u->data;
+						v->left = v->right = NULL;
+						//delete u;
+						destroyNode(u);
+					}
+					else
+					{
+						// Detach v from tree and move u up
+						if (v->isOnLeft()) {
+							parent->left = u;
+						} else {
+							parent->right = u;
+						}
+						destroyNode(v);
+						//delete v;
+						u->parent = parent;
+						if (uvBlack) {
+							// u and v both black, fix double black at u
+							fixDoubleBlack(u);
+						} else {
+							// u or v red, color u black
+							u->color = BLACK;
+						}
+					}
+					this->t_size -= 1;
+					return;
+				}
+				// v has 2 children, swap values with successor and recurse
+				swapValues(u, v);
+				deleteNode(u);
+			}
+			
+			bool deleteByVal(value_type n)
+			{
+				if (root == NULL)
+					// Tree is empty
+					return(false);
+				Node *v = search(n);
+				if (v->data.first != n.first)
+				{
+					return (false);
+				}
+				unsetRnilLeaf();
+				deleteNode(v);
+				setRnilLeaf();
+				return (true);
+			}
+			
+		/******************************* FIXING FUNCTIONS *****************************/
+			
 			void leftRotate(Node *x)
 			{
 				// new parent will be node's right child
@@ -182,19 +341,18 @@ namespace ft
 				if (x == root)
 					root = nParent;
 				x->moveDown(nParent);
-
 				// connect x with new parent's left element
 				x->right = nParent->left;
 				// connect new parent's left element with node
 				// if it is not null
 				if (nParent->left != NULL)
 					nParent->left->parent = x;
-
 				// connect new parent with x
 				nParent->left = x;
 			}
-
-			void rightRotate(Node *x) {
+			
+				void rightRotate(Node *x)
+				{
 				// new parent will be node's left child
 				Node *nParent = x->left;
 
@@ -215,7 +373,8 @@ namespace ft
 				nParent->right = x;
 			}
 
-			void swapColors(Node *x1, Node *x2) {
+			void swapColors(Node *x1, Node *x2)
+			{
 				int temp;
 
 				temp = x1->color;
@@ -231,29 +390,16 @@ namespace ft
 				temp = u->data.second;
 				u->data.second = v->data.second;
 				v->data.second = temp;
-				
-				// Key *tmp;
-				// Key* temp_u = const_cast<Key *>(&u->data.first);
-				// Key* temp_v = const_cast<Key *>(&v->data.first);
-				// tmp = temp_u; 
-				// temp_u = temp_v;
-				// temp_v = tmp;
-
-
-
-				//swap les second
-
 			}
 
 			// fix red red at given node
-			void fixRedRed(Node *x) {
+			void fixRedRed(Node *x)
+			{
 				// if x is root color it black and return
 				if (x == root) {
 					x->color = BLACK;
 					return;
 				}
-
-				// initialize parent, grandparent, uncle
 				Node *parent = x->parent, *grandparent = parent->parent,
 					 *uncle = x->uncle();
 
@@ -291,9 +437,7 @@ namespace ft
 					}
 				}
 			}
-
-			// find node that do not have a left child
-			// in the subtree of the given node
+	
 			Node *successor(Node *x) {
 				Node *temp = x;
 
@@ -307,11 +451,9 @@ namespace ft
 				// when node have 2 children
 				if (x->left != NULL and x->right != NULL)
 					return successor(x->right);
-
 				// when leaf
 				if (x->left == NULL and x->right == NULL)
 					return NULL;
-
 				// when single child
 				if (x->left != NULL)
 					return x->left;
@@ -319,92 +461,20 @@ namespace ft
 					return x->right;
 			}
 
-			void deleteNode(Node *v) {
-				Node *u = BSTreplace(v);
-
-				unsetNilLeaf();
-				bool uvBlack = ((u == NULL or u->color == BLACK) and (v->color == BLACK));
-				Node *parent = v->parent;
-
-				if (u == NULL) {
-					if (v == root) {
-						// v is root, making root null
-						root = NULL;
-					} else {
-						if (uvBlack) {
-							// u and v both black
-							// v is leaf, fix double black at v
-							fixDoubleBlack(v);
-						} else {
-							// u or v is red
-							if (v->sibling() != NULL)
-								// sibling is not null, make it red"
-								v->sibling()->color = RED;
-						}
-
-						// delete v from the tree
-						if (v->isOnLeft()) {
-							parent->left = NULL;
-						} else {
-							parent->right = NULL;
-						}
-					}
-					_alloc.destroy(v);
-					_alloc.deallocate(v, 1);
-					setNilLeaf();
-					this->t_size -= 1;
-					return;
-				}
-
-				if (v->left == NULL or v->right == NULL) {
-					// v has 1 child
-					if (v == root) {
-						// v is root, assign the value of u to v, and delete u
-						swapValues(u, v);//v->data = u->data;
-						v->left = v->right = NULL;
-						//delete u;
-						_alloc.destroy(u);
-						_alloc.deallocate(u, 1);
-					} else {
-						// Detach v from tree and move u up
-						if (v->isOnLeft()) {
-							parent->left = u;
-						} else {
-							parent->right = u;
-						}
-						_alloc.destroy(v);
-						_alloc.deallocate(v, 1);
-						//delete v;
-						u->parent = parent;
-						if (uvBlack) {
-							// u and v both black, fix double black at u
-							fixDoubleBlack(u);
-						} else {
-							// u or v red, color u black
-							u->color = BLACK;
-						}
-						setNilLeaf();
-					}
-					this->t_size -= 1;
-					return;
-				}
-
-				// v has 2 children, swap values with successor and recurse
-				swapValues(u, v);
-				deleteNode(u);
-			}
-
-			void fixDoubleBlack(Node *x) {
+			void fixDoubleBlack(Node *x)
+			{
 				if (x == root)
 					// Reached root
 					return;
-
 				Node *sibling = x->sibling(), *parent = x->parent;
-				if (sibling == NULL) {
+				if (sibling == NULL)
+				{
 					// No sibiling, double black pushed up
 					fixDoubleBlack(parent);
-				} else {
-					if (sibling->color == RED) {
+				} else
+				{
+					if (sibling->color == RED)
+					{
 						// Sibling red
 						parent->color = RED;
 						sibling->color = BLACK;
@@ -416,9 +486,12 @@ namespace ft
 							leftRotate(parent);
 						}
 						fixDoubleBlack(x);
-					} else {
+					}
+					else
+					{
 						// Sibling black
-						if (sibling->hasRedChild()) {
+						if (sibling->hasRedChild())
+						{
 							// at least 1 red children
 							if (sibling->left != NULL and sibling->left->color == RED) {
 								if (sibling->isOnLeft()) {
@@ -432,8 +505,11 @@ namespace ft
 									rightRotate(sibling);
 									leftRotate(parent);
 								}
-							} else {
-								if (sibling->isOnLeft()) {
+							}
+							else
+							{
+								if (sibling->isOnLeft())
+								{
 									// left right
 									sibling->right->color = parent->color;
 									leftRotate(sibling);
@@ -446,7 +522,9 @@ namespace ft
 								}
 							}
 							parent->color = BLACK;
-						} else {
+						}
+						else
+						{
 							// 2 black children
 							sibling->color = RED;
 							if (parent->color == BLACK)
@@ -457,87 +535,7 @@ namespace ft
 					}
 				}
 			}
-
-
-			// searches for given value
-			// if found returns the node (used for delete)
-			// else returns the last node while traversing (used in insert)
-			Node *search(value_type n) {
-				Node *temp = root;
-				while (temp != NULL)
-				{
-					if (comp(n, temp->data))
-					{
-						if (temp->left == NULL)
-							break;
-						else
-							temp = temp->left;
-					} 
-					else if (n.first == temp->data.first)
-						break;
-					 else 
-					 {
-						if (temp->right == NULL)
-							break;
-						else
-							temp = temp->right;
-					}
-				}
-				return (temp);
-			}
-			Node *find(Node *toFind, value_type n)
-			{
-				toFind = search(n);
-				if (toFind->data == n)
-					return (toFind);
-				return (Tnil);
-			}
-			// inserts the given value to tree
-			//allocate  Nodes
-			void insert(value_type n) {
-
-				Node tmp(n, Tnil);
-				Node *newNode;
-				//Node *newNode(n);
-				newNode = _alloc.allocate(1);
-				_alloc.construct(newNode, tmp);
-				if (root == NULL)
-				{
-					newNode->color = BLACK;
-					root = newNode;
-				}
-				else
-				{
-					unsetNilLeaf();
-					Node *temp = search(n);
-					if (temp->data.first == n.first)
-						return;
-					newNode->parent = temp;
-					if (comp(n, temp->data))
-						temp->left = newNode;
-					else
-						temp->right = newNode;
-					fixRedRed(newNode);
-				}
-				setNilLeaf();
-				newNode->T_nil = Tnil;
-				this->t_size += 1;
-			}
-			bool deleteByVal(value_type n) {
-				if (root == NULL)
-					// Tree is empty
-					return(false);
-
-				Node *v = search(n);
-
-				if (v->data != n)
-				{
-					return (false);
-				}
-
-				deleteNode(v);
-				return (true);
-			}
+		/*********************************** PRINT **********************************/
 			void print(Node *root, std::string indent, bool last)
 			{
 				if (root != NULL)
@@ -578,7 +576,6 @@ namespace ft
 					//out(this->root->key);
 				}
 			}
-
 
 		};
 };
