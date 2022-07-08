@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:35:45 by lucrece           #+#    #+#             */
-/*   Updated: 2022/07/07 14:40:24 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:41:22 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,23 @@ namespace ft
 
 		RB_Node(void): data(T())
 		{
-			this->color = BLACK;
-			left = right = parent = NULL;
+			parent = NULL;
+			left =  NULL;
+			right = NULL;
+			color = 0;
+			T_nil = NULL;
+			
 		}
+		
 		RB_Node(value_type data, Node_ptr const &Tnil) :
             data(data),
 			T_nil(Tnil)
 		{
-			// this->dat/a = data;
-			left = right = parent = NULL;
-			this->color = RED;
+			parent = NULL;
+			left = NULL;
+			right = NULL;
 		}
+		
         RB_Node const &operator=(const RB_Node& src)
         {
             *this = src;
@@ -66,55 +72,9 @@ namespace ft
 			left(cpy.left), 
 			right(cpy.right), 
 			data(cpy.data),
-			color(cpy.color) // not sure for the color
+			color(cpy.color)
 		{}
-		// returns pointer to uncle
-		RB_Node *uncle()
-		{
-			// If no parent or grandparent, then no uncle
-			if (parent == NULL or parent->parent == NULL)
-				return NULL;
-			if (parent->isOnLeft())
-				return parent->parent->right;
-			else
-				return parent->parent->left;
-		}
-		
-			
-	// check if node is left child of parent
-			bool isOnLeft() { return this == parent->left; }
 
-			// returns pointer to sibling
-			Node *sibling() {
-				// sibling null if no parent
-				if (parent == NULL)
-				return NULL;
-
-				if (isOnLeft())
-				return parent->right;
-
-				return parent->left;
-			}
-
-			// moves node down and moves given node in its place
-			void moveDown(Node *nParent) {
-				if (parent != NULL) {
-				if (isOnLeft()) {
-					parent->left = nParent;
-				} else {
-					parent->right = nParent;
-				}
-				}
-				nParent->parent = parent;
-				parent = nParent;
-			}
-
-			bool hasRedChild()
-			{
-				return (left != NULL and left->color == RED) or
-					(right != NULL and right->color == RED);
-			}
-            
         };
     };
         
