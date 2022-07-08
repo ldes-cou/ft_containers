@@ -11,13 +11,15 @@
 #include "../includes/tests.hpp"
 //#include "map/map.hpp"
 #include <map>
-
 #ifndef NAMESPACE
 # define NAMESPACE std
 
+void test_new_algo();
+
 int main()
 {
-    test_map();
+    test_new_algo();
+    //test_map();
     return 0;
 }
 #endif

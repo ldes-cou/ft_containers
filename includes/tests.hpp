@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:39:17 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/04 13:29:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:02:12 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void test_stack_std();
 void test_vector_ft();
 void test_vector_std();
 void test_map();
+void test_new_algo_rbt();
 
 #endif
