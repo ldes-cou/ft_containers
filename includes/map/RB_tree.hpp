@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/08 17:59:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:04:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ struct RB_Node;
 namespace ft
 {
 	
-	template <typename Key, typename T, typename T2, typename Compare = std::less<Key> >              		
-	class RedBlackTree
+	template <typename Key, typename T, typename Compare = std::less<Key> >              		
+	class RBTree
 	{
 				typedef T																value_type;
 				typedef RB_Node<T>														Node;
@@ -294,7 +294,7 @@ namespace ft
 			}
 
 		public:
-			RedBlackTree() {
+			RBTree() {
 				TNULL = new Node;
 				TNULL->color = 0;
 				TNULL->left = NULL;
@@ -397,10 +397,20 @@ namespace ft
 
 			// Inserting a node
 			void insert(value_type key)
-		{
+			{
 				Node_ptr node = new Node;
+				
 				node->parent = NULL;
-				node->data = key;
+				// node->data.first = 
+				Key *key_node = const_cast<Key*>(&node->data.first);
+				Key *key_value = const_cast<Key*>(&key.first);
+				key_node = key_value;
+				node->data.second = key.second;
+				
+				// node->data = unconst(node->data)
+				// node->data = key;
+				//node->data.first = deconst;
+				// node->data.second = key.second;
 				node->left = TNULL;
 				node->right = TNULL;
 				node->color = 1;
@@ -447,6 +457,7 @@ namespace ft
 			Node_ptr getRoot() {
 				return this->root;
 			}
+			Node_ptr getTNULL() { return (this->TNULL);}
 
 			void deleteNode(value_type data) {
 				deleteNodeHelper(this->root, data);
@@ -457,7 +468,11 @@ namespace ft
 					printHelper(this->root, "", true);
 				}
 			}
-		
+		// template < class T >  
+		// T &  unconst  ( T const & t ) 
+		// {
+ 		// 	return  const_cast < T & >  ( t ) ; 
+		// }
 
 	};
 } // namespace ft

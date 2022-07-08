@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:50:53 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/08 17:57:42 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:07:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ using namespace ft;
 void test_new_algo()
 {
     
-  RedBlackTree<int, pair<int, int>, int> bst;
+  RBTree<int, pair<int, int>, int> bst;
   
   bst.insert(pair<int, int>(42, 68));
   bst.insert(pair<int, int>(450, 68));

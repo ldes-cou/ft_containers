@@ -19,7 +19,7 @@ void test_new_algo();
 int main()
 {
     test_new_algo();
-    //test_map();
+    test_map();
     return 0;
 }
 #endif

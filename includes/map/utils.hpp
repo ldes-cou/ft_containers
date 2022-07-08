@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:23:40 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/08 16:15:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:08:05 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@
 namespace ft
 {
     
-    class nullptr_t
-    {
-    public:
+    // class nullptr_t
+    // {
+    // public:
     
-        template<class T>
-        operator T*() const { return (0); }
+    //     template<class T>
+    //     operator T*() const { return (0); }
 
-        template<class C, class T>
-        operator T C::*() const { return (0); }
+    //     template<class C, class T>
+    //     operator T C::*() const { return (0); }
 
-    private:
-        void operator&() const;
+    // private:
+    //     void operator&() const;
 
-    } u_nullptr = {};
+    // } u_nullptr = {};
     
     template <class T1, class T2>
     struct pair

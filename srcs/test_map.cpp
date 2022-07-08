@@ -6,28 +6,28 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/08 17:59:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:03:35 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// # include "../includes/map/map.hpp"
-// # include "../includes/map/RB_tree.hpp"
-// //# include <map>
-// # include <utility>
-// #include <iostream>
+# include "../includes/map/map.hpp"
+//# include "../includes/map/RB_tree.hpp"
+//# include <map>
+# include <utility>
+#include <iostream>
 
-// #define out(x) std::cout << x << std::endl; 
-// using namespace ft;
+#define out(x) std::cout << x << std::endl; 
+using namespace ft;
 
-// void test_map()
-//  {
-//    map<int, int> marks;
+void test_map()
+ {
+   map<int, int> marks;
    
-   
-//      marks.insert(pair<int, int>(160, 42));
-//      map<int, int>::iterator it = marks.begin();
-//      std::cout << it->second << std::endl;
-//     marks.insert(pair<int, int>(159, 30));
+     marks.insert(pair<int, int>(160, 42));
+     map<int, int>::iterator it = marks.begin();
+     std::cout << it->second << std::endl;
+     marks.insert(pair<int, int>(159, 30));
+ }
     
 //      marks.insert(pair<int, int>(163, 50));
 //      marks.insert(pair<int, int>(164, 31)); 
