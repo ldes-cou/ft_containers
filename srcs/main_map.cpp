@@ -18,7 +18,7 @@ void test_new_algo();
 
 int main()
 {
-    test_new_algo();
+   // test_new_algo();
     test_map();
     return 0;
 }

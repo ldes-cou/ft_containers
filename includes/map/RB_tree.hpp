@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/08 19:04:29 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:29:28 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,23 @@ namespace ft
 				typedef	std::allocator<Node>											allocator_type; // regarder alloc map
 				typedef typename allocator_type::template rebind<Node>::other			node_alloc;
 				//typedef	ft::_Rb_tree_iterator<T>										iterator;
+				typedef typename node_alloc::size_type								size_type;
 		private:
 			Node_ptr root;
 			Node_ptr TNULL;
+		
+		public:
 
+			size_type size;
+			//const size_type& getSize() {return (this->size);}
+			 
 			void initializeNULLNode(Node_ptr node, Node_ptr parent) {
 				node->data = 0;
 				node->parent = parent;
 				node->left =  NULL;
 				node->right = NULL;
 				node->color = 0;
+				size = 0;
 			}
 
 			// Preorder
@@ -175,30 +182,27 @@ namespace ft
 				v->parent = u->parent;
 			}
 
-			void deleteNodeHelper(Node_ptr node, value_type key)
-		{
+			size_type deleteNodeHelper(Node_ptr node, value_type key)
+			{
 				Node_ptr z = TNULL;
 				Node_ptr x, y;
 				while (node != TNULL)
-		{
-					if (node->data == key)
-			{
+				{
+					if (node->data.first == key.first)
+					{
 						z = node;
 					}
-					if (node->data <= key)
-			{
+					if (node->data.first <= key.first)
+					{
 						node = node->right;
 					} 
-			else
-			{
+					else
+					{
 						node = node->left;
 					}
 				}
-
-				if (z == TNULL) {
-					std::cout << "Key not found in the tree" << std::endl;
-					return;
-				}
+				if (z == TNULL)	
+					return (0);
 				y = z;
 				int y_original_color = y->color;
 				if (z->left == TNULL) {
@@ -218,16 +222,18 @@ namespace ft
 						y->right = z->right;
 						y->right->parent = y;
 					}
-
 					rbTransplant(z, y);
 					y->left = z->left;
 					y->left->parent = y;
 					y->color = z->color;
 				}
 				delete z;
-				if (y_original_color == 0) {
+				if (y_original_color == 0)
+				{
 					deleteFix(x);
 				}
+				size--;
+				return (1);
 			}
 
 			// For balancing the tree after insertion
@@ -300,6 +306,7 @@ namespace ft
 				TNULL->left = NULL;
 				TNULL->right = NULL;
 				root = TNULL;
+				size = 0;
 			}
 
 			void preorder() {
@@ -398,57 +405,51 @@ namespace ft
 			// Inserting a node
 			void insert(value_type key)
 			{
+				Node *toFind = searchTree(key);
+				if (toFind != TNULL)
+					return;
 				Node_ptr node = new Node;
-				
 				node->parent = NULL;
-				// node->data.first = 
 				Key *key_node = const_cast<Key*>(&node->data.first);
-				Key *key_value = const_cast<Key*>(&key.first);
-				key_node = key_value;
+				*key_node = key.first;
 				node->data.second = key.second;
-				
-				// node->data = unconst(node->data)
-				// node->data = key;
-				//node->data.first = deconst;
-				// node->data.second = key.second;
 				node->left = TNULL;
 				node->right = TNULL;
 				node->color = 1;
-
+				size++;
+				
 				Node_ptr y = NULL;
 				Node_ptr x = this->root;
-
 				while (x != TNULL)
-		{
+				{
 					y = x;
 					if (node->data < x->data)
-			{
+					{
 						x = x->left;
 					} else {
 						x = x->right;
 					}
 				}
-
 				node->parent = y;
 				if (y == NULL)
-		{
+				{
 					root = node;
 				}
-		else if (node->data < y->data)
-		{
+				else if (node->data < y->data)
+				{
 					y->left = node;
-				} else {
+				}
+				else
+				{
 					y->right = node;
 				}
-
 				if (node->parent == NULL)
-		{
+				{
 					node->color = 0;
 					return;
 				}
-
 				if (node->parent->parent == NULL)
-		{
+				{
 					return;
 				}
 				insertFix(node);
@@ -459,8 +460,8 @@ namespace ft
 			}
 			Node_ptr getTNULL() { return (this->TNULL);}
 
-			void deleteNode(value_type data) {
-				deleteNodeHelper(this->root, data);
+			size_type deleteNode(value_type data) {
+				return (deleteNodeHelper(this->root, data));
 			}
 
 			void printTree() {
@@ -475,6 +476,7 @@ namespace ft
 		// }
 
 	};
-} // namespace ft
+
+}// namespace ft
 
 
