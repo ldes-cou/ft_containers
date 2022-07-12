@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 10:25:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:35:26 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,23 +171,28 @@ namespace ft
 					return (true);
 				return (false);
 			}
+			
 			size_type max_size() const
 			{
 				return (_alloc.max_size());
 			}
+			
 			size_type	size() const
 			{
 				return (_rbtree.size);
 			}
+
 			void erase (iterator position)
 			{
 				_rbtree.deleteNode(*position);
 			}
+
 			size_type erase (const key_type& k)
 			{
 				value_type	toErase = ft::make_pair(k, mapped_type());
 				return(_rbtree.deleteNode(toErase));
 			}
+			
      		void erase (iterator first, iterator last)
 			{
 				iterator tmp;
@@ -197,10 +202,10 @@ namespace ft
 					erase(tmp);
 				}
 			}
-			// void swap (map& x)
-			// {
+			void swap (map& x)
+			{
 				
-			// }
+			}
 			// void clear()
 			// {}
 			iterator find (const key_type& k)
