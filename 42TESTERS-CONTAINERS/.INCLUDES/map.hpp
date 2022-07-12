@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 15:39:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:39:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,14 @@ namespace ft
 				}
 				return (*this);
 			}
+			~map()
+			{}
 			
 			mapped_type& operator[] (const key_type& k)
 			{
 				iterator toFind = find(k);
 				if (toFind != end())
-					return (*(toFind.second));
+					return (toFind->second);
 				else
 					return ((*((this->insert(make_pair(k,mapped_type()))).first)).second);
 			}
@@ -122,13 +124,13 @@ namespace ft
 			ft::pair<iterator, bool> insert( const value_type& value )
 			{
 				iterator it;
-				it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL());
+				it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
 				if (it != this->end())
 					return (ft::make_pair(it, false));
 				else
 				{
 					_rbtree.insert(value);
-					it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL());
+					it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
 					return (ft::make_pair(it, true));
 				}
 			}
@@ -139,47 +141,47 @@ namespace ft
 			}
 			iterator begin()
 			{
-				return (iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL()));
+				return (iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL(), _rbtree.getRoot()));
 			}
 			
 			const_iterator begin() const
 			{
-				return (const_iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL()));
+				return (const_iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL(), _rbtree.getRoot()));
 			}
 			
 			iterator end()
 			{
-				return (iterator(_rbtree.getTNULL(), _rbtree.getTNULL()));
+				return (iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
 			}
 			
 			const_iterator end() const
 			{
-				return (const_iterator(_rbtree.getTNULL()));
+				return (const_iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
 			}
 			
 			reverse_iterator rbegin()
 			{
-				return (iterator(_rbtree.getTNULL()));
+				return (reverse_iterator(this->end()));
 			}
 			
 			const_reverse_iterator rbegin() const
 			{	
-				return (const_iterator(_rbtree.getTNULL()));
+				return (const_reverse_iterator(this->end()));
 			}
 			
 			reverse_iterator rend()
 			{
-				return (iterator(_rbtree.minimum(_rbtree.getRoot())));
+				return (reverse_iterator(this->begin()));
 			}
 			
 			const_reverse_iterator rend() const
 			{
-				return (const_iterator(_rbtree.minimum(_rbtree.getRoot())));
+				return (const_reverse_iterator(this->begin()));
 			}
 			
 			bool empty() const
 			{
-				if (this->_rbtree.t_size == 0)
+				if (this->_rbtree.size == 0)
 					return (true);
 				return (false);
 			}
@@ -228,7 +230,7 @@ namespace ft
 			iterator find (const key_type& k)
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
-				iterator it = iterator(_rbtree.searchTree(toFind));
+				iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
 				if (it->first == k)
 					return it;
 				return (end());
@@ -237,7 +239,7 @@ namespace ft
 			const_iterator find (const key_type& k) const
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
-				iterator it = iterator(_rbtree.searchTree(toFind));
+				iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
 				if (it->first == k)
 					return it;
 				return (end());
@@ -247,7 +249,7 @@ namespace ft
 			{
 				RB_Node<T> *temp;
 				temp = _rbtree.searchTree(k);
-				if (temp == k)
+				if (temp == k.first)
 					return (1);
 				return (0);
 			}

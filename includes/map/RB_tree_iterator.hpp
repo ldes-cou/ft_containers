@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 16:59:54 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 19:27:27 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ namespace ft
 		explicit
 		_Rb_tree_iterator(Node_ptr __x, Node_ptr TNULL, Node_ptr root) : _M_node(__x), _NULL(TNULL), _root(root) { }
 		
+		//_Rb_tree_iterator(Node_ptr __x) : _M_node(__x), _NULL(NULL), _root(NULL) {}
+		
+		_Rb_tree_iterator	&operator=(_Rb_tree_iterator const &rhs)
+		{
+				if (this != &rhs) {
+					this->_M_node = rhs._M_node;
+					this->_root = rhs._root;
+					this->_NULL = rhs._NULL;
+				}
+				return (*this);
+		}
+		~_Rb_tree_iterator() {}
 		Node_ptr min(Node_ptr node)
 		{
 			if (node != _NULL)
@@ -87,6 +99,8 @@ namespace ft
 
 		Node_ptr	_prev(Node_ptr node)
 		{
+			if (node == _NULL)
+				return (max(_root));
 			if (node->left != this->_NULL)
 				return (this->max(node->left));
 			Node_ptr parent = node->parent;
@@ -141,7 +155,7 @@ namespace ft
 		}
 		operator	_Rb_tree_iterator<value_type const>(void) const
 		{
-				return (_Rb_tree_iterator<value_type const>(_M_node, this->_NULL, this->root));
+				return (_Rb_tree_iterator<value_type const>());
 			}
 
 	};
@@ -171,10 +185,22 @@ namespace ft
 		_Rb_tree_const_iterator() : _M_node(NULL), _NULL(NULL), _root(NULL) { }
 		
 		explicit
-		_Rb_tree_const_iterator(Node_ptr __x) : _M_node(__x) { }
+		_Rb_tree_const_iterator(Node_ptr __x, Node_ptr TNULL, Node_ptr root) : _M_node(__x), _NULL(TNULL), _root(root) { }
+		
+		//_Rb_tree_const_iterator(Node_ptr __x) : _M_node(__x), _NULL(NULL), _root(NULL) {}
 		
 		_Rb_tree_const_iterator(const iterator& __it) : _M_node(__it._M_node), _NULL(__it._NULL), _root(__it.root) { }
 
+		_Rb_tree_const_iterator &operator=(_Rb_tree_const_iterator const &rhs)
+		{
+				if (this != &rhs) {
+					this->_M_node = rhs._M_node;
+					this->_root = rhs._root;
+					this->_NULL = rhs._NULL;
+				}
+				return (*this);
+		}
+		~_Rb_tree_const_iterator() {}
 		/****************************** OPERATORS ************************************/
 		Node_ptr min(Node_ptr node)
 		{
@@ -263,6 +289,7 @@ namespace ft
 		
 		bool operator!=(const _Self& __x) const
 		{ return _M_node != __x._M_node; }
+		
 		
 };
 	template<typename _Val> inline bool

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 16:04:18 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:30:46 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,25 @@ namespace ft
         private:
 			Node_ptr        _M_node;
 			Node_ptr		_NULL;
-			// friend			typename RBTree<_Tp>.Rnil		Rnil;
+			Node_ptr		_root;
+
 		/***************************** CONSTRUCTORS ***********************************/
 		public:
-		_Rb_tree_iterator() : _M_node(), _NULL(NULL) { }
+		_Rb_tree_iterator() : _M_node(NULL), _NULL(NULL), _root(NULL) { }
 
 		explicit
-		_Rb_tree_iterator(Node_ptr __x, Node_ptr TNULL) : _M_node(__x), _NULL(TNULL) { }
+		_Rb_tree_iterator(Node_ptr __x, Node_ptr TNULL, Node_ptr root) : _M_node(__x), _NULL(TNULL), _root(root) { }
 		
+		_Rb_tree_iterator	&operator=(_Rb_tree_iterator const &rhs)
+		{
+				if (this != &rhs) {
+					this->_M_node = rhs._M_node;
+					this->_root = rhs._root;
+					this->_NULL = rhs._NULL;
+				}
+				return (*this);
+		}
+		~_Rb_tree_iterator() {}
 		Node_ptr min(Node_ptr node)
 		{
 			if (node != _NULL)
@@ -71,6 +82,8 @@ namespace ft
 			
 		Node_ptr	_next(Node_ptr node)
 		{
+				if (node == max(_root))
+					return (_NULL);
 				if (node->right != this->_NULL)
 					return (this->min(node->right));
 				Node_ptr parent = node->parent;
@@ -84,6 +97,8 @@ namespace ft
 
 		Node_ptr	_prev(Node_ptr node)
 		{
+			if (node == _NULL)
+				return (max(_root));
 			if (node->left != this->_NULL)
 				return (this->max(node->left));
 			Node_ptr parent = node->parent;
@@ -138,7 +153,7 @@ namespace ft
 		}
 		operator	_Rb_tree_iterator<value_type const>(void) const
 		{
-				return (_Rb_tree_iterator<value_type const>(_M_node, this->_NULL));
+				return (_Rb_tree_iterator<value_type const>());
 			}
 
 	};
@@ -159,18 +174,29 @@ namespace ft
 		private:
 			Node_ptr _M_node;
 			Node_ptr _NULL;
+			Node_ptr _root;
 		
 		public:
 
 		/***************************** CONSTRUCTORS ***********************************/
 		
-		_Rb_tree_const_iterator() : _M_node(NULL), _NULL(NULL) { }
+		_Rb_tree_const_iterator() : _M_node(NULL), _NULL(NULL), _root(NULL) { }
 		
 		explicit
 		_Rb_tree_const_iterator(Node_ptr __x) : _M_node(__x) { }
 		
-		_Rb_tree_const_iterator(const iterator& __it) : _M_node(__it._M_node) { }
+		_Rb_tree_const_iterator(const iterator& __it) : _M_node(__it._M_node), _NULL(__it._NULL), _root(__it.root) { }
 
+		_Rb_tree_const_iterator &operator=(_Rb_tree_const_iterator const &rhs)
+		{
+				if (this != &rhs) {
+					this->_M_node = rhs._M_node;
+					this->_root = rhs._root;
+					this->_NULL = rhs._NULL;
+				}
+				return (*this);
+		}
+		~_Rb_tree_const_iterator() {}
 		/****************************** OPERATORS ************************************/
 		Node_ptr min(Node_ptr node)
 		{
@@ -196,7 +222,7 @@ namespace ft
 			return node;
 		}
 			
-		Node_ptr	_next(Node_ptr node)
+		Node_ptr	next(Node_ptr node)
 		{
 				if (node->right != this->_NULL)
 					return (this->min(node->right));
@@ -208,7 +234,7 @@ namespace ft
 				return (parent);
 		}
 
-		Node_ptr	_prev(Node_ptr node)
+		Node_ptr	prev(Node_ptr node)
 		{
 			if (node->left != this->_NULL)
 				return (this->max(node->left));
@@ -231,27 +257,27 @@ namespace ft
 		
 		_Self& operator++()
 		{
-			_M_node = _next(_M_node);
+			_M_node = next(_M_node);
 			return *this;
 		}
 		
 		_Self operator++(int)
 		{
 			_Self __tmp = *this;
-			_M_node = _next(_M_node);
+			_M_node = next(_M_node);
 			return __tmp;
 		}
 		
 		_Self& operator--()
 		{
-			_M_node = _prev(_M_node);
+			_M_node = prev(_M_node);
 			return *this;
 		}
 		
 		_Self operator--(int)
 		{
 			_Self __tmp = *this;
-			_M_node = _prev(_M_node);
+			_M_node = prev(_M_node);
 			return __tmp;
 		}
 		bool operator==(const _Self& __x) const

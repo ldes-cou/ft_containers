@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 16:58:22 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 19:26:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,14 @@ namespace ft
 				}
 				return (*this);
 			}
+			~map()
+			{}
 			
 			mapped_type& operator[] (const key_type& k)
 			{
 				iterator toFind = find(k);
 				if (toFind != end())
-					return (*(toFind.second));
+					return (toFind->second);
 				else
 					return ((*((this->insert(make_pair(k,mapped_type()))).first)).second);
 			}
@@ -179,7 +181,7 @@ namespace ft
 			
 			bool empty() const
 			{
-				if (this->_rbtree.t_size == 0)
+				if (this->_rbtree.size == 0)
 					return (true);
 				return (false);
 			}
@@ -228,7 +230,7 @@ namespace ft
 			iterator find (const key_type& k)
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
-				iterator it = iterator(_rbtree.searchTree(toFind));
+				iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
 				if (it->first == k)
 					return it;
 				return (end());
@@ -237,7 +239,7 @@ namespace ft
 			const_iterator find (const key_type& k) const
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
-				iterator it = iterator(_rbtree.searchTree(toFind));
+				const_iterator it = const_iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
 				if (it->first == k)
 					return it;
 				return (end());
@@ -245,9 +247,7 @@ namespace ft
 			
 			size_type count (const key_type& k) const
 			{
-				RB_Node<T> *temp;
-				temp = _rbtree.searchTree(k);
-				if (temp == k)
+				if (find(k) != end())
 					return (1);
 				return (0);
 			}

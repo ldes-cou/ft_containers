@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 15:51:43 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:06:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ namespace ft
 			Node_ptr 	TNULL;
 			node_alloc	_alloc;
 			size_type size;
-			//friend typename Compare::comp;
 			//Compare		_comp;
 			
 		public:
@@ -65,44 +64,6 @@ namespace ft
 		}
 		
 		size_type getSize() const {return (this->size);}
-			 
-			// void initializeNULLNode(Node_ptr node, Node_ptr parent)
-			// {
-			// 	node->data = 0;
-			// 	node->parent = parent;
-			// 	node->left =  NULL;
-			// 	node->right = NULL;
-			// 	node->color = BLACK;
-			// 	size = 0;
-			// }
-
-			// // Preorder
-			// void preOrderHelper(Node_ptr node)
-			// {
-			// 	if (node != TNULL)
-			// 	{
-			// 		std::cout << node->data << " ";
-			// 		preOrderHelper(node->left);
-			// 		preOrderHelper(node->right);
-			// 	}
-			// }
-			// void inOrderHelper(Node_ptr node)
-			// {
-			// 	if (node != TNULL)
-			// 	{
-			// 		inOrderHelper(node->left);
-			// 		std::cout << node->data << " ";
-			// 		inOrderHelper(node->right);
-			// 	}
-			// }
-			// void postOrderHelper(Node_ptr node)
-			// {
-			// 	if (node != TNULL) {
-			// 		postOrderHelper(node->left);
-			// 		postOrderHelper(node->right);
-			// 		std::cout << node->data << " ";
-			// 	}
-			// }
 
 			Node_ptr searchTreeHelper(Node_ptr node, value_type key) 
 			{
@@ -347,14 +308,28 @@ namespace ft
 			}
 
 		public:
-		RBTree (const node_alloc& node_al = node_alloc()) : _alloc(node_al)//, _comp(compare_arg)
-		{
+			RBTree (const node_alloc& node_al = node_alloc()) : _alloc(node_al)
+			{
+					TNULL = createNode();
+					TNULL->color = BLACK;
+					TNULL->left = NULL;
+					TNULL->right = NULL;
+					root = TNULL;
+					size = 0;
+				}
+			
+			RBTree (RBTree const& rhs):_alloc(rhs._alloc)//, _comp(rhs.comp)
+			{
 				TNULL = createNode();
-				TNULL->color = BLACK;
-				TNULL->left = NULL;
-				TNULL->right = NULL;
 				root = TNULL;
-				size = 0;
+				*this = rhs;
+			}
+
+			~RBTree()
+			{
+				deleteTree(root);
+				root = TNULL;
+				destroyNode(TNULL);
 			}
 			
 			Node_ptr createNode()
@@ -371,22 +346,15 @@ namespace ft
 				_alloc.deallocate(node, 1);
 				_alloc.destroy(node);
 			}
+			void deleteTree(Node_ptr node)
+			{
+				if (node == TNULL)
+					return;
+				deleteTree(node->left);
+				deleteTree(node->right);
+				destroyNode(node);
+			}
 			
-			void preorder()
-			{
-				preOrderHelper(this->root);
-			}
-
-			void inorder()
-			{
-				inOrderHelper(this->root);
-			}
-
-			void postorder()
-			{
-				postOrderHelper(this->root);
-			}
-
 			Node_ptr searchTree(value_type k)
 			{
 				return searchTreeHelper(this->root, k);

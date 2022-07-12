@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 16:29:59 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 19:27:14 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,22 +308,30 @@ namespace ft
 			}
 
 		public:
-		RBTree (const node_alloc& node_al = node_alloc()) : _alloc(node_al)
-		{
+			RBTree (const node_alloc& node_al = node_alloc()) : _alloc(node_al)
+			{
+					TNULL = createNode();
+					TNULL->color = BLACK;
+					TNULL->left = NULL;
+					TNULL->right = NULL;
+					root = TNULL;
+					size = 0;
+				}
+			
+			RBTree (RBTree const& rhs):_alloc(rhs._alloc)//, _comp(rhs.comp)
+			{
 				TNULL = createNode();
-				TNULL->color = BLACK;
-				TNULL->left = NULL;
-				TNULL->right = NULL;
 				root = TNULL;
-				size = 0;
+				*this = rhs;
 			}
-		
-		RBTree (RBTree const& rhs):_alloc(rhs._alloc)//, _comp(rhs.comp)
-		{
-			TNULL = createNode();
-			root = TNULL;
-			*this = rhs;
-		}
+
+			~RBTree()
+			{
+				deleteTree(root);
+				root = TNULL;
+				destroyNode(TNULL);
+			}
+			
 			Node_ptr createNode()
 			{
 				Node tmp;
@@ -338,12 +346,26 @@ namespace ft
 				_alloc.deallocate(node, 1);
 				_alloc.destroy(node);
 			}
+			void deleteTree(Node_ptr node)
+			{
+				if (node == TNULL)
+					return;
+				deleteTree(node->left);
+				deleteTree(node->right);
+				destroyNode(node);
+			}
 			
 			Node_ptr searchTree(value_type k)
 			{
 				return searchTreeHelper(this->root, k);
 			}
-
+			bool isInTree(value_type k)
+			{
+				if (searchTree(k) == TNULL)
+					return (false);
+				return true;
+			}
+			
 			Node_ptr minimum(Node_ptr node)
 			{
 				if (node != TNULL)
