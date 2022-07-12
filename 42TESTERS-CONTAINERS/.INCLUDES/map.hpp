@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 16:58:22 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:39:48 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,13 @@ namespace ft
 			ft::pair<iterator, bool> insert( const value_type& value )
 			{
 				iterator it;
-				it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
+				it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL());
 				if (it != this->end())
 					return (ft::make_pair(it, false));
 				else
 				{
 					_rbtree.insert(value);
-					it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
+					it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL());
 					return (ft::make_pair(it, true));
 				}
 			}
@@ -139,42 +139,42 @@ namespace ft
 			}
 			iterator begin()
 			{
-				return (iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL(), _rbtree.getRoot()));
+				return (iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL()));
 			}
 			
 			const_iterator begin() const
 			{
-				return (const_iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL(), _rbtree.getRoot()));
+				return (const_iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL()));
 			}
 			
 			iterator end()
 			{
-				return (iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
+				return (iterator(_rbtree.getTNULL(), _rbtree.getTNULL()));
 			}
 			
 			const_iterator end() const
 			{
-				return (const_iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
+				return (const_iterator(_rbtree.getTNULL()));
 			}
 			
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(this->end()));
+				return (iterator(_rbtree.getTNULL()));
 			}
 			
 			const_reverse_iterator rbegin() const
 			{	
-				return (const_reverse_iterator(this->end()));
+				return (const_iterator(_rbtree.getTNULL()));
 			}
 			
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(this->begin()));
+				return (iterator(_rbtree.minimum(_rbtree.getRoot())));
 			}
 			
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(this->begin()));
+				return (const_iterator(_rbtree.minimum(_rbtree.getRoot())));
 			}
 			
 			bool empty() const

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 10:26:31 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:14:33 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,50 @@
 #define out(x) std::cout << x << std::endl; 
 using namespace ft;
 
+template <class Key, class T>
+void	print(map<Key, T>& lst)
+{
+	for (typename map<Key, T>::iterator it = lst.begin(); it != lst.end(); it++)
+		std::cout << *it << ' ';
+	std::cout << '\n';
+}
+
 void test_map()
- {
-   map<int, int> marks;
-   
-     marks.insert(pair<int, int>(160, 42));
-    //  map<int, int>::iterator it = marks.begin();
-    //  std::cout << it->second << std::endl;
-     marks.insert(pair<int, int>(15, 90));
-     marks.insert(pair<int, int>(139, 70));
-     marks.insert(pair<int, int>(129, 350));
-     marks.insert(pair<int, int>(15419, 37450));
-     marks.insert(pair<int, int>(34119, 3670));
-     marks.insert(pair<int, int>(14319, 35470));
-     marks.insert(pair<int, int>(1316, 375430));
-     marks.insert(pair<int, int>(11119, 37430));
-     marks.insert(pair<int, int>(16319, 360));
-     marks.insert(pair<int, int>(119, 37032));
-     marks.insert(pair<int, int>(1199, 37340));
-     //marks.insert(pair<int, int>(119, 3720));
-     marks.insert(pair<int, int>(1149, 3570));
-     marks.insert(pair<int, int>(1139, 3750));
+{
+	pair<int, std::string>			my_pair(8, "salut");
+	map<int, std::string>			test;
+	map<int, std::string>::iterator	it;
+	
+	test.insert(my_pair);
+	test.insert(pair<int, std::string>(-4, "bar"));
+	test.insert(pair<int, std::string>(2, "machin"));
+	test.insert(pair<int, std::string>(3, "foo"));
+	test.insert(pair<int, std::string>(746, "Marcel"));
+	test.insert(pair<int, std::string>(1, "truc"));
+	test._rbtree.printTree();
+	it = test.begin();
+	map<int, std::string>::iterator	kit = test.end();
+	std::cout <<(*kit) << std::endl;
+	
+	std::cout << '\n';
+
+	while (it != test.end())
+	{
+		// cout << "start of while\n";
+		std::cout << it->first << ", " << it->second << '\n';
+		it++;
+// 		cout << "iterator incremented\n";
+
+// #ifndef STD
+// 		cout << it.getPointer() << '\n';
+// 		cout << test.end().getPointer() << '\n';
+// #endif
+
+	}
+	std::cout << "End of display loop\n";
+}
      
-     marks._rbtree.printTree();
-    out("                      ")
-     out(marks.size())
-     marks.erase(119);
-     marks.erase(139);
-     marks.erase(15);
-     marks.erase(11119);
-     marks._rbtree.printTree();
-     out("                      ")
-     out(marks.size())
-     
-     
- }
+
     
 
 
