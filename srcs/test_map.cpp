@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 12:05:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:20:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,22 +119,24 @@ void test_map()
 		it++;
 	}
 
-	 map<char,int> map;
+	 map<char,int> mimap;
   char c;
 
-  map ['a']=101;
+  mimap ['a']=101;
   std::cout << "assigned 'a'\n";
-  map ['c']=202;
+  mimap ['c']=202;
   std::cout << "assiged 'c'\n";
-  map ['f']=303;
+  mimap ['f']=303;
   std::cout << "assigned 'f'\n";
 
 	std::cout << "end of assignations\n";
   
+  map<char, int>::iterator tit = mimap.find('a');
+  out(*tit)
   for (c='a'; c<'h'; c++)
   {
     std::cout << c;
-    if (map.count(c)>0)
+    if (mimap.count(c)>0)
       std::cout << " is an element of map.\n";
     else 
       std::cout << " is not an element of map.\n";

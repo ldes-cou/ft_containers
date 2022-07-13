@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 12:02:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:21:53 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,18 +232,14 @@ namespace ft
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
 				iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
-				if (it->first == k)
-					return it;
-				return (end());
+				return (it);
 			}
 			
 			const_iterator find (const key_type& k) const
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
 				const_iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
-				if (it->first == k)
-					return it;
-				return (end());
+				return (it);
 			}
 			
 			size_type count (const key_type& k) const

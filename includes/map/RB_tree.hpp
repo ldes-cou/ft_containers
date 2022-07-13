@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 12:05:07 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:15:00 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ namespace ft
 
 			Node_ptr searchTreeHelper(Node_ptr node, value_type key) const
 			{
-				if (node == TNULL || key == node->data)
+				if (node == TNULL || key.first == node->data.first)
 				{
 					return node;
 				}
