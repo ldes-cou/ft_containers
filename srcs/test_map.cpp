@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 18:42:16 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:05:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void test_map()
   std::cout << "assigned 'f'\n";
 
 	std::cout << "end of assignations\n";
+  
   for (c='a'; c<'h'; c++)
   {
     std::cout << c;

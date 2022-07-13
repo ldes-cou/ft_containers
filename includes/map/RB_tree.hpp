@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 19:27:14 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:05:07 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ namespace ft
 			
 		public:
 
-		bool _comp(value_type a, value_type b, value_compare u = value_compare())
+		bool _comp(value_type a, value_type b, value_compare u = value_compare()) const
 		{
 			return u(a.first, b.first);
 		}
 		
 		size_type getSize() const {return (this->size);}
 
-			Node_ptr searchTreeHelper(Node_ptr node, value_type key) 
+			Node_ptr searchTreeHelper(Node_ptr node, value_type key) const
 			{
 				if (node == TNULL || key == node->data)
 				{
@@ -355,7 +355,7 @@ namespace ft
 				destroyNode(node);
 			}
 			
-			Node_ptr searchTree(value_type k)
+			Node_ptr searchTree(value_type k) const
 			{
 				return searchTreeHelper(this->root, k);
 			}
@@ -524,11 +524,9 @@ namespace ft
 				insertFix(node);
 			}
 
-			Node_ptr getRoot()
-			{
-				return this->root;
-			}
-			Node_ptr getTNULL() { return (this->TNULL);}
+			Node_ptr getRoot() const { return ( this->root ) ;}
+			
+			Node_ptr getTNULL() const { return (this->TNULL) ;}
 
 			size_type deleteNode(value_type data)
 			{

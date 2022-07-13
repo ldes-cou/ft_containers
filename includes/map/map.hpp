@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 19:26:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 12:02:06 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ namespace ft
 			
 			const_iterator end() const
 			{
-				return (const_iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
+				const_iterator it = iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot());
+				return (it); //ici pb
 			}
 			
 			reverse_iterator rbegin()
@@ -239,7 +240,7 @@ namespace ft
 			const_iterator find (const key_type& k) const
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
-				const_iterator it = const_iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
+				const_iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
 				if (it->first == k)
 					return it;
 				return (end());
