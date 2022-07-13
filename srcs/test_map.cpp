@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 14:25:25 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:53:20 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,7 @@ void test_map()
   std::cout << "assigned 'f'\n";
 
 	std::cout << "end of assignations\n";
-  out("               ")
-  out(mimap.count('a'))
-  out("               ")
-  map<char, int>::iterator tit = mimap.find('a');
-  out(*tit)
+  
   for (c='a'; c<'h'; c++)
   {
     std::cout << c;
@@ -140,7 +136,18 @@ void test_map()
       std::cout << " is not an element of map.\n";
   }
 
-
+  map<char,int>::key_compare mycomp = mymap.key_comp();
+  std::cout << mycomp(3 , 2) << std::endl;
+  map<char,int>::value_compare micomp = mymap.value_comp();
+  std::cout << micomp(make_pair('a', 2), make_pair('b', 4)) << std::endl;
+  out(BLUE2)
+  out("**************      TEST EMPTY   ****************** ")
+  out(END)
+  bool empty = mymap.empty();
+  if (empty == true)
+    std::cout << " that container is empty" << std::endl;
+  std::cout << "that container is not empty" << std::endl;
+  
 }
      
 

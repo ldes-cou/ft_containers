@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 14:47:41 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:48:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -470,11 +470,11 @@ namespace ft
 			}
 
 			// Inserting a node
-			void insert(value_type key)
+			bool insert(value_type key)
 			{
 				Node *toFind = searchTree(key);
 				if (toFind != TNULL)
-					return;
+					return (false);
 				Node_ptr node = createNode();//new Node;
 				node->parent = NULL;
 				Key *key_node = const_cast<Key*>(&node->data.first);
@@ -515,13 +515,14 @@ namespace ft
 				if (node->parent == NULL)
 				{
 					node->color = BLACK;
-					return;
+					return (true);
 				}
 				if (node->parent->parent == NULL)
 				{
-					return;
+					return (true);
 				}
 				insertFix(node);
+				return (true);
 			}
 
 			Node_ptr getRoot() const { return ( this->root ) ;}

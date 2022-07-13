@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 14:53:51 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:11:04 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,16 @@ namespace ft
 			typedef T												mapped_type;                    //The second template parameter (T)	
 			typedef typename ft::pair<const key_type, mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
 			typedef Compare											key_compare;					//The third template parameter (Compare)	defaults to: less<key_type>
-            //friend class RBTree<key_type, value_type, key_compare>;
 			friend struct RB_Node<value_type>;
 			class value_compare : std::binary_function<value_type, 	value_type, bool>				//Nested function class to compare elements	see value_comp
 			{
 				friend class map<key_type, value_type, key_compare>;
 				//friend class RBTree<key_type, value_type, value_compare, Alloc>
-				
-				protected:
+				//protected:
+				public:
 					Compare comp;
 					value_compare (Compare c) : comp(c) {}
-				
-				public:
+				//public:
 					bool operator() (const value_type& x, const value_type& y) const
 					{ return (comp(x.first, y.first)); }
 			};
@@ -139,7 +137,9 @@ namespace ft
 			iterator insert (iterator position, const value_type& val)
 			{
 				(void)position;
-				return (iterator(_rbtree.insert(val)));
+				if (_rbtree.insert(val) == true)
+					return (iterator(_rbtree.searchTree(val), _rbtree.getTNULL(), _rbtree.getRoot()));
+				return (end());
 			}
 			iterator begin()
 			{
@@ -184,7 +184,7 @@ namespace ft
 			
 			bool empty() const
 			{
-				if (this->_rbtree.size == 0)
+				if (this->_rbtree.getSize() == 0)
 					return (true);
 				return (false);
 			}
@@ -280,15 +280,54 @@ namespace ft
 			{
 				return (_alloc);
 			}
-			// key_compare	key_comp(void) const {
-			// 	return (this->_key_comp);
-			// }
-
-			// value_compare	value_comp(void) const {
-			// 	return (this->_value_comp);
-			// }
-	};		
+			key_compare	key_comp(void) const
+			{
+				return (_comp);
+			}
 			
+			value_compare	value_comp(void) const
+			{
+				return (value_compare(key_comp()));
+			}
+	};		
+	template<typename _Key, typename _Val,
+           typename _Compare, typename _Alloc>
+    inline bool operator==(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x, const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    {
+      return __x.size() == __y.size()
+             && std::equal(__x.begin(), __x.end(), __y.begin());
+    }
+  	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+    inline bool operator<(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
+              const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    {
+      return std::lexicographical_compare(__x.begin(), __x.end(), 
+                                          __y.begin(), __y.end());
+    }
+  	
+	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+    inline bool operator!=(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
+               const RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    { return !(__x == __y); }
+  	
+	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+    inline bool operator>(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
+              const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    { return __y < __x; }
+  	
+	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+    inline bool operator<=(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
+               const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    { return !(__y < __x); }
+  	
+	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+    inline bool operator>=(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
+               const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    { return !(__x < __y); }
+  	
+	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+    inline void swap (ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x, ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    { __x.swap(__y); }			
 
 
 };
