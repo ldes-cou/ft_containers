@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 18:06:41 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:47:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ namespace ft
 			Node_ptr 	root;
 			Node_ptr 	TNULL;
 			node_alloc	_alloc;
-			size_type size;
+			size_type 	size;
 			//Compare		_comp;
 			
 		public:
 
-		bool _comp(value_type a, value_type b, value_compare u = value_compare())
+		bool _comp(value_type a, value_type b, value_compare u = value_compare()) const
 		{
 			return u(a.first, b.first);
 		}
 		
 		size_type getSize() const {return (this->size);}
 
-			Node_ptr searchTreeHelper(Node_ptr node, value_type key) 
+			Node_ptr searchTreeHelper(Node_ptr node, value_type key) const
 			{
-				if (node == TNULL || key == node->data)
+				if (node == TNULL || key.first == node->data.first)
 				{
 					return node;
 				}
@@ -355,11 +355,17 @@ namespace ft
 				destroyNode(node);
 			}
 			
-			Node_ptr searchTree(value_type k)
+			Node_ptr searchTree(value_type k) const
 			{
 				return searchTreeHelper(this->root, k);
 			}
-
+			bool isInTree(value_type k)
+			{
+				if (searchTree(k) == TNULL)
+					return (false);
+				return true;
+			}
+			
 			Node_ptr minimum(Node_ptr node)
 			{
 				if (node != TNULL)
@@ -518,11 +524,9 @@ namespace ft
 				insertFix(node);
 			}
 
-			Node_ptr getRoot()
-			{
-				return this->root;
-			}
-			Node_ptr getTNULL() { return (this->TNULL);}
+			Node_ptr getRoot() const { return ( this->root ) ;}
+			
+			Node_ptr getTNULL() const { return (this->TNULL) ;}
 
 			size_type deleteNode(value_type data)
 			{

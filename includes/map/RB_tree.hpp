@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 12:15:00 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:47:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft
 			Node_ptr 	root;
 			Node_ptr 	TNULL;
 			node_alloc	_alloc;
-			size_type size;
+			size_type 	size;
 			//Compare		_comp;
 			
 		public:

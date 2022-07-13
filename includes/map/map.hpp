@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 12:21:53 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:53:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 #define MAP_HPP
 #include <iostream>
 #include "RB_tree.hpp"
-//#include "RB_tree_iterator.hpp"
-#include "vector/iterator_base_type.hpp"
-#include "vector/iterator.hpp"
+#include "RB_tree_iterator.hpp"
+// #include "vector/iterator_base_type.hpp"
+// #include "vector/iterator.hpp"
+#include "iterator_base_type.hpp"
+//#include "iterator.hpp"
 #include "utils.hpp"
 
 
@@ -32,7 +34,7 @@ namespace ft
 		public :
 			typedef Key												key_type;	                    //The first template parameter (Key)	
 			typedef T												mapped_type;                    //The second template parameter (T)	
-			typedef typename ft::pair<const key_type,mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
+			typedef typename ft::pair<const key_type, mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
 			typedef Compare											key_compare;					//The third template parameter (Compare)	defaults to: less<key_type>
             //friend class RBTree<key_type, value_type, key_compare>;
 			friend struct RB_Node<value_type>;
@@ -56,14 +58,14 @@ namespace ft
 			typedef typename Alloc::pointer									pointer;	                    				                //for the default allocator: value_type*
 			typedef typename Alloc::const_pointer							const_pointer;		    										//for the default allocator: const value_type*
 			typedef ft::_Rb_tree_iterator<value_type>						iterator;														//convertible to const_iterator
-			typedef ft::_Rb_tree_iterator<const value_type> 				const_iterator;													//a bidirectional iterator to const value_type	
+			typedef ft::_Rb_tree_const_iterator<value_type> 				const_iterator;													//a bidirectional iterator to const value_type	
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;												//reverse_iterator<iterator>
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;											//reverse_iterator<const_iterator>	
 			typedef	typename iterator_traits<iterator>::difference_type		difference_type;												//a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef typename allocator_type::size_type						size_type;
 
-			allocator_type									_alloc;
-			Compare											_comp;
+			allocator_type											_alloc;
+			Compare													_comp;
 			RBTree<key_type, value_type, key_compare, Alloc>		_rbtree;
 			
 			private:
@@ -156,7 +158,7 @@ namespace ft
 			
 			const_iterator end() const
 			{
-				const_iterator it = iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot());
+				const_iterator it = const_iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot());
 				return (it); //ici pb
 			}
 			
@@ -238,7 +240,9 @@ namespace ft
 			const_iterator find (const key_type& k) const
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
-				const_iterator it = iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
+				const_iterator it = const_iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
+				// if (it != end())
+				// 	std::cout << _rbtree.searchTree(toFind)->data.first << std::endl;
 				return (it);
 			}
 			

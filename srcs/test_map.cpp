@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 12:20:55 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:25:25 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,11 @@ void test_map()
 	std::cout << "Wupwup\n";
 
 	it++;
-	out("caca")
 	++it;
-	out("caca")
 
 	it--;
-	out("caca")
 
 	--it;
-	out("caca")
 
 	std::cout << "marker1\n";
 
@@ -130,7 +126,9 @@ void test_map()
   std::cout << "assigned 'f'\n";
 
 	std::cout << "end of assignations\n";
-  
+  out("               ")
+  out(mimap.count('a'))
+  out("               ")
   map<char, int>::iterator tit = mimap.find('a');
   out(*tit)
   for (c='a'; c<'h'; c++)
