@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 16:48:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:13:11 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,7 +540,9 @@ namespace ft
 					printHelper(this->root, "", true);
 				}
 			}
+			
 	};
+	
 
 }// namespace ft
 
