@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 15:57:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 11:12:20 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ namespace ft
                     this->clear();
                     this->_alloc.deallocate(this->_start, capacity());
                 }
+                
                 vector& operator= (const vector& x)
                 {
                     if (this != &x)
@@ -175,11 +176,11 @@ namespace ft
                 
                 reference at (size_type n)
                 {
-                    if (n >= size())
+                    if (n >= size()) //change it, too long std::string error("vector::at: n (which is "); error += ft::to_string(n) += ") >= this->size() (which is " += ft::to_string(size() += std::string(")"
                     {
-                        std::string error("vector::at: n (wich is ");
+                        std::string error("vector::at: n (which is ");
                         error += ft::to_string(n);
-                        error += std::string(") >= this->size() (wich is ");
+                        error += std::string(") >= this->size() (which is ");
                         error += ft::to_string(size());
                         error += std::string(")");
                         throw(std::out_of_range(error));
@@ -190,9 +191,9 @@ namespace ft
                 {
                     if (n >= size())
                     {
-                        std::string error("vector::at: n (wich is ");
+                        std::string error("vector::at: n (which is ");
                         error += ft::to_string(n);
-                        error += std::string(") >= this->size() (wich is ");
+                        error += std::string(") >= this->size() (which is ");
                         error += ft::to_string(size());
                         error += std::string(")");
                         throw(std::out_of_range(error));
@@ -414,9 +415,10 @@ namespace ft
 				}
 				return (first);
 			}
+            
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last, 
-            typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+                typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
             {
                 difference_type dist = ft::distance(first, last);
                 this->clear();
@@ -468,11 +470,13 @@ namespace ft
             {
                 return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
             }
+
             template <class T, class Alloc>
             bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
                 return (!( lhs == rhs ));
             }
+            
             template <class T, class Alloc>
             bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
@@ -484,11 +488,13 @@ namespace ft
             {
                 return (!( rhs < lhs ));
             }
+            
             template <class T, class Alloc>
             bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
                 return ( rhs < lhs );
             }
+            
             template <class T, class Alloc>
             bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
             {
