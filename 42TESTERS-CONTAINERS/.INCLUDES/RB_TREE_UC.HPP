@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 16:48:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 11:24:59 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,7 +366,7 @@ namespace ft
 				return true;
 			}
 			
-			Node_ptr minimum(Node_ptr node)
+			Node_ptr minimum(Node_ptr node) const
 			{
 				if (node != TNULL)
 				{
@@ -378,7 +378,7 @@ namespace ft
 				return node;
 			}
 
-			Node_ptr maximum(Node_ptr node)
+			Node_ptr maximum(Node_ptr node) const
 			{
 				if (node != TNULL)
 				{
@@ -540,7 +540,9 @@ namespace ft
 					printHelper(this->root, "", true);
 				}
 			}
+			
 	};
+	
 
 }// namespace ft
 

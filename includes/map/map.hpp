@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/13 17:13:25 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 11:30:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 #include "iterator_base_type.hpp"
 //#include "iterator.hpp"
 #include "utils.hpp"
-
+#include "lexicograpical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft
 {
@@ -292,43 +293,43 @@ namespace ft
 	};
 			
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline bool operator==(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x, const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    inline bool operator==(const ft::map<_Key, _Val, _Compare, _Alloc>& __x, const ft::map<_Key, _Val, _Compare, _Alloc>& __y)
     {
       return __x.size() == __y.size()
-             && std::equal(__x.begin(), __x.end(), __y.begin());
+             && ft::equal(__x.begin(), __x.end(), __y.begin());
     }
 	
   	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline bool operator<(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
-              const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    inline bool operator<(const ft::map<_Key, _Val, _Compare, _Alloc>& __x,
+              const ft::map<_Key, _Val, _Compare, _Alloc>& __y)
     {
       return ft::lexicographical_compare(__x.begin(), __x.end(), 
                                           __y.begin(), __y.end());
     }
   	
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline bool operator!=(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
-               const RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    inline bool operator!=(const ft::map<_Key, _Val, _Compare, _Alloc>& __x,
+               const map<_Key, _Val, _Compare, _Alloc>& __y)
     { return !(__x == __y); }
   	
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline bool operator>(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
-              const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    inline bool operator>(const ft::map<_Key, _Val, _Compare, _Alloc>& __x,
+              const ft::map<_Key, _Val, _Compare, _Alloc>& __y)
     { return __y < __x; }
   	
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline bool operator<=(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
-               const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    inline bool operator<=(const ft::map<_Key, _Val, _Compare, _Alloc>& __x,
+               const ft::map<_Key, _Val, _Compare, _Alloc>& __y)
     { return !(__y < __x); }
   	
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline bool operator>=(const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x,
-               const ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
+    inline bool operator>=(const ft::map<_Key, _Val, _Compare, _Alloc>& __x,
+               const ft::map<_Key, _Val, _Compare, _Alloc>& __y)
     { return !(__x < __y); }
 	
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
-    inline void swap (ft::RBTree<_Key, _Val, _Compare, _Alloc>& __x, ft::RBTree<_Key, _Val, _Compare, _Alloc>& __y)
-    { __x.swap(__y); }			
+    inline void swap (ft::map<_Key, _Val, _Compare, _Alloc>& __x, ft::map<_Key, _Val, _Compare, _Alloc>& __y)
+    { __x._rbtree.swap(__y._rbtree); }			
 
 
 };
