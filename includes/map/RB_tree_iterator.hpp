@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 11:29:35 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:52:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #define RB_ITERATOR_HPP
 //#include "RB_tree.hpp"
 #include "Node.hpp"
-#include "iterator.hpp"
+#include "vector/iterator.hpp"
+// #include "iterator.hpp"
 
 template<typename _Tp>
 class RBTree;

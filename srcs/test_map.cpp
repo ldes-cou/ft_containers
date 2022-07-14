@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 11:28:17 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:02:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,20 @@ void test_map()
 	// 	// cout << "start of while\n";
 	// 	std::cout << it->first << ", " << it->second << '\n';
 	// 	it++;
-// 		cout << "iterator incremented\n";
+	// 		cout << "iterator incremented\n";
 
-// #ifndef STD
-// 		cout << it.getPointer() << '\n';
-// 		cout << test.end().getPointer() << '\n';
-// #endif
+	// #ifndef STD
+	// 		cout << it.getPointer() << '\n';
+	// 		cout << test.end().getPointer() << '\n';
+	// #endif
 
 	//}
 	//std::cout << "End of display loop\n";
 
-	// out("                       ")
-	// out(PINK)
-	// out("           TEST BEGIN()         ")
+	out("                       ")
+	out(BLUE2)
+	out("***************	 TEST BEGIN()		*****************")
+	out(END)
 	map<char,int> mymap;
 
 
@@ -115,8 +116,8 @@ void test_map()
 		it++;
 	}
 
-	 map<char,int> mimap;
-  char c;
+	map<char,int> mimap;
+  	char c;
 
   mimap ['a']=101;
   std::cout << "assigned 'a'\n";
@@ -136,10 +137,14 @@ void test_map()
       std::cout << " is not an element of map.\n";
   }
 
-  map<char,int>::key_compare mycomp = mymap.key_comp();
-  std::cout << mycomp(3 , 2) << std::endl;
-  map<char,int>::value_compare micomp = mymap.value_comp();
-  std::cout << micomp(make_pair('a', 2), make_pair('b', 4)) << std::endl;
+	out(BLUE2)
+  	out("**************      TEST VALUECOMP/KEYCOMP   ****************** ")
+  	out(END)
+	map<char,int>::key_compare mycomp = mymap.key_comp();
+	std::cout << mycomp(3 , 2) << std::endl;
+	map<char,int>::value_compare micomp = mymap.value_comp();
+  
+  	std::cout << micomp(make_pair('a', 2), make_pair('b', 4)) << std::endl;
   out(BLUE2)
   out("**************      TEST EMPTY   ****************** ")
   out(END)
@@ -164,6 +169,23 @@ void test_map()
   if (foo> bar) std::cout << "foo is greater than bar\n";
   if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
   if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+
+
+
+	// out(BLUE2)
+	// out("**************      TEST OPERATORS[]   ****************** ")
+	// out(END)
+	// map<char,std::string> themap;
+
+	// themap['a']="an element";
+	// themap['b']="another element";
+	// themap['c']=themap['b'];
+
+	// std::cout << "themap['a'] is " << themap['a'] << '\n';
+	// std::cout << "themap['b'] is " << themap['b'] << '\n';
+	// std::cout << "themap['c'] is " << themap['c'] << '\n';
+	// std::cout << "themap['d'] is " << themap['d'] << '\n';
+	// std::cout << "themap now contains " << themap.size() << " elements.\n";
 
 }
      

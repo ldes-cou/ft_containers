@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 11:30:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 13:02:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
-// #include "vector/iterator_base_type.hpp"
-// #include "vector/iterator.hpp"
-#include "iterator_base_type.hpp"
-//#include "iterator.hpp"
-#include "utils.hpp"
-#include "lexicograpical_compare.hpp"
-#include "equal.hpp"
+#include "vector/iterator_base_type.hpp"
+#include "vector/utils.hpp"
+#include "vector/lexicograpical_compare.hpp"
+#include "vector/equal.hpp"
+// #include "iterator_base_type.hpp"
+// #include "utils.hpp"
+// #include "lexicograpical_compare.hpp"
+// #include "equal.hpp"
 
 namespace ft
 {
@@ -112,7 +113,13 @@ namespace ft
 				if (toFind != end())
 					return (toFind->second);
 				else
-					return ((*((this->insert(make_pair(k,mapped_type()))).first)).second);
+				{
+					return ((*((this->insert(make_pair(k, 0))).first)).second);
+					// iterator it;
+					// bool res = true;
+					// pair<iterator, bool>(it, res) = insert(make_pair(k, 0));
+					// return(it->second);
+				}
 			}
 			
 			template< class InputIt >
@@ -135,6 +142,7 @@ namespace ft
 					return (ft::make_pair(it, true));
 				}
 			}
+			
 			iterator insert (iterator position, const value_type& val)
 			{
 				(void)position;
@@ -220,12 +228,10 @@ namespace ft
 					erase(tmp);
 				}
 			}
-			void swap (map& x)
-			{
-				std::swap(this->_rbtree, x->_rbtree);
-				std::swap(this->_alloc, x->_alloc);
-				std::swap(this->_comp, x->_comp);
-			}
+			
+			void swap(map& __x) //_GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value)
+			{ _rbtree.swap(__x._rbtree); }
+			
 			void clear()
 			{
 				erase(begin(), end());
@@ -329,7 +335,7 @@ namespace ft
 	
 	template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
     inline void swap (ft::map<_Key, _Val, _Compare, _Alloc>& __x, ft::map<_Key, _Val, _Compare, _Alloc>& __y)
-    { __x._rbtree.swap(__y._rbtree); }			
+    { __x.swap(__y); }			
 
 
 };
