@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 11:43:39 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:42:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ namespace ft
 				typedef	ft::reverse_iterator<iterator>			        reverse_iterator;
 				typedef ft::reverse_iterator<const_iterator>	        const_reverse_iterator;
 				typedef typename std::ptrdiff_t					        difference_type;
-				// typedef	typename std::size_t					        size_type;
-                typedef typename	allocator_type::size_type						size_type;
+                typedef typename allocator_type::size_type						size_type;
                 
         private:
             allocator_type  _alloc;

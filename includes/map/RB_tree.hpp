@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 15:57:11 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 18:57:02 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -528,10 +528,13 @@ namespace ft
 					printHelper(this->root, "", true);
 				}
 			}
-			void swap(RBTree& __t)
-			{
-				std::swap(this, __t);
-			}
+			// void swap(RBTree& __t)
+			// {
+			// 	RBTree tmp(*this);
+			// 	this(__t);
+			// 	__t(tmp);
+			//std::swap(this, __t);
+			// }
 		 	// Node_ptr _M_lower_bound(value_type __x, Node_ptr __y, const Key& __k)
 			// {
 			// while (__x != 0)
