@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 12:39:47 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:57:11 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,15 @@
 #include "Node.hpp"
 #include "utils.hpp"
 #include "RB_tree_iterator.hpp"
-// Implementing Red-Black Tree in C++
 
 
-#include <iostream>
-//using namespace std;
-
-// struct Node {
-// 	int data;
-// 	Node *parent;
-// 	Node *left;
-// 	Node *right;
-// 	int color;
-// };
-
-// typedef Node *Node_ptr;
 struct RB_Node;
-// using namespace  ft
+
 namespace ft
 {
 	
 	template <typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = std::allocator<T> >              		
-	class RBTree//: public class Map
+	class RBTree
 	{
 				typedef T																value_type;
 				typedef RB_Node<T>														Node;
@@ -78,7 +65,7 @@ namespace ft
 				return searchTreeHelper(node->right, key);
 			}
 
-			// For balancing the tree after deletion
+			
 			void deleteFix(Node_ptr x)
 			{
 				Node_ptr s;
@@ -469,7 +456,7 @@ namespace ft
 				x->parent = y;
 			}
 
-			// Inserting a node
+			
 			bool insert(value_type key)
 			{
 				Node *toFind = searchTree(key);
@@ -479,6 +466,7 @@ namespace ft
 				node->parent = NULL;
 				Key *key_node = const_cast<Key*>(&node->data.first);
 				*key_node = key.first;
+				
 				node->data.second = key.second;
 				node->left = TNULL;
 				node->right = TNULL;
@@ -544,7 +532,16 @@ namespace ft
 			{
 				std::swap(this, __t);
 			}
-		 	//  _GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value);
+		 	// Node_ptr _M_lower_bound(value_type __x, Node_ptr __y, const Key& __k)
+			// {
+			// while (__x != 0)
+			// {
+			// 	if (!_comp(__x, __k.first))
+			// 		__y = __x, __x = left(__x);
+			// 	else
+			// 		__x = _S_right(__x);
+			// }
+			// return (__y);
 
 			
 	};

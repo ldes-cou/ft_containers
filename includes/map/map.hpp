@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 14:16:24 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:53:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
-#include "vector/iterator_base_type.hpp"
-#include "vector/utils.hpp"
-#include "vector/lexicograpical_compare.hpp"
-#include "vector/equal.hpp"
-// #include "iterator_base_type.hpp"
-// #include "utils.hpp"
-// #include "lexicograpical_compare.hpp"
-// #include "equal.hpp"
+// #include "vector/iterator_base_type.hpp"
+// #include "vector/utils.hpp"
+// #include "vector/lexicograpical_compare.hpp"
+// #include "vector/equal.hpp"
+#include "iterator_base_type.hpp"
+#include "utils.hpp"
+#include "lexicograpical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft
 {
@@ -97,10 +97,10 @@ namespace ft
 			
 			map& operator=(const map& x)
 			{
-				if (x != this)
+				if (x != *this)
 				{
-					clear(this);
-					assign(this->begin, this->end);
+					clear();
+					insert(this->begin(), this->end());
 				}
 				return (*this);
 			}
@@ -112,14 +112,7 @@ namespace ft
 				iterator toFind = find(k);
 				if (toFind != end())
 					return (toFind->second);
-				else
-				{
-					return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
-					// iterator it;
-					// bool res = true;
-					// pair<iterator, bool>(it, res) = insert(make_pair(k, 0));
-					// return(it->second);
-				}
+				return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
 			}
 			
 			template< class InputIt >
@@ -259,30 +252,73 @@ namespace ft
 					return (1);
 				return (0);
 			}
-			// iterator lower_bound (const key_type& k)
-			// {
-			// 	iterator it;
-			// 	Node *temp = search(k);
-			// 	it = iterator(temp);
-			// 	if (temp == k)
-			// 		return (it);
-			// 	it++;
-			// 	return (it);
-			// }
-			// const_iterator lower_bound (const key_type& k) 
-			// {
-			// 	const_iterator it;
-			// 	Node *temp = search(k);
-			// 	it = const_iterator(temp);
-			// 	if (temp == k)
-			// 		return (it);
-			// 	it++;
-			// 	return (it);
-			// }
-			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-			// {}
-			// pair<iterator,iterator>             equal_range (const key_type& k)
-			// {}
+			iterator lower_bound (const key_type& k)
+			{
+				
+				iterator it = begin();
+				while(it != end() )
+				{
+					if (!_comp(it->first, k))
+						break;//return (it);
+					it++;
+				}
+				if (it != end())
+					return (it++);
+				return (it);
+
+			}
+			const_iterator lower_bound (const key_type& k) const
+			{
+				const_iterator it = begin();
+				while(it != end())
+				{
+					if(!_comp(it->first, k))
+						break;//return (it);
+					it++;
+				}
+				if (it != end())
+					return (it++);
+				return (it);
+			}
+			iterator upper_bound( const Key& k )
+			{
+				iterator it = begin();
+				while(it != end())
+				{
+					if(!_comp(it->first, k))
+						break;//return (++it);
+					it++;
+				}
+				if (it != end())
+					return (++it);
+				return (it);
+			}
+			
+			const_iterator upper_bound( const Key& k ) const
+			{
+				const_iterator it = begin();
+				while(it != end())
+				{
+					if(!_comp(it->first, k))
+						break;//return (++it);
+					it++;
+				}
+				if (it != end())
+					return (++it);
+				return (it);
+			}
+			pair<iterator,iterator>             equal_range (const key_type& k)
+			{
+				iterator it = lower_bound (k);
+  				return ft::make_pair ( it, upper_bound(k) );	
+			}
+			
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			{
+				const_iterator it = lower_bound (k);
+  				return ft::make_pair ( it, upper_bound(k) );	
+			}
+			
 			allocator_type get_allocator() const
 			{
 				return (_alloc);

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 13:54:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/12 14:53:52 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:30:39 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft
     *  argument.  Specialized versions for pointers and pointers-to-const
     *  provide tighter, more correct semantics.
    */
-   template<typename _Iterator>
+    template<typename _Iterator>
      struct iterator_traits
      {
        typedef typename _Iterator::iterator_category iterator_category;
