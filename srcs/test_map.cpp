@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 13:02:51 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:09:12 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,20 +172,20 @@ void test_map()
 
 
 
-	// out(BLUE2)
-	// out("**************      TEST OPERATORS[]   ****************** ")
-	// out(END)
-	// map<char,std::string> themap;
+	out(BLUE2)
+	out("**************      TEST OPERATORS[]   ****************** ")
+	out(END)
+	map<char,std::string> themap;
 
-	// themap['a']="an element";
-	// themap['b']="another element";
-	// themap['c']=themap['b'];
+	themap['a']="an element";
+	themap['b']="another element";
+	themap['c']=themap['b'];
 
-	// std::cout << "themap['a'] is " << themap['a'] << '\n';
-	// std::cout << "themap['b'] is " << themap['b'] << '\n';
-	// std::cout << "themap['c'] is " << themap['c'] << '\n';
-	// std::cout << "themap['d'] is " << themap['d'] << '\n';
-	// std::cout << "themap now contains " << themap.size() << " elements.\n";
+	std::cout << "themap['a'] is " << themap['a'] << '\n';
+	std::cout << "themap['b'] is " << themap['b'] << '\n';
+	std::cout << "themap['c'] is " << themap['c'] << '\n';
+	std::cout << "themap['d'] is " << themap['d'] << '\n';
+	std::cout << "themap now contains " << themap.size() << " elements.\n";
 
 }
      
