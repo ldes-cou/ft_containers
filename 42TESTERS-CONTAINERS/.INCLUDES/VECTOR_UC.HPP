@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/12 15:57:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:22:20 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,14 +170,15 @@ namespace ft
              /** ************************************************************************** */
 		     /**                                 ELEMENT ACCESS                             */
 		     /** ************************************************************************** */
-                reference operator[] (size_type n){return (*(_start + n));}
-                const_reference operator[] (size_type n) const { return (*_start + n);}
+                reference operator[] (size_type n){return (*(_start + n)); }
+                
+                const_reference operator[] (size_type n) const { return (*_start + n); }
                 
                 reference at (size_type n)
                 {
                     if (n >= size())
                     {
-                        std::string error("vector::at: n (wich is ");
+                        std::string error("vector::at: n (which is "); 
                         error += ft::to_string(n);
                         error += std::string(") >= this->size() (wich is ");
                         error += ft::to_string(size());
@@ -190,9 +191,9 @@ namespace ft
                 {
                     if (n >= size())
                     {
-                        std::string error("vector::at: n (wich is ");
+                        std::string error("vector::at: n (which is ");
                         error += ft::to_string(n);
-                        error += std::string(") >= this->size() (wich is ");
+                        error += std::string(") >= this->size() (which is ");
                         error += ft::to_string(size());
                         error += std::string(")");
                         throw(std::out_of_range(error));
@@ -203,6 +204,7 @@ namespace ft
                 const_reference front() const {return (*_start);}
                 reference back(){return (*(_end - 1));}
                 const_reference back() const {return (*(_end - 1));}
+                
              /** ************************************************************************** */
 		     /**                                 CAPACITY                                   */
 		     /** ************************************************************************** */
@@ -229,6 +231,7 @@ namespace ft
              }
             size_type capacity() const{return ((this->_capacity - this->_start));}
             bool empty() const{ return (size() == 0);}
+            
             /*Increase the capacity of the vector (the total number of elements that the vector can hold 
             without requiring reallocation) to a value that's greater or equal to new_cap. 
             If new_cap is greater than the current capacity(), new storage is allocated, 
