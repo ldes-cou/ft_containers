@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 13:02:16 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:16:24 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ namespace ft
 					return (toFind->second);
 				else
 				{
-					return ((*((this->insert(make_pair(k, 0))).first)).second);
+					return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
 					// iterator it;
 					// bool res = true;
 					// pair<iterator, bool>(it, res) = insert(make_pair(k, 0));
