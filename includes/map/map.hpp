@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/14 18:57:52 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/15 13:10:17 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
-#include "vector/iterator_base_type.hpp"
-#include "vector/utils.hpp"
-#include "vector/lexicograpical_compare.hpp"
-#include "vector/equal.hpp"
-// #include "iterator_base_type.hpp"
-// #include "utils.hpp"
-// #include "lexicograpical_compare.hpp"
-// #include "equal.hpp"
+// #include "vector/iterator_base_type.hpp"
+// #include "vector/utils.hpp"
+// #include "vector/lexicograpical_compare.hpp"
+// #include "vector/equal.hpp"
+#include "iterator_base_type.hpp"
+#include "utils.hpp"
+#include "lexicograpical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft
 {
@@ -222,12 +222,19 @@ namespace ft
 				}
 			}
 			
-			// void swap(map& __x) //_GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value)
-			// {
-			// 	this->_rbtree.swap(__x._rbtree); }
-			// }
+			void swap(map& __x) //_GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value)
+			{
+				map<key_type, mapped_type> tmp;
+				tmp = *this;
+				*this = __x;
+				__x = tmp;
+				//this->_rbtree.swap(__x._rbtree); }
+			}
+			
 			void clear()
 			{
+				//_rbtree.deleteTree(_rbtree.getRoot());
+				erase(begin(), end());
 				erase(begin(), end());
 			}
 			
