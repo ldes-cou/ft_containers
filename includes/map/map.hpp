@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/15 13:10:17 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:16:05 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,18 +224,19 @@ namespace ft
 			
 			void swap(map& __x) //_GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value)
 			{
-				map<key_type, mapped_type> tmp;
-				tmp = *this;
-				*this = __x;
-				__x = tmp;
-				//this->_rbtree.swap(__x._rbtree); }
+				
+				// map<key_type, mapped_type> tmp;
+				// tmp = *this;
+				// *this = __x;
+				// __x = tmp;
+				this->_rbtree.swap(__x._rbtree);
 			}
 			
 			void clear()
 			{
 				//_rbtree.deleteTree(_rbtree.getRoot());
 				erase(begin(), end());
-				erase(begin(), end());
+				//erase(begin(), end());
 			}
 			
 			iterator find (const key_type& k)

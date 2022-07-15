@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/15 12:55:27 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:13:24 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,10 +333,6 @@ namespace ft
 				_alloc.deallocate(node, 1);
 				_alloc.destroy(node);
 			}
-			// void deleteTree()
-			// {
-				
-			// }
 			void deleteTree(Node_ptr node)
 			{
 				if (node == TNULL)
@@ -533,6 +529,13 @@ namespace ft
 				if (root) {
 					printHelper(this->root, "", true);
 				}
+			}
+			void swap(RBTree &_x)
+			{
+				std::swap(_x.root, this->root);
+				std::swap(_x.TNULL, this->TNULL);
+				std::swap(_x._alloc, this->_alloc);
+				std::swap(_x.size, this->size);
 			}
 	};
 	
