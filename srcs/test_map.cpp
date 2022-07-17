@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/15 15:12:41 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/17 11:08:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void test_clear();
 void test_swap();
 void test_map()
 {
+	out("                       ")
+	out(BLUE2)
+	out("***************	 TEST INSERT		*****************")
+	out(END)
 	pair<int, std::string>			my_pair(8, "salut");
 	map<int, std::string>			test;
 
@@ -44,26 +48,42 @@ void test_map()
 	test.insert(pair<int, std::string>(3, "foo"));
 	test.insert(pair<int, std::string>(746, "Marcel"));
 	test.insert(pair<int, std::string>(1, "truc"));
-	test._rbtree.printTree();
-	map<int, std::string>::iterator	kit = test.end();
-	std::cout <<(*kit) << std::endl;
+	//test._rbtree.printTree();
+	map<int, std::string>::iterator	kit = test.begin();
+	for (; kit != test.end(); kit++)
+		std::cout <<(*kit) << std::endl;
+		
+	out("                       ")
+	out(BLUE2)
+	out("***************	 TEST ERASE		*****************")
+	out(END)
+	
+	map<char,int> a_map;
+	map<char,int>::iterator tit;
 
-	std::cout << '\n';
+	// insert some values:
+	a_map['a']=10;
+	a_map['b']=20;
+	a_map['c']=30;
+	a_map['d']=40;
+	a_map['e']=50;
+	a_map['f']=60;
 
-	// while (it != test.end())
-	// {
-	// 	// cout << "start of while\n";
-	// 	std::cout << it->first << ", " << it->second << '\n';
-	// 	it++;
-	// 		cout << "iterator incremented\n";
+	tit=a_map.find('b');
+	std::cout << "found b\n";
+	a_map.erase (tit);                   // erasing by iterator
+	std::cout << "erase iterator to b\n";
+	a_map.erase ('c');                  // erasing by key
+	std::cout << "erase by key 'c'\n";
+	tit=a_map.find ('e');
+	std::cout << "erase by range 'e' to end\n";
+	a_map.erase ( tit, a_map.end() );    // erasing by range
 
-	// #ifndef STD
-	// 		cout << it.getPointer() << '\n';
-	// 		cout << test.end().getPointer() << '\n';
-	// #endif
+	std::cout << " display :\n";
+	// show content:
+	for (tit=a_map.begin(); tit!=a_map.end(); ++tit)
+		std::cout << tit->first << " => " << tit->second << '\n';
 
-	//}
-	//std::cout << "End of display loop\n";
 
 	out("                       ")
 	out(BLUE2)
@@ -142,11 +162,20 @@ void test_map()
 	out(BLUE2)
 	out("**************      TEST VALUECOMP/KEYCOMP   ****************** ")
 	out(END)
+	
 	map<char,int>::key_compare mycomp = mymap.key_comp();
-	std::cout << mycomp(3 , 2) << std::endl;
+	std::cout << "comparing 3 to 2 " << std::endl;
+	if (mycomp(3 , 2) == true )
+		std::cout << BLUE2 << "3 is inferior to 2" << END << std::endl;
+	else
+		std::cout << BLUE2 << "3 is not inferior to 2" << END << std::endl;
 	map<char,int>::value_compare micomp = mymap.value_comp();
 
-	std::cout << micomp(make_pair('a', 2), make_pair('b', 4)) << std::endl;
+	std::cout <<"comparing pair ('a', 2) to pair ('b', 4) "  << std::endl;
+	if (micomp(make_pair('a', 2), make_pair('b', 4)) == true)
+		std::cout << BLUE2 <<"pair ('a', 2) is inferior to pair ('b' , 4)" << END << std::endl;
+	else
+		std::cout << BLUE2 <<"pair ('a', 2) is not inferior to pair ('b' , 4)" << END << std::endl;
 	out(BLUE2)
 	out("**************      TEST EMPTY   ****************** ")
 	out(END)
@@ -200,11 +229,11 @@ void test_map()
 	first['y']=16;
 	first['z']=32;
 
-	second=first;                	// second now contains 3 ints
-	first=map<char,int>();  		// and first is now empty
+	// second=first;                	// second now contains 3 ints
+	// first=map<char,int>();  		// and first is now empty
 
-	std::cout << "Size of first: " << first.size() << '\n';
-	std::cout << "Size of second: " << second.size() << '\n';
+	// std::cout << "Size of first: " << first.size() << '\n';
+	// std::cout << "Size of second: " << second.size() << '\n';
 
 
 	out(BLUE2)
@@ -220,13 +249,15 @@ void test_map()
 	mamap['d']=80;
 	mamap['e']=100;
 
+	mamap._rbtree.printTree();
 	itlow = mamap.lower_bound ('b');  // itlow points to b
 	itup = mamap.upper_bound ('d');   // itup points to e (not d!)
 
 	std::cout << "low : " << itlow->first << '\n';
 	std::cout << "up : " << itup->first << '\n';
 
-	//mamap.erase(itlow,itup);        
+	//mamap.erase(itlow,itup);
+	//mamap._rbtree.printTree();
 
 	// print content:
 	for (map<char,int>::iterator it=mamap.begin(); it!=mamap.end(); ++it)

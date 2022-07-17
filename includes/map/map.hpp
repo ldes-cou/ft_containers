@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/15 15:16:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/17 10:27:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
-// #include "vector/iterator_base_type.hpp"
-// #include "vector/utils.hpp"
-// #include "vector/lexicograpical_compare.hpp"
-// #include "vector/equal.hpp"
-#include "iterator_base_type.hpp"
-#include "utils.hpp"
-#include "lexicograpical_compare.hpp"
-#include "equal.hpp"
+#include "vector/iterator_base_type.hpp"
+#include "vector/utils.hpp"
+#include "vector/lexicograpical_compare.hpp"
+#include "vector/equal.hpp"
 
 namespace ft
 {
@@ -269,10 +265,10 @@ namespace ft
 				{
 					if (!_comp(it->first, k))
 						break;//return (it);
-					it++;
+					++it;
 				}
-				if (it != end())
-					return (it++);
+				// if (it != end())
+				// 	return (it++);
 				return (it);
 
 			}
@@ -285,8 +281,8 @@ namespace ft
 						break;//return (it);
 					it++;
 				}
-				if (it != end())
-					return (it++);
+				// if (it != end())
+				// 	return (it++);
 				return (it);
 			}
 			iterator upper_bound( const Key& k )
@@ -294,12 +290,12 @@ namespace ft
 				iterator it = begin();
 				while(it != end())
 				{
-					if(!_comp(it->first, k))
+					if(_comp(k, it->first))
 						break;//return (++it);
-					it++;
+					++it;
 				}
-				if (it != end())
-					return (++it);
+				// if (it != end())
+				// 	return (++it);
 				return (it);
 			}
 			
@@ -308,12 +304,12 @@ namespace ft
 				const_iterator it = begin();
 				while(it != end())
 				{
-					if(!_comp(it->first, k))
+					if(_comp(k, it->first))
 						break;//return (++it);
-					it++;
+					++it;
 				}
-				if (it != end())
-					return (++it);
+				// if (it != end())
+				// 	return (++it);
 				return (it);
 			}
 			pair<iterator,iterator>             equal_range (const key_type& k)
