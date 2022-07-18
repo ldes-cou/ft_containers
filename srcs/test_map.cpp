@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 12:36:44 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:35:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print(map<Key, T>& lst)
 
 void test_clear();
 void test_swap();
-void test_map()
+void test_insert()
 {
 	out("                       ")
 	out(BLUE2)
@@ -43,16 +43,20 @@ void test_map()
 	map<int, std::string>			test;
 
 	test.insert(my_pair);
-	test.insert(pair<int, std::string>(-4, "bar"));
-	test.insert(pair<int, std::string>(2, "machin"));
-	test.insert(pair<int, std::string>(3, "foo"));
-	test.insert(pair<int, std::string>(746, "Marcel"));
-	test.insert(pair<int, std::string>(1, "truc"));
+	// test.insert(pair<int, std::string>(-4, "bar"));
+	// test.insert(pair<int, std::string>(2, "machin"));
+	// test.insert(pair<int, std::string>(3, "foo"));
+	// test.insert(pair<int, std::string>(746, "Marcel"));
+	// test.insert(pair<int, std::string>(1, "truc"));
 	//test._rbtree.printTree();
 	map<int, std::string>::iterator	kit = test.begin();
 	for (; kit != test.end(); kit++)
 		std::cout <<(*kit) << std::endl;
 		
+}
+
+void test_erase()
+{
 	out("                       ")
 	out(BLUE2)
 	out("***************	 TEST ERASE		*****************")
@@ -71,20 +75,27 @@ void test_map()
 
 	tit=a_map.find('b');
 	std::cout << "found b\n";
-	a_map.erase (tit);                   // erasing by iterator
+	a_map.erase (tit);                   
 	std::cout << "erase iterator to b\n";
-	a_map.erase ('c');                  // erasing by key
+	a_map.erase ('c');                 
 	std::cout << "erase by key 'c'\n";
 	tit=a_map.find ('e');
 	std::cout << "erase by range 'e' to end\n";
-	a_map.erase ( tit, a_map.end() );    // erasing by range
+	a_map.erase ( tit, a_map.end() );    
 
 	std::cout << " display :\n";
 	// show content:
 	for (tit=a_map.begin(); tit!=a_map.end(); ++tit)
 		std::cout << tit->first << " => " << tit->second << '\n';
+}
 
+void test_map()
+{	
+	
 
+	test_insert();
+	test_erase();
+	
 	out("                       ")
 	out(BLUE2)
 	out("***************	 TEST ITERATORS		*****************")
@@ -255,19 +266,8 @@ void test_map()
 
 	std::cout << "low : " << itlow->first << '\n';
 	std::cout << "up : " << itup->first << '\n';
-  //out("lol")
 
 	mamap.erase(itlow,itup);
-	// map<char,int>::iterator tmp;
-	// tmp = itlow++;
-	// map<char,int>::iterator tmp2;
-	// tmp2 = tmp++;
-	// mamap.erase(itlow);
-	// mamap.erase(tmp);
-	// mamap.erase(tmp2);
-	//mamap.erase(itup);
-	//out("lol")
-	//mamap._rbtree.printTree();
 
 	// print content:
 	for (map<char,int>::iterator it=mamap.begin(); it!=mamap.end(); ++it)
@@ -347,87 +347,87 @@ void test_swap()
 	for (map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
-// 	map<char, int>	other;
+	map<char, int>	other;
 
-// 	other['1'] = 73;
-// 	other['2'] = 173;
-// 	other['3'] = 763;
-// 	other['4'] = 73854;
-// 	other['5'] = 74683;
-// 	other['6'] = 753;
+	other['1'] = 73;
+	other['2'] = 173;
+	other['3'] = 763;
+	other['4'] = 73854;
+	other['5'] = 74683;
+	other['6'] = 753;
 
-// 	map<char, int>::const_iterator tmp3 = other.begin(); // tmp3 iterates through other
+	map<char, int>::const_iterator tmp3 = other.begin(); // tmp3 iterates through other
 
-// 	std::cout << "foo contains:\n";
-// 	for (map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
-// 		std::cout << it->first << " => " << it->second << '\n';
+	std::cout << "foo contains:\n";
+	for (map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
 
-// 	std::cout << "bar contains:\n";
-// 	for (map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
-// 		std::cout << it->first << " => " << it->second << '\n';
+	std::cout << "bar contains:\n";
+	for (map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
 
-// 	while(tmp != bar.end())
-// 	{
-// 		std::cout << tmp->first << " => " << tmp->second << '\n';
-// 		tmp++;
-// 	}
-// 	tmp--;
+	while(tmp != bar.end())
+	{
+		std::cout << tmp->first << " => " << tmp->second << '\n';
+		tmp++;
+	}
+	tmp--;
 
-// 	while(tmp2 != foo.end())
-// 	{
-// 		std::cout << tmp2->first << " => " << tmp2->second << '\n';
-// 		tmp2++;
-// 	}
-// 	tmp2--;
+	while(tmp2 != foo.end())
+	{
+		std::cout << tmp2->first << " => " << tmp2->second << '\n';
+		tmp2++;
+	}
+	tmp2--;
 
-// 	other.swap(foo); //tmp2 iterates through other
-// 					//tmp3 iterates throught foo
-// 	print(other);
-// 	print(foo);
-// 	print(bar);
-// 	while(tmp != bar.begin())
-// 	{
-// 		std::cout << tmp->first << " => " << tmp->second << '\n';
-// 		tmp--;
-// 	}
-// 	std::cout << tmp->first << " => " << tmp->second << '\n';
+	other.swap(foo); //tmp2 iterates through other
+					//tmp3 iterates throught foo
+	print(other);
+	print(foo);
+	print(bar);
+	while(tmp != bar.begin())
+	{
+		std::cout << tmp->first << " => " << tmp->second << '\n';
+		tmp--;
+	}
+	std::cout << tmp->first << " => " << tmp->second << '\n';
 
-// 	while(tmp2 != other.begin())
-// 	{
-// 		std::cout << tmp2->first << " => " << tmp2->second << '\n';
-// 		tmp2--;
-// 	}
-// 	std::cout << tmp2->first << " => " << tmp2->second << '\n';
+	while(tmp2 != other.begin())
+	{
+		std::cout << tmp2->first << " => " << tmp2->second << '\n';
+		tmp2--;
+	}
+	std::cout << tmp2->first << " => " << tmp2->second << '\n';
 
-// 	while(tmp3 != foo.end())
-// 	{
-// 		std::cout << tmp3->first << " => " << tmp3->second << '\n';
-// 		tmp3++;
-// 	}
-// 	tmp3--;
+	while(tmp3 != foo.end())
+	{
+		std::cout << tmp3->first << " => " << tmp3->second << '\n';
+		tmp3++;
+	}
+	tmp3--;
 
-// 	bar.swap(foo);
+	bar.swap(foo);
 
-// 	print(other);
-// 	print(foo);
-// 	print(bar);
+	print(other);
+	print(foo);
+	print(bar);
 
-// 	while(tmp != foo.end())
-// 	{
-// 		std::cout << tmp->first << " => " << tmp->second << '\n';
-// 		tmp++;
-// 	}
+	while(tmp != foo.end())
+	{
+		std::cout << tmp->first << " => " << tmp->second << '\n';
+		tmp++;
+	}
 
-// 	while(tmp2 != other.end())
-// 	{
-// 		std::cout << tmp2->first << " => " << tmp2->second << '\n';
-// 		tmp2++;
-// 	}
+	while(tmp2 != other.end())
+	{
+		std::cout << tmp2->first << " => " << tmp2->second << '\n';
+		tmp2++;
+	}
 
-// 	while(tmp3 != bar.begin())
-// 	{
-// 		std::cout << tmp3->first << " => " << tmp3->second << '\n';
-// 		tmp3--;
-// 	}
-// 	std::cout << tmp3->first << " => " << tmp3->second << '\n';
+	while(tmp3 != bar.begin())
+	{
+		std::cout << tmp3->first << " => " << tmp3->second << '\n';
+		tmp3--;
+	}
+	std::cout << tmp3->first << " => " << tmp3->second << '\n';
 }

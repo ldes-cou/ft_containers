@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:35:45 by lucrece           #+#    #+#             */
-/*   Updated: 2022/07/12 11:38:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:26:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ namespace ft
             *this = src;
         }
 		~RB_Node()
-		{}
+		{
+			
+		}
 		
 		RB_Node(const RB_Node &cpy) : 
 			parent(cpy.parent), 

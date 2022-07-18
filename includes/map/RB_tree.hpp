@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 12:37:27 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:44:58 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,9 +314,11 @@ namespace ft
 
 			~RBTree()
 			{
-				deleteTree(root);
-				root = TNULL;
+				if (root != TNULL)
+					deleteTree(root);
+				//root = TNULL;
 				destroyNode(TNULL);
+				//_alloc.destroy(TNULL);
 			}
 			
 			Node_ptr createNode()
@@ -331,7 +333,7 @@ namespace ft
 			void destroyNode(Node_ptr node)
 			{
 				_alloc.deallocate(node, 1);
-				_alloc.destroy(node);
+				//_alloc.destroy(node);
 			}
 			void deleteTree(Node_ptr node)
 			{
