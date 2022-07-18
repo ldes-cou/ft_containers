@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 18:57:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 20:55:04 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <stack>
 // #include "stack.hpp"
 #include "iterator_base_type.hpp"
-#include "utils.hpp"
+#include "distance.hpp"
 #include "lexicograpical_compare.hpp"
 #include "equal.hpp"
 
@@ -83,6 +83,7 @@ namespace ft
 				_comp(comp),
 				_rbtree(_alloc)
 			{}
+			
 			/* range */  
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), 
@@ -94,14 +95,17 @@ namespace ft
 			/* copy */
 			map (const map& x): _alloc(x._alloc), _comp(x._comp), _rbtree(x._rbtree)
 			{
-				*this = x;
+				//_rbtree = x._rbtree;
 			}
 			
 			map& operator=(const map& x)
 			{
 				if (x != *this)
 				{
-					clear();
+					if (size() != 0)
+						clear();
+					_comp = x._comp;
+					_alloc = x._alloc;
 					insert(x.begin(), x.end());
 				}
 				return (*this);
@@ -216,17 +220,17 @@ namespace ft
 			
      		void erase (iterator first, iterator last)
 			{
-				std::stack<key_type>	store;
+				std::stack<key_type>	save;
 				while (first != last)
 				{
-					store.push(first->first);
+					save.push(first->first);
 					first++;
 				}
-				while (!store.empty())
+				while (!save.empty())
 				{
 
-					this->erase(store.top());
-					store.pop();
+					this->erase(save.top());
+					save.pop();
 				}
 				// iterator tmp;
 				// //int i = 0;
@@ -252,8 +256,9 @@ namespace ft
 			
 			void clear()
 			{
-				//_rbtree.deleteTree(_rbtree.getRoot());
-				erase(begin(), end());
+				_rbtree.deleteTree(_rbtree.getRoot());
+				
+				//erase(begin(), end());
 				//erase(begin());
 				//erase(iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
 				//erase(begin(), end());

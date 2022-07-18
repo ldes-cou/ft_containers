@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 18:05:18 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 21:09:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 //# include <map>
 # include <utility>
 #include <iostream>
+#include "../includes/common.hpp"
+#include <list>
 
+#define T1 int
+#define T2 int
+typedef _pair<const T1, T2> T3;
 # define BLUE2 "\x1B[36m"
 # define PINK "\x1B[45;1m"
 # define END "\033[0m"
@@ -33,6 +38,40 @@ void	print(map<Key, T>& lst)
 
 void test_clear();
 void test_swap();
+void test_copy_construct()
+{
+	// std::list<T3> lst;
+	// unsigned int lst_size = 7;
+	// for (unsigned int i = 0; i < lst_size; ++i)
+	// 	lst.push_back(T3(lst_size - i, i));
+
+	// TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
+	// TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+
+	// TESTED_NAMESPACE::map<T1, T2> mp_range(it, --(--ite));
+	// for (int i = 0; it != ite; ++it)
+	// 	it->second = ++i * 5;
+
+	// it = mp.begin(); ite = --(--mp.end());
+	// TESTED_NAMESPACE::map<T1, T2> mp_copy(mp);
+	// for (int i = 0; it != ite; ++it)
+	// 	it->second = ++i * 7;
+
+	// std::cout << "\t-- PART ONE --" << std::endl;
+	// printSize(mp);
+	// printSize(mp_range);
+	// printSize(mp_copy);
+
+	// mp = mp_copy;
+	// //mp_copy = mp_range;
+	// mp_range.clear();
+
+	// std::cout << "\t-- PART TWO --" << std::endl;
+	// printSize(mp);
+	// printSize(mp_range);
+	// printSize(mp_copy);
+}
+
 void test_insert()
 {
 	out("                       ")
@@ -92,7 +131,7 @@ void test_erase()
 void test_map()
 {	
 	
-
+	test_copy_construct();
 	test_insert();
 	test_erase();
 	

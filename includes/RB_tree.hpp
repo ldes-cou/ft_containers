@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 18:02:51 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 20:53:02 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,10 @@ namespace ft
 				root = TNULL;
 				*this = rhs;
 			}
-
+			// RBTree& operator=(const RBTree& x)
+			// {
+			// 	if ()
+			// }
 			~RBTree()
 			{
 				if (root != TNULL)
