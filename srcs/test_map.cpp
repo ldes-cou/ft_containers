@@ -6,11 +6,11 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 15:35:42 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:05:18 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/map/map.hpp"
+# include "../includes/map.hpp"
 //# include "../includes/map/RB_tree.hpp"
 //# include <map>
 # include <utility>
@@ -43,11 +43,11 @@ void test_insert()
 	map<int, std::string>			test;
 
 	test.insert(my_pair);
-	// test.insert(pair<int, std::string>(-4, "bar"));
-	// test.insert(pair<int, std::string>(2, "machin"));
-	// test.insert(pair<int, std::string>(3, "foo"));
-	// test.insert(pair<int, std::string>(746, "Marcel"));
-	// test.insert(pair<int, std::string>(1, "truc"));
+	test.insert(pair<int, std::string>(-4, "bar"));
+	test.insert(pair<int, std::string>(2, "machin"));
+	test.insert(pair<int, std::string>(3, "foo"));
+	test.insert(pair<int, std::string>(746, "Marcel"));
+	test.insert(pair<int, std::string>(1, "truc"));
 	//test._rbtree.printTree();
 	map<int, std::string>::iterator	kit = test.begin();
 	for (; kit != test.end(); kit++)
@@ -260,7 +260,7 @@ void test_map()
 	mamap['d']=80;
 	mamap['e']=100;
 
-	mamap._rbtree.printTree();
+	//mamap._rbtree.printTree();
 	itlow = mamap.lower_bound ('b');  // itlow points to b
 	itup = mamap.upper_bound ('d');   // itup points to e (not d!)
 
@@ -301,7 +301,7 @@ void	test_clear()
 	mymap.insert(pair<int, std::string>(3, "foo"));
 	mymap.insert(pair<int, std::string>(746, "Marcel"));
 	mymap.insert(pair<int, std::string>(1, "truc"));
-	mymap._rbtree.printTree();
+	//mymap._rbtree.printTree();
 	
 	std::cout << "mymap size before clear is " << mymap.size() << std::endl;
 	mymap.clear();
