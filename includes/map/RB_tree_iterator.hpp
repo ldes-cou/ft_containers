@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RB_tree_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 11:44:25 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:38:47 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #define RB_ITERATOR_HPP
 //#include "RB_tree.hpp"
 #include "Node.hpp"
-#include "vector/iterator.hpp"
-// #include "iterator.hpp"
+// #include "vector/iterator.hpp"
+#include "iterator.hpp"
 
 template<typename _Tp>
 class RBTree;

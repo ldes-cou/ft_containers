@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 11:39:16 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:39:28 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
-#include "vector/iterator_base_type.hpp"
-#include "vector/utils.hpp"
-#include "vector/lexicograpical_compare.hpp"
-#include "vector/equal.hpp"
+// #include "vector/iterator_base_type.hpp"
+// #include "vector/utils.hpp"
+// #include "vector/lexicograpical_compare.hpp"
+// #include "vector/equal.hpp"
+#include <stack>
+// #include "stack/stack.hpp"
+#include "iterator_base_type.hpp"
+#include "utils.hpp"
+#include "lexicograpical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft
 {
@@ -96,7 +102,7 @@ namespace ft
 				if (x != *this)
 				{
 					clear();
-					insert(this->begin(), this->end());
+					insert(x.begin(), x.end());
 				}
 				return (*this);
 			}
@@ -210,15 +216,27 @@ namespace ft
 			
      		void erase (iterator first, iterator last)
 			{
-				iterator tmp;
-				//int i = 0;
-				while( first != last )
+				std::stack<key_type>	store;
+				while (first != last)
 				{
-					tmp = first++;
-					//std::cout << i << std::endl;
-					erase(tmp);
-					//i++;
+					store.push(first->first);
+					first++;
 				}
+				while (!store.empty())
+				{
+
+					this->erase(store.top());
+					store.pop();
+				}
+				// iterator tmp;
+				// //int i = 0;
+				// while( first != last )
+				// {
+				// 	tmp = first++;
+				// 	//std::cout << i << std::endl;
+				// 	erase(tmp);
+				// 	//i++;
+				// }
 				
 			}
 			
@@ -236,6 +254,8 @@ namespace ft
 			{
 				//_rbtree.deleteTree(_rbtree.getRoot());
 				erase(begin(), end());
+				//erase(begin());
+				//erase(iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
 				//erase(begin(), end());
 			}
 			

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_map.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 11:46:35 by lucrece          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:36:44 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,11 +229,11 @@ void test_map()
 	first['y']=16;
 	first['z']=32;
 
-	// second=first;                	// second now contains 3 ints
-	// first=map<char,int>();  		// and first is now empty
+	second=first;                	// second now contains 3 ints
+	first=map<char,int>();  		// and first is now empty
 
-	// std::cout << "Size of first: " << first.size() << '\n';
-	// std::cout << "Size of second: " << second.size() << '\n';
+	std::cout << "Size of first: " << first.size() << '\n';
+	std::cout << "Size of second: " << second.size() << '\n';
 
 
 	out(BLUE2)
@@ -255,12 +255,18 @@ void test_map()
 
 	std::cout << "low : " << itlow->first << '\n';
 	std::cout << "up : " << itup->first << '\n';
-  out("lol")
+  //out("lol")
 
-	//mamap.erase(itlow,itup);
-  mamap.erase(itlow);
-  mamap.erase(itup);
-  out("lol")
+	mamap.erase(itlow,itup);
+	// map<char,int>::iterator tmp;
+	// tmp = itlow++;
+	// map<char,int>::iterator tmp2;
+	// tmp2 = tmp++;
+	// mamap.erase(itlow);
+	// mamap.erase(tmp);
+	// mamap.erase(tmp2);
+	//mamap.erase(itup);
+	//out("lol")
 	//mamap._rbtree.printTree();
 
 	// print content:
@@ -300,7 +306,7 @@ void	test_clear()
 	std::cout << "mymap size before clear is " << mymap.size() << std::endl;
 	mymap.clear();
 	std::cout << "mymap size after clear is " << mymap.size() << std::endl;
-	mymap._rbtree.printTree();
+	//mymap._rbtree.printTree();
 }
 void test_swap()
 {
