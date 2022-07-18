@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/17 10:27:55 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:39:16 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,11 +211,15 @@ namespace ft
      		void erase (iterator first, iterator last)
 			{
 				iterator tmp;
+				//int i = 0;
 				while( first != last )
 				{
 					tmp = first++;
+					//std::cout << i << std::endl;
 					erase(tmp);
+					//i++;
 				}
+				
 			}
 			
 			void swap(map& __x) //_GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value)

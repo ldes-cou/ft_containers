@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RB_tree_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:27:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/17 10:16:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:44:25 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,25 @@ namespace ft
 		{
 			if (node != _NULL)
 			{
+				//std::cout << node->data.first << std::endl; 
 				while (node->right != _NULL)
 				{
+					//std::cout << node->data.first << std::endl; 
 					node = node->right;
 				}
+					//std::cout << node->data.first << std::endl; 
 			}
 			return node;
 		}
 			
 		Node_ptr	_next(Node_ptr node)
 		{
+				//std::cout << node->data.first << std::endl; 
 				if (node == max(_root))
+				{
 					return (_NULL);
+					
+				}
 				if (node->right != this->_NULL)
 					return (this->min(node->right));
 				Node_ptr parent = node->parent;

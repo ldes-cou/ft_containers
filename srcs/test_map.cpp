@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_map.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucrece <lucrece@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/17 11:08:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:46:35 by lucrece          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,13 +255,17 @@ void test_map()
 
 	std::cout << "low : " << itlow->first << '\n';
 	std::cout << "up : " << itup->first << '\n';
+  out("lol")
 
 	//mamap.erase(itlow,itup);
+  mamap.erase(itlow);
+  mamap.erase(itup);
+  out("lol")
 	//mamap._rbtree.printTree();
 
 	// print content:
 	for (map<char,int>::iterator it=mamap.begin(); it!=mamap.end(); ++it)
-	std::cout << it->first << " => " << it->second << '\n';
+	  std::cout << it->first << " => " << it->second << '\n';
 
 	out(BLUE2)
 	out("**************      TEST EQUAL RANGE   ****************** ")
@@ -281,7 +285,7 @@ void test_map()
 	std::cout << "upper bound points to: ";
 	std::cout << ret.second->first << " => " << ret.second->second << '\n';
 	test_swap();
-	//test_clear();
+	test_clear();
 }
 void	test_clear()
 {
@@ -421,9 +425,3 @@ void test_swap()
 // 	}
 // 	std::cout << tmp3->first << " => " << tmp3->second << '\n';
 }
-
-
-
-
-
-

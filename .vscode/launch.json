@@ -9,13 +9,13 @@
             "name": "Build and debug project",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/ft_map",
+            "program": "${workspaceFolder}/_map",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
+            "MIMode": "lldb",
             "setupCommands": [
               {
                 "description": "Enable pretty-printing for gdb",
@@ -23,8 +23,8 @@
                 "ignoreFailures": true
               }
             ],
-            "preLaunchTask": "C/C++: Build project",
-            "miDebuggerPath": "/usr/bin/gdb"
+            // "preLaunchTask": "C/C++: Build project",
+            "miDebuggerPath": "/usr/bin/lldb"
           }
         ]
       }
