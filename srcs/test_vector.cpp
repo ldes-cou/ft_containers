@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 12:11:31 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:58:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@
 
 void test_vector()
 {
-    std::cout << PINK << "************** TEST CONSTRUCTOR ****************" << END << std::endl;
-    NM::vector<int> first;                                            // empty vector of ints
-    std::cout << "ok" <<std::endl;                                 
+    std::cout << BLUE2 << "************** TEST CONSTRUCTOR ****************" << END << std::endl;
+    NM::vector<int> first;                                            // empty vector of ints                               
     NM::vector<int> second (4,100);                                 // four ints with value 100  
-    std::cout << "ok" <<std::endl;
+
                                  
     NM::vector<int> third (second.begin(),second.end());  // iterating through second
     std::cout << third.size() << std::endl;
@@ -41,7 +40,7 @@ void test_vector()
     for (int i=0;i<(int)fourth.size() - 1;i++)
       std::cout << ' ' << fourth[i];
     std::cout << '\n';
-    std::cout << PINK << "************** TEST CAPACITY ****************" << END << std::endl;
+    std::cout << BLUE2 << "************** TEST CAPACITY ****************" << END << std::endl;
     
     for (int i=0; i<100; i++) third.push_back(i);
     for (int i=0; i<100; i++) third.push_back(i);
@@ -53,7 +52,7 @@ void test_vector()
     third.clear();
     std::cout << "size: " << third.size() << "\n";
 
-    std::cout << PINK << "************** TEST RESIZE ****************" << END << std::endl;
+    std::cout << BLUE2 << "************** TEST RESIZE ****************" << END << std::endl;
     NM::vector<int> myvector;
     for (int i=1;i<10;i++) myvector.push_back(i);
     std::cout << myvector.size() << std::endl;
@@ -67,7 +66,7 @@ void test_vector()
     myvector.resize(12);
     
     std::cout << "end :" << *((myvector.end()- 1)) << std::endl;
-    std::cout << PINK << "************** TEST ELEMENT ACCESS ****************" << END << std::endl;
+    std::cout << BLUE2 << "************** TEST ELEMENT ACCESS ****************" << END << std::endl;
     std::cout << "myvector contains:";
     for (int i=0;i<(int)myvector.size();i++)
     {
@@ -84,7 +83,6 @@ void test_vector()
     std::cout << "front: "<< myvector.front() << std::endl;
     std::cout << "back : " << myvector.back() << std::endl;
     
-    std::cout << PINK << "************** MODIFIERS ****************" << END << std::endl;
     std::cout << BLUE2 << "**************  INSERT ****************" << END << std::endl;
     NM::vector<int>::iterator it;
     it = myvector.begin();
@@ -186,7 +184,6 @@ void test_vector()
     std::cout << "Size of jet: " << int(jet.size()) << '\n';
     std::cout << "Size of li : " << int(li.size()) << '\n';
     
-    std::cout << PINK << "************** NON MEMBER FONCTION OVERLOADS ****************" << END << std::endl;
     std::cout << BLUE2 << "**************  RELATIONAL OPERATOR==  ****************" << END << std::endl;
     {
       NM::vector<int> foo (3,100);   // three ints with a value of 100

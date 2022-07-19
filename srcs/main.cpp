@@ -4,7 +4,6 @@
 # define BLUE1 "\x1B[34m"
 # define PURPLE "\x1B[35m"
 # define BLUE2 "\x1B[36m"
-# define BLUE3 "\x1B[34;1m"
 # define END "\033[0m"
 # define SIZE 42
 
@@ -12,7 +11,6 @@
 #  define NM ft
 # endif
 
-//#include "includes/tests.hpp"
 #include "includes/map.hpp"
 
 #include <map>
@@ -26,12 +24,22 @@ void test_map();
 
 int main()
 {
-   // test_new_algo();
+
     clock_t tStart = clock();
+
+    std::cout << PINK << "/**************************   STACK   ******************************/" << END << std::endl; 
     test_stack();
-    test_map();
+    std::cout  << std::endl;
+
+    std::cout << PINK << "/**************************   VECTOR  ******************************/" << END << std::endl; 
     test_vector();
-    std::cout << "Time taken: "  << (double)(clock() - tStart)/CLOCKS_PER_SEC << std::endl;
+    std::cout << std::endl;
+
+    std::cout << PINK << "/**************************     MAP     ***************************/" << END << std::endl; 
+    test_map();
+    std::cout << std::endl;
+
+    std::cout << PURPLE << "Time taken: "  << (double)(clock() - tStart)/CLOCKS_PER_SEC << std::endl;
     return 0;
 }
 

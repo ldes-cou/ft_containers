@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 10:23:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:53:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ namespace ft
 			friend struct RB_Node<value_type>;
 			class value_compare : std::binary_function<value_type, 	value_type, bool>				//Nested function class to compare elements	see value_comp
 			{
-				friend class map<key_type, value_type, key_compare>;
-				//friend class RBTree<key_type, value_type, value_compare, Alloc>
-				//protected:
-				public:
+				friend class map;
+
+				protected:
 					Compare comp;
 					value_compare (Compare c) : comp(c) {}
-				//public:
+					
+				public:
 					bool operator() (const value_type& x, const value_type& y) const
 					{ return (comp(x.first, y.first)); }
 			};
@@ -66,17 +66,17 @@ namespace ft
 			typedef	typename iterator_traits<iterator>::difference_type		difference_type;												//a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef typename allocator_type::size_type						size_type;
 
+			private:
+			
 			allocator_type											_alloc;
 			Compare													_comp;
 			RBTree<key_type, value_type, key_compare, Alloc>		_rbtree;
 			
-			private:
 				
 		/********************************************** CONSTRUCTORS ****************************************/
 		
 		public :
 			/* default */
-			//map() : _rbtree() { }
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 			:
 				_alloc(alloc),
@@ -166,10 +166,8 @@ namespace ft
 			
 			const_iterator end() const
 			{
-				const_iterator it = const_iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot());
-				return (it); //ici pb
+				return (const_iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot())); 
 			}
-			
 			reverse_iterator rbegin()
 			{
 				return (reverse_iterator(this->end()));
@@ -232,36 +230,16 @@ namespace ft
 					this->erase(save.top());
 					save.pop();
 				}
-				// iterator tmp;
-				// //int i = 0;
-				// while( first != last )
-				// {
-				// 	tmp = first++;
-				// 	//std::cout << i << std::endl;
-				// 	erase(tmp);
-				// 	//i++;
-				// }
-				
 			}
 			
-			void swap(map& __x) //_GLIBCXX_NOEXCEPT_IF(__is_nothrow_swappable<_Compare>::value)
+			void swap(map& __x)
 			{
-				
-				// map<key_type, mapped_type> tmp;
-				// tmp = *this;
-				// *this = __x;
-				// __x = tmp;
 				this->_rbtree.swap(__x._rbtree);
 			}
 			
 			void clear()
 			{
-				//_rbtree.deleteTree(_rbtree.getRoot());
-				
 				erase(begin(), end());
-				//erase(begin());
-				//erase(iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
-				//erase(begin(), end());
 			}
 			
 			iterator find (const key_type& k)
@@ -275,8 +253,6 @@ namespace ft
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
 				const_iterator it = const_iterator(_rbtree.searchTree(toFind), _rbtree.getTNULL(), _rbtree.getRoot());
-				// if (it != end())
-				// 	std::cout << _rbtree.searchTree(toFind)->data.first << std::endl;
 				return (it);
 			}
 			
@@ -293,11 +269,9 @@ namespace ft
 				while(it != end() )
 				{
 					if (!_comp(it->first, k))
-						break;//return (it);
+						break;
 					++it;
 				}
-				// if (it != end())
-				// 	return (it++);
 				return (it);
 
 			}
@@ -307,11 +281,9 @@ namespace ft
 				while(it != end())
 				{
 					if(!_comp(it->first, k))
-						break;//return (it);
+						break;
 					it++;
 				}
-				// if (it != end())
-				// 	return (it++);
 				return (it);
 			}
 			iterator upper_bound( const Key& k )
@@ -320,11 +292,9 @@ namespace ft
 				while(it != end())
 				{
 					if(_comp(k, it->first))
-						break;//return (++it);
+						break;
 					++it;
 				}
-				// if (it != end())
-				// 	return (++it);
 				return (it);
 			}
 			
@@ -334,11 +304,9 @@ namespace ft
 				while(it != end())
 				{
 					if(_comp(k, it->first))
-						break;//return (++it);
+						break;
 					++it;
 				}
-				// if (it != end())
-				// 	return (++it);
 				return (it);
 			}
 			pair<iterator,iterator>             equal_range (const key_type& k)

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 12:42:59 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:54:47 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ namespace ft
 			node_alloc	_alloc;
 			size_type 	_size;
 			
-		public:
 
 		bool _comp(value_type a, value_type b, value_compare u = value_compare()) const
 		{
