@@ -21,6 +21,7 @@
 void test_vector();
 void test_stack();
 void test_map();
+void test_set();
 
 int main()
 {
@@ -39,8 +40,11 @@ int main()
     test_map();
     std::cout << std::endl;
 
+    std::cout << PINK << "/**************************     SET     ***************************/" << END << std::endl; 
+    test_set();
+    std::cout << std::endl;
+
     std::cout << PURPLE << "Time taken: "  << (double)(clock() - tStart)/CLOCKS_PER_SEC << std::endl;
     return 0;
 }
-
 

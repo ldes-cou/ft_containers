@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 12:53:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 18:25:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 #include <iostream>
 #include "RB_tree.hpp"
 #include "RB_tree_iterator.hpp"
-// #include "vector/iterator_base_type.hpp"
-// #include "vector/utils.hpp"
-// #include "vector/lexicograpical_compare.hpp"
-// #include "vector/equal.hpp"
-// #include <stack>
-#include "stack.hpp"
 #include "iterator_base_type.hpp"
 #include "distance.hpp"
+#include "stack.hpp"
 #include "lexicograpical_compare.hpp"
 #include "equal.hpp"
 
@@ -40,7 +35,6 @@ namespace ft
 			typedef T												mapped_type;                    //The second template parameter (T)	
 			typedef typename ft::pair<const key_type, mapped_type>	value_type;                      //pair<const key_type,mapped_type>	
 			typedef Compare											key_compare;					//The third template parameter (Compare)	defaults to: less<key_type>
-			friend struct RB_Node<value_type>;
 			class value_compare : std::binary_function<value_type, 	value_type, bool>				//Nested function class to compare elements	see value_comp
 			{
 				friend class map;
@@ -73,7 +67,7 @@ namespace ft
 			RBTree<key_type, value_type, key_compare, Alloc>		_rbtree;
 			
 				
-		/********************************************** CONSTRUCTORS ****************************************/
+		/*******************************************  	CONSTRUCTORS	 ****************************************/
 		
 		public :
 			/* default */
@@ -98,6 +92,10 @@ namespace ft
 				insert(x.begin(), x.end());
 			}
 			
+			/* destructor */
+			~map()
+			{}
+			
 			map& operator=(const map& x)
 			{
 				if (x != *this)
@@ -110,45 +108,8 @@ namespace ft
 				}
 				return (*this);
 			}
-			~map()
-			{}
-			
-			mapped_type& operator[] (const key_type& k)
-			{
-				iterator toFind = find(k);
-				if (toFind != end())
-					return (toFind->second);
-				return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
-			}
-			
-			template< class InputIt >
-			void insert( InputIt first, InputIt last )
-			{
-				for (;first != last; first++)
-					insert(*first);
-			}
-			
-			ft::pair<iterator, bool> insert( const value_type& value )
-			{
-				iterator it;
-				it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
-				if (it != this->end())
-					return (ft::make_pair(it, false));
-				else
-				{
-					_rbtree.insert(value);
-					it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
-					return (ft::make_pair(it, true));
-				}
-			}
-			
-			iterator insert (iterator position, const value_type& val)
-			{
-				(void)position;
-				if (_rbtree.insert(val) == true)
-					return (iterator(_rbtree.searchTree(val), _rbtree.getTNULL(), _rbtree.getRoot()));
-				return (end());
-			}
+			//********************************************** ITERATORS ****************************************/
+            
 			iterator begin()
 			{
 				return (iterator(_rbtree.minimum(_rbtree.getRoot()), _rbtree.getTNULL(), _rbtree.getRoot()));
@@ -187,8 +148,9 @@ namespace ft
 			{
 				return (const_reverse_iterator(this->begin()));
 			}
-			
-			bool empty() const
+            /**********************************************     CAPACITY    ****************************************/
+
+            bool empty() const
 			{
 				if (this->_rbtree.getSize() == 0)
 					return (true);
@@ -203,6 +165,37 @@ namespace ft
 			size_type	size() const
 			{
 				return (this->_rbtree.getSize());
+			}
+            
+            /**********************************************     MODIFIERS        ****************************************/
+            
+            	template< class InputIt >
+			void insert( InputIt first, InputIt last )
+			{
+				for (;first != last; first++)
+					insert(*first);
+			}
+			
+			ft::pair<iterator, bool> insert( const value_type& value )
+			{
+				iterator it;
+				it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
+				if (it != this->end())
+					return (ft::make_pair(it, false));
+				else
+				{
+					_rbtree.insert(value);
+					it = iterator(_rbtree.searchTree(value), _rbtree.getTNULL(), _rbtree.getRoot());
+					return (ft::make_pair(it, true));
+				}
+			}
+			
+			iterator insert (iterator position, const value_type& val)
+			{
+				(void)position;
+				if (_rbtree.insert(val) == true)
+					return (iterator(_rbtree.searchTree(val), _rbtree.getTNULL(), _rbtree.getRoot()));
+				return (end());
 			}
 
 			void erase (iterator position)
@@ -241,7 +234,20 @@ namespace ft
 			{
 				erase(begin(), end());
 			}
+			/**********************************************     OBSERVERS        ****************************************/
+            
+            key_compare	key_comp(void) const
+			{
+				return (_comp);
+			}
 			
+			value_compare	value_comp(void) const
+			{
+				return (value_compare(key_comp()));
+			}
+            
+            /**********************************************     OPERATIONS        ****************************************/
+		
 			iterator find (const key_type& k)
 			{
 				value_type toFind = ft::make_pair(k, mapped_type());
@@ -321,18 +327,20 @@ namespace ft
   				return ft::make_pair ( it, upper_bound(k) );	
 			}
 			
+            
+            /**********************************************     GET_ALLOCATOR        ****************************************/
+            
 			allocator_type get_allocator() const
 			{
 				return (_alloc);
 			}
-			key_compare	key_comp(void) const
-			{
-				return (_comp);
-			}
 			
-			value_compare	value_comp(void) const
+			mapped_type& operator[] (const key_type& k)
 			{
-				return (value_compare(key_comp()));
+				iterator toFind = find(k);
+				if (toFind != end())
+					return (toFind->second);
+				return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
 			}
 	};
 			

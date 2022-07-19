@@ -15,6 +15,7 @@ SOURCES_NAME	= 	\
 					srcs/test_map		\
 					srcs/test_stack		\
 					srcs/test_vector	\
+					srcs/test_set
 
 
 # Add SRCS_DIR name before filename and cpp at the end
