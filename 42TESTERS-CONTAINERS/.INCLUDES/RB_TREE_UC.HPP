@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:52:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 12:42:59 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:42:31 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,7 +349,6 @@ namespace ft
 		{
 			return searchTreeHelper(this->_root, k);
 		}
-		
 		bool isInTree(value_type k)
 		{
 			if (searchTree(k) == _TNULL)
@@ -435,7 +434,7 @@ namespace ft
 			Node *toFind = searchTree(key);
 			if (toFind != _TNULL)
 				return (false);
-			Node_ptr node = createNode();
+			Node_ptr node = createNode();//new Node;
 			node->parent = NULL;
 			Key *key_node = const_cast<Key*>(&node->data.first);
 			*key_node = key.first;
@@ -499,9 +498,9 @@ namespace ft
 
 		Node_ptr getRoot() const { return ( this->_root ) ;}
 		
-		Node_ptr getTNULL() const { return (this->_TNULL ) ;}
+		Node_ptr getTNULL() const { return (this->_TNULL) ;}
 
-		size_type getSize() const {return (this->_size );}
+		size_type getSize() const {return (this->_size);}
 		
 		void swap(RBTree &_x)
 		{

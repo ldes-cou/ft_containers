@@ -1,39 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.hpp                                          :+:      :+:    :+:   */
+/*   hbaudet_utils.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbaudet <hbaudet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/17 14:39:17 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 12:09:37 by ldes-cou         ###   ########.fr       */
+/*   Created: 2020/12/03 14:20:31 by hbaudet           #+#    #+#             */
+/*   Updated: 2021/01/18 15:54:58 by hbaudet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef TEST_UTILS_HPP
+# define TEST_UTILS_HPP
 
-# define GREEN "\x1B[32m"
-# define YELLOW "\x1B[33m"
-# define PINK "\x1B[45;1m"
-# define BLUE1 "\x1B[34m"
-# define PURPLE "\x1B[35m"
-# define BLUE2 "\x1B[36m"
-# define BLUE3 "\x1B[34;1m"
-# define END "\033[0m"
+# include <iostream>
+# include <string>
+# include <sstream>
 
-#include <iostream>
-#include <ostream>
+# ifdef DEBUG
+#  define PRINT 1
+#  else
+#  define PRINT 0
+# endif
+
 
 namespace ft
 {
 	static std::ostream& 									cout = std::cout;
 	typedef std::string										string;
+
+
+# ifndef TO_STRING
+#  define TO_STRING
+	string	to_string(size_t n)
+	{
+		std::stringstream tmp;
+
+		tmp << n;
+
+		return tmp.str();
+	}
+# endif
 }
-
-
-void test_stack();
-void test_vector();
-void test_map();
 
 #endif

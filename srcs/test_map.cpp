@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 12:00:55 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:44:45 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # if !defined(NM)
 #  define NM ft
-# endif /* !defined(STD) */
+# endif /* = STD */
 
 #define out(x) std::cout << x << std::endl; 
 template <class Key, class T>

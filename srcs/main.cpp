@@ -12,7 +12,7 @@
 #  define NM ft
 # endif
 
-#include "includes/tests.hpp"
+//#include "includes/tests.hpp"
 #include "includes/map.hpp"
 
 #include <map>

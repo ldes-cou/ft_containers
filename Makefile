@@ -11,7 +11,7 @@ DEFINE_STD		=	-D NAMESPACE="std"
 DEFINE_FT		=	-D NAMESPACE="ft"
 
 SOURCES_NAME	= 	\
-					srcs/main_map		\
+					srcs/main		\
 					srcs/test_map		\
 					srcs/test_stack		\
 					srcs/test_vector	\
