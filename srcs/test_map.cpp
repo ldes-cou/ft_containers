@@ -6,21 +6,16 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 21:09:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:28:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/map.hpp"
-//# include "../includes/map/RB_tree.hpp"
-//# include <map>
+# include <map>
 # include <utility>
-#include <iostream>
-#include "../includes/common.hpp"
-#include <list>
+# include <iostream>
+# include <list>
 
-#define T1 int
-#define T2 int
-typedef _pair<const T1, T2> T3;
 # define BLUE2 "\x1B[36m"
 # define PINK "\x1B[45;1m"
 # define END "\033[0m"
@@ -28,7 +23,7 @@ typedef _pair<const T1, T2> T3;
 #define out(x) std::cout << x << std::endl; 
 using namespace ft;
 
-	template <class Key, class T>
+template <class Key, class T>
 void	print(map<Key, T>& lst)
 {
 	for (typename map<Key, T>::iterator it = lst.begin(); it != lst.end(); it++)
@@ -38,39 +33,7 @@ void	print(map<Key, T>& lst)
 
 void test_clear();
 void test_swap();
-void test_copy_construct()
-{
-	// std::list<T3> lst;
-	// unsigned int lst_size = 7;
-	// for (unsigned int i = 0; i < lst_size; ++i)
-	// 	lst.push_back(T3(lst_size - i, i));
 
-	// TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
-	// TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-
-	// TESTED_NAMESPACE::map<T1, T2> mp_range(it, --(--ite));
-	// for (int i = 0; it != ite; ++it)
-	// 	it->second = ++i * 5;
-
-	// it = mp.begin(); ite = --(--mp.end());
-	// TESTED_NAMESPACE::map<T1, T2> mp_copy(mp);
-	// for (int i = 0; it != ite; ++it)
-	// 	it->second = ++i * 7;
-
-	// std::cout << "\t-- PART ONE --" << std::endl;
-	// printSize(mp);
-	// printSize(mp_range);
-	// printSize(mp_copy);
-
-	// mp = mp_copy;
-	// //mp_copy = mp_range;
-	// mp_range.clear();
-
-	// std::cout << "\t-- PART TWO --" << std::endl;
-	// printSize(mp);
-	// printSize(mp_range);
-	// printSize(mp_copy);
-}
 
 void test_insert()
 {
@@ -87,7 +50,6 @@ void test_insert()
 	test.insert(pair<int, std::string>(3, "foo"));
 	test.insert(pair<int, std::string>(746, "Marcel"));
 	test.insert(pair<int, std::string>(1, "truc"));
-	//test._rbtree.printTree();
 	map<int, std::string>::iterator	kit = test.begin();
 	for (; kit != test.end(); kit++)
 		std::cout <<(*kit) << std::endl;
@@ -129,9 +91,7 @@ void test_erase()
 }
 
 void test_map()
-{	
-	
-	test_copy_construct();
+{
 	test_insert();
 	test_erase();
 	
@@ -187,7 +147,10 @@ void test_map()
 		std::cout << it->first << " => " << it->second << '\n';
 		it++;
 	}
-
+	out("                       ")
+	out(BLUE2)
+	out("***************	 TEST ASSIGNATION	*****************")
+	out(END)
 	map<char,int> mimap;
 	char c;
 
@@ -226,6 +189,7 @@ void test_map()
 		std::cout << BLUE2 <<"pair ('a', 2) is inferior to pair ('b' , 4)" << END << std::endl;
 	else
 		std::cout << BLUE2 <<"pair ('a', 2) is not inferior to pair ('b' , 4)" << END << std::endl;
+		
 	out(BLUE2)
 	out("**************      TEST EMPTY   ****************** ")
 	out(END)
@@ -299,7 +263,7 @@ void test_map()
 	mamap['d']=80;
 	mamap['e']=100;
 
-	//mamap._rbtree.printTree();
+
 	itlow = mamap.lower_bound ('b');  // itlow points to b
 	itup = mamap.upper_bound ('d');   // itup points to e (not d!)
 
@@ -308,7 +272,6 @@ void test_map()
 
 	mamap.erase(itlow,itup);
 
-	// print content:
 	for (map<char,int>::iterator it=mamap.begin(); it!=mamap.end(); ++it)
 	  std::cout << it->first << " => " << it->second << '\n';
 
@@ -332,6 +295,7 @@ void test_map()
 	test_swap();
 	test_clear();
 }
+
 void	test_clear()
 {
 	map<int, std::string> mymap;
@@ -340,13 +304,14 @@ void	test_clear()
 	mymap.insert(pair<int, std::string>(3, "foo"));
 	mymap.insert(pair<int, std::string>(746, "Marcel"));
 	mymap.insert(pair<int, std::string>(1, "truc"));
-	//mymap._rbtree.printTree();
+
 	
 	std::cout << "mymap size before clear is " << mymap.size() << std::endl;
 	mymap.clear();
 	std::cout << "mymap size after clear is " << mymap.size() << std::endl;
-	//mymap._rbtree.printTree();
+
 }
+
 void test_swap()
 {
 	

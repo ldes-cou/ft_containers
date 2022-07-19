@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   distance.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:08:47 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/16 17:40:31 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:24:35 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#ifndef DISTANCE_HPP
+#define DISTANCE_HPP
 # include <cstddef>
 #include <string>
 #include <sstream>

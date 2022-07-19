@@ -14,7 +14,7 @@
 #ifndef NAMESPACE
 # define NAMESPACE std
 
-void test_new_algo();
+
 
 int main()
 {

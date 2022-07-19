@@ -6,17 +6,13 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:39:33 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 18:04:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 11:25:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-
-//tester
-// #include "base.hpp"
-// #include "common.hpp"
 #include "lexicograpical_compare.hpp"
 #include "equal.hpp"
 #include "is_integral.hpp"
@@ -45,39 +41,17 @@ namespace ft
 				typedef const value_type&						        const_reference;
 				typedef typename Allocator::pointer				        pointer;
 				typedef typename Allocator::const_pointer		        const_pointer;
-				// typedef value_type*                                 iterator;
-                // typedef const value_type*                           const_iterator;
                 typedef ft::random_access_iterator<value_type>          iterator;
 				typedef ft::random_access_iterator<const value_type>    const_iterator;
 				typedef	ft::reverse_iterator<iterator>			        reverse_iterator;
 				typedef ft::reverse_iterator<const_iterator>	        const_reverse_iterator;
 				typedef typename std::ptrdiff_t					        difference_type;
-                typedef typename allocator_type::size_type						size_type;
-                
-        private:
-            allocator_type  _alloc;
-            pointer         _start;
-            pointer         _end;
-            pointer         _capacity;
-            
-            size_type	computeCapacity(size_type __n)
-			{
-				if (this->capacity() > (this->size() + __n))
-                {
-					return (this->capacity());
-                }
-				size_type __len = size() + std::max(size(), __n);
-				return (__len < size() || __len > max_size()) ? max_size() : __len;
-			}   
-
-           
-            
-        public:        
+                typedef typename allocator_type::size_type				size_type;
+                   
                 
              /** ************************************************************************** */
-		     /**                                     CONSTRUCTORS                           */
-		     /** ************************************************************************** */
-             
+		     /**                            CONSTRUCTORS                                    */
+		     /** ************************************************************************** */  
                  
                 /*Default
                     Constructs an empty container, with no elements.
@@ -130,12 +104,9 @@ namespace ft
                  /*copy constructor
                     Constructs a container with a copy of each of the elements in x, in the same order. 
                  */
-                 vector (const vector& x):_alloc(x.get_allocator())
+                 vector (const vector& x):_alloc(x.get_allocator()), _start(0), _end(0), _capacity(0)
                  {
-                     _start = _alloc.allocate(x.size());
-                     _capacity = _start + x.size();
-                     _end = _start;
-                     assign(x.begin(), x.end()); 
+                     *this = x;
                  }
                 
                 /*destructor*/
@@ -176,29 +147,23 @@ namespace ft
                 
                 reference at (size_type n)
                 {
-                    if (n >= size()) //change it, too long std::string error("vector::at: n (which is "); error += ft::to_string(n) += ") >= this->size() (which is " += ft::to_string(size() += std::string(")"
+                    if (n >= size()) 
                     {
-                        std::string error("vector::at: n (which is "); 
-                        error += ft::to_string(n);
-                        error += std::string(") >= this->size() (which is ");
-                        error += ft::to_string(size());
-                        error += std::string(")");
+                        std::string error("vector::at: n (which is ");
+                        error += ft::to_string(n) += (") >= this->size() (which is " + ft::to_string(size()) + std::string(")"));
                         throw(std::out_of_range(error));
                     }
-                    return (*(_start + n));
+                    return (_start[n]);
                 }
                 const_reference at (size_type n) const
                 {
                     if (n >= size())
                     {
                         std::string error("vector::at: n (which is ");
-                        error += ft::to_string(n);
-                        error += std::string(") >= this->size() (which is ");
-                        error += ft::to_string(size());
-                        error += std::string(")");
+                        error += ft::to_string(n) += (") >= this->size() (which is " + ft::to_string(size()) + std::string(")"));
                         throw(std::out_of_range(error));
                     }
-                    return (*(_start + n));
+                    return (_start[n]);
                 }
                 reference front(){return (*_start);}
                 const_reference front() const {return (*_start);}
@@ -249,7 +214,7 @@ namespace ft
                         for (size_type i = 0; i < this->size(); i++)
                         {
                             this->_alloc.construct(new_start + i, this->_start[i]);
-                            this->_alloc.destroy(&(this->_start[i]));
+                            this->_alloc.destroy(this->_start + i);
                             new_end++;
                         }
                         this->_alloc.deallocate(this->_start, this->capacity());
@@ -258,22 +223,7 @@ namespace ft
                         this->_capacity = this->_start + n;
                 }
             }
-            // void	reserve(size_type n) {
-			// 	if (n > this->max_size())
-			// 		throw std::length_error("vector::reserve");
-			// 	if (this->capacity() < n) {
-			// 		const size_type old_size = this->size();
-			// 		pointer		tmp = this->_alloc.allocate(n, this->_start);
-			// 		for	(size_type i = 0; i < this->size(); i++) {
-			// 			this->_alloc.construct(tmp + i, this->_start[i]);
-			// 			this->_alloc.destroy(&(this->_start[i]));
-			// 		}
-			// 		this->_alloc.deallocate(this->_start, this->capacity());
-			// 		this->_start = tmp;
-			// 		this->_end = tmp + old_size;
-			// 		this->_capacity = this->_start + n;
-			// 	}
-			//}
+            
             /** *************************************************************************** */
 		    /**                                 MODIFIERS                                  */
 		    /** ************************************************************************* */
@@ -282,7 +232,7 @@ namespace ft
             {
                 if (this->_end == this->_capacity)
                 {
-                    reserve(computeCapacity(1));
+                    reserve(findCapacity(1));
                 }
                 _alloc.construct(_end, val);
                 _end++;
@@ -304,7 +254,7 @@ namespace ft
             {
                 size_type new_start = ft::distance(begin(), position);
                 size_type i = size();
-                reserve(computeCapacity(1));
+                reserve(findCapacity(1));
                 while (i > 0 && --i >= new_start)
                 {
                     _alloc.construct(_start + i + 1, *(_start + i)); 
@@ -321,7 +271,7 @@ namespace ft
                     return ;
                 size_type new_start = ft::distance(begin(), position);
                 ptrdiff_t i = size();
-                reserve(computeCapacity(n));
+                reserve(findCapacity(n));
                 while(i > 0 && --i >= static_cast<ptrdiff_t>(new_start))
                 {
                     _alloc.construct((_start + i + n), *(_start + i)); 
@@ -344,7 +294,7 @@ namespace ft
                     return ;
                 size_type new_start = ft::distance(begin(), position);
                 size_type i = size();
-                reserve(computeCapacity(dist));
+                reserve(findCapacity(dist));
                 while (i > 0 && --i >= new_start)
                 {
                     _alloc.construct(_start + i + dist, *(_start + i));
@@ -360,63 +310,32 @@ namespace ft
             
     
 
-            iterator erase (iterator position) {
-				return (erase(position, position + 1));
-			}
-            
-            // iterator erase(iterator position)
-            // {
-            //     if (size() <= 0)
-            //         return (position);
-            //     size_type i = ft::distance(begin(), position);
-            //     iterator it = position + 1;
-            //     while (it != end())
-            //     {
-            //         _alloc.destroy(_start + i);
-            //         _alloc.construct(_start + i, *it);
-            //         it++;
-            //         i++;
-            //     }
-            //     _alloc.destroy(_start + i);
-            //     _end -= 1;
-            //     return (position);
-            // }
+          iterator erase(iterator position)
+          {
+                if (size() <= 0)
+                    return (position); // ?? on verra
+                size_type i = ft::distance(begin(), position);
+                iterator it = position + 1;
+                while (it != end())
+                {
+                    _alloc.destroy(_start + i);
+                    _alloc.construct(_start + i, *it);
+                    it++;
+                    i++;
+                }
+                _alloc.destroy(_start + i);
+                _end -= 1;
+                return (position);
+            }
 
-            
-            // iterator erase (iterator first, iterator last)
-            // {
-            //     size_type dist = ft::distance(last, iterator(_end));
-            //     size_type  i = ft::distance(iterator(_start), first);
-            //     if (this->size() == 0)
-            //         return (_end);
-            //     while(i <= dist)
-            //     {
-            //         _alloc.destroy(_start + i);
-            //         i++;
-            //     }
-            //     for (size_type i = 0; i <= dist; i++)
-            //     {
-            //         _alloc.construct((_start + i),*(last + i));
-            //     }
-            //     _end -= (last - first);
-            //     return (last + 1);
-            // }
-            iterator erase (iterator first, iterator last)
-             {
-				if (first != this->end() && first != last) {
-					pointer p_first = &(*first);
-					for (; &(*first) != &(*last); first++)
-						_alloc.destroy(&(*first));
-					for (int i = 0; i < _end - &(*last); i++)
-					{
-						_alloc.construct(p_first + i, *(&(*last) + i));
-						_alloc.destroy(&(*last) + i);
-					}
-					_end -= (&(*last) - p_first);
-					return (iterator(p_first));
-				}
-				return (first);
-			}
+            iterator erase(iterator first, iterator last)
+            {
+                size_type dist = ft::distance(first, last);
+                iterator ret = first;
+                for (; dist; dist--)
+                    ret = erase(ret);
+                return (ret);
+            }
             
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last, 
@@ -424,10 +343,9 @@ namespace ft
             {
                 difference_type dist = ft::distance(first, last);
                 this->clear();
-                reserve(computeCapacity(dist));
+                reserve(findCapacity(dist));
                 for (difference_type i = 0; i < dist; i++)
                 {
-                    //_alloc.construct((_start + i), *(first + i));
                     _alloc.construct((_start + i), *(first));
                     first++;
                 }
@@ -436,7 +354,7 @@ namespace ft
             
             void assign (size_type n, const value_type& val)
             {
-                reserve(computeCapacity(n));
+                reserve(findCapacity(n));
                 this->clear();
                 for (size_type i = 0 ; i < n; i++)
                     _alloc.construct((_start + i), val);
@@ -455,6 +373,23 @@ namespace ft
 		    /** ************************************************************************** */
             allocator_type get_allocator() const {return (_alloc);}
 
+        private:
+            allocator_type  _alloc;
+            pointer         _start;
+            pointer         _end;
+            pointer         _capacity;
+            
+            size_type	findCapacity(size_type __n)
+			{
+				if (this->capacity() > (this->size() + __n))
+                {
+					return (this->capacity());
+                }
+				size_type __len = size() + std::max(size(), __n);
+				return (__len < size() || __len > max_size()) ? max_size() : __len;
+			}   
+
+           
         };
             /** *************************************************************************** */
 		    /**                        NON MEMBER FUNCTION                                 */

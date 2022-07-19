@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:49:18 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 20:55:04 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:23:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 // #include "vector/utils.hpp"
 // #include "vector/lexicograpical_compare.hpp"
 // #include "vector/equal.hpp"
-#include <stack>
-// #include "stack.hpp"
+// #include <stack>
+#include "stack.hpp"
 #include "iterator_base_type.hpp"
 #include "distance.hpp"
 #include "lexicograpical_compare.hpp"
@@ -93,9 +93,9 @@ namespace ft
 			}
 
 			/* copy */
-			map (const map& x): _alloc(x._alloc), _comp(x._comp), _rbtree(x._rbtree)
+			map (const map& x): _alloc(x._alloc), _comp(x._comp), _rbtree(_alloc) 
 			{
-				//_rbtree = x._rbtree;
+				insert(x.begin(), x.end());
 			}
 			
 			map& operator=(const map& x)
@@ -220,7 +220,7 @@ namespace ft
 			
      		void erase (iterator first, iterator last)
 			{
-				std::stack<key_type>	save;
+				ft::stack<key_type>	save;
 				while (first != last)
 				{
 					save.push(first->first);
@@ -256,9 +256,9 @@ namespace ft
 			
 			void clear()
 			{
-				_rbtree.deleteTree(_rbtree.getRoot());
+				//_rbtree.deleteTree(_rbtree.getRoot());
 				
-				//erase(begin(), end());
+				erase(begin(), end());
 				//erase(begin());
 				//erase(iterator(_rbtree.getTNULL(), _rbtree.getTNULL(), _rbtree.getRoot()));
 				//erase(begin(), end());

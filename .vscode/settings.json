@@ -76,6 +76,7 @@
         "queue": "cpp",
         "ratio": "cpp",
         "__functional_03": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "stack": "cpp"
     }
 }

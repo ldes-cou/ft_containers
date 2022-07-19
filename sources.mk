@@ -9,7 +9,6 @@ VECTOR_SOURCES	+=            		\
 MAP_SOURCES		+=					\
 		srcs/main_map.cpp			\
 		srcs/test_map.cpp			\
-		srcs/test_new_algo.cpp
 
 STACK_SOURCES	+=					\
 		srcs/main_stack.cpp			\
