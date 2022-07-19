@@ -1,103 +1,84 @@
-CXX					:= c++
-ifeq ($(shell uname -s), Darwin)
-	CXX				:= g++
-endif
 
-VECTOR_TARGET		:= _vector
-STACK_TARGET		:= _stack
-MAP_TARGET			:= _map
+FT_NAME			=	ft_containers
+STD_NAME		=	std_containers
 
-BUILD				:= release
+SOURCES_DIR		=	srcs/
 
-include sources.mk
+INCLUDES		= 	-I include -I .
 
-SRCDIR				:= srcs
-INCDIR				:= includes
-BUILDDIR			:= objs_
-TARGETDIR			:= .
-SRCEXT				:= cpp
-DEPEXT				:= d
-OBJEXT				:= o
+DEFINE_STD		=	-D NAMESPACE="std"
 
-VECTOR_OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(VECTOR_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-MAP_OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(MAP_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-STACK_OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)$(VERSION)/%,$(STACK_SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+DEFINE_FT		=	-D NAMESPACE="ft"
 
-cflags.release		:= -Wall -Werror -Wextra
-cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb 
-cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
-CFLAGS				:= $(cflags.$(BUILD))
-CPPFLAGS			:= $(cflags.$(BUILD)) -DNS=$(VERSION) -std=c++98
-
-lib.release			:=
-lib.valgrind		:= $(lib.release)
-lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
-LIB					:= $(lib.$(BUILD))
-
-INC					:= -I$(INCDIR) -I/usr/local/include
-INCDEP				:= -I$(INCDIR)
-
-# Colors
-C_RESET				:= \033[0m
-C_PENDING			:= \033[0;36m
-C_SUCCESS			:= \033[0;32m
-
-# Multi platforms
-ECHO				:= echo
-
-# Escape sequences (ANSI/VT100)
-ES_ERASE			:= "\033[1A\033[2K\033[1A"
-ERASE				:= $(ECHO) $(ES_ERASE)
-
-all: vector.ft map.ft stack.ft vector.std map.std stack.std
-
-vector.%:
-	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(VECTOR_TARGET)
-
-map.%:
-	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(MAP_TARGET)
-
-stack.%:
-	$(MAKE) VERSION=$* $(TARGETDIR)/$*$(STACK_TARGET)
-
-fclean: clean
-	@$(RM) -f *.d *.o
-	@$(RM) -rf $(BUILDDIR)ft
-	@$(RM) -rf $(BUILDDIR)std
-
-clean:
-	@$(RM) -rf $(TARGETDIR)/ft$(VECTOR_TARGET)
-	@$(RM) -rf $(TARGETDIR)/std$(VECTOR_TARGET)
-	@$(RM) -rf $(TARGETDIR)/ft$(MAP_TARGET)
-	@$(RM) -rf $(TARGETDIR)/std$(MAP_TARGET)
-	@$(RM) -rf $(TARGETDIR)/ft$(STACK_TARGET)
-	@$(RM) -rf $(TARGETDIR)/std$(STACK_TARGET)
+SOURCES_NAME	= 	\
+					srcs/main_map		\
+					srcs/test_map		\
+					srcs/test_stack		\
+					srcs/test_vector	\
 
 
--include $(VECTOR_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
--include $(MAP_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
--include $(STACK_OBJECTS:.$(OBJEXT)=.$(DEPEXT))
+# Add SRCS_DIR name before filename and cpp at the end
+SOURCES			= $(patsubst %, %.cpp, $(SOURCES_NAME))
 
-$(TARGETDIR)/%$(VECTOR_TARGET): $(VECTOR_OBJECTS)
-	@mkdir -p $(TARGETDIR)
-	$(CXX) -o $(TARGETDIR)/$(VERSION)$(VECTOR_TARGET) $^ $(LIB)
+# Copy SOURCES but replace .cpp by .o
+FT_OBJECTS			= 	$(SOURCES:%.cpp=ft/%.o)
+STD_OBJECTS			= 	$(SOURCES:%.cpp=std/%.o)
 
-$(TARGETDIR)/%$(MAP_TARGET): $(MAP_OBJECTS)
-	@mkdir -p $(TARGETDIR)
-	$(CXX) -o $(TARGETDIR)/$(VERSION)$(MAP_TARGET) $^ $(LIB)
+# Copy SOURCES but replace .cpp by .d
+FT_DEPEND			=	$(SOURCES:.cpp=.d)
+STD_DEPEND			=	$(SOURCES:.cpp=.d)
 
-$(TARGETDIR)/%$(STACK_TARGET): $(STACK_OBJECTS)
-	@mkdir -p $(TARGETDIR)
-	$(CXX) -o $(TARGETDIR)/$(VERSION)$(STACK_TARGET) $^ $(LIB)
+# Compiler
+CPP				=	c++
 
-$(BUILDDIR)$(VERSION)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(dir $@)
-	@$(ECHO) "$(TARGET)\t\t[$(C_PENDING)⏳$(C_RESET)]"
-	$(CXX) $(CPPFLAGS) $(INC) -c -o $@ $<
-	@$(CXX) $(CPPFLAGS) $(INCDEP) -MM $(SRCDIR)/$*.$(SRCEXT) > $(BUILDDIR)$(VERSION)/$*.$(DEPEXT)
-	@$(ERASE)
-	@$(ERASE)
-	@cp -f $(BUILDDIR)$(VERSION)/$*.$(DEPEXT) $(BUILDDIR)$(VERSION)/$*.$(DEPEXT).tmp
-	@sed -e 's|.*:|$(BUILDDIR)$(VERSION)/$*.$(OBJEXT):|' < $(BUILDDIR)$(VERSION)/$*.$(DEPEXT).tmp > $(BUILDDIR)$(VERSION)/$*.$(DEPEXT)
-	@sed -e 's/.*://' -e 's/\\$$//' < $(BUILDDIR)$(VERSION)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(BUILDDIR)$(VERSION)/$*.$(DEPEXT)
-	@rm -f $(VERSION)$(BUILDDIR)/$*.$(DEPEXT).tmp
+#SANITIZE = -fsanitize=address
+DEBUG		=	-g3 $(SANITIZE)
+CPPFLAGS		=	-Wall -Werror -Wextra -std=c++98 -MMD -MP $(DEBUG) $(INCLUDES)
+$(FT_NAME): CPPFLAGS += $(DEFINE_FT)
+$(STD_NAME): CPPFLAGS += $(DEFINE_STD)
+
+
+-include $(FT_DEPEND)
+-include $(STD_DEPEND)
+
+#	AUTOMATIC VARIABLES
+#	$@	=	Name of the rules
+#	$<	=	Name of the first dependances
+#	$^	=	every dependances
+
+std/%.o: %.cpp
+	mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) $(INC) -c -o $@ $<
+
+ft/%.o: %.cpp
+	mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) $(INC) -c -o $@ $<
+
+
+all:			$(FT_NAME) $(STD_NAME)
+
+$(STD_NAME):	$(STD_OBJECTS)
+	$(CPP) $(CPPFLAGS) $^ -o $@
+
+$(FT_NAME):		$(FT_OBJECTS)
+	$(CPP) $(CPPFLAGS) $^ -o $@
+
+clean:			
+	rm -rf ft
+	rm -rf std
+
+fclean:			clean
+	rm -f $(FT_NAME)
+	rm -f $(STD_NAME)
+
+re:				fclean all
+
+
+
+.PHONY:			all clean fclean re
+	# Delete the default suffixes
+	.SUFFIXES:            		
+	# Define my suffix list
+	.SUFFIXES:		.cpp .o .h
+	# Default target
+	.DEFAULT_GOAL 	:= all

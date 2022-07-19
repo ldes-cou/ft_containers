@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:44:58 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 10:28:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:00:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@
 # define PINK "\x1B[45;1m"
 # define END "\033[0m"
 
-#define out(x) std::cout << x << std::endl; 
-using namespace ft;
+# if !defined(NM)
+#  define NM ft
+# endif /* !defined(STD) */
 
+#define out(x) std::cout << x << std::endl; 
 template <class Key, class T>
-void	print(map<Key, T>& lst)
+void	print(NM::map<Key, T>& lst)
 {
-	for (typename map<Key, T>::iterator it = lst.begin(); it != lst.end(); it++)
+	for (typename NM::map<Key, T>::iterator it = lst.begin(); it != lst.end(); it++)
 		std::cout << *it << ' ';
 	std::cout << '\n';
 }
-
 void test_clear();
 void test_swap();
-
 
 void test_insert()
 {
@@ -41,16 +41,16 @@ void test_insert()
 	out(BLUE2)
 	out("***************	 TEST INSERT		*****************")
 	out(END)
-	pair<int, std::string>			my_pair(8, "salut");
-	map<int, std::string>			test;
+	NM::pair<int, std::string>			my_pair(8, "salut");
+	NM::map<int, std::string>			test;
 
 	test.insert(my_pair);
-	test.insert(pair<int, std::string>(-4, "bar"));
-	test.insert(pair<int, std::string>(2, "machin"));
-	test.insert(pair<int, std::string>(3, "foo"));
-	test.insert(pair<int, std::string>(746, "Marcel"));
-	test.insert(pair<int, std::string>(1, "truc"));
-	map<int, std::string>::iterator	kit = test.begin();
+	test.insert(NM::pair<int, std::string>(-4, "bar"));
+	test.insert(NM::pair<int, std::string>(2, "machin"));
+	test.insert(NM::pair<int, std::string>(3, "foo"));
+	test.insert(NM::pair<int, std::string>(746, "Marcel"));
+	test.insert(NM::pair<int, std::string>(1, "truc"));
+	NM::map<int, std::string>::iterator	kit = test.begin();
 	for (; kit != test.end(); kit++)
 		std::cout <<(*kit) << std::endl;
 		
@@ -63,8 +63,8 @@ void test_erase()
 	out("***************	 TEST ERASE		*****************")
 	out(END)
 	
-	map<char,int> a_map;
-	map<char,int>::iterator tit;
+	NM::map<char,int> a_map;
+	NM::map<char,int>::iterator tit;
 
 	// insert some values:
 	a_map['a']=10;
@@ -99,7 +99,7 @@ void test_map()
 	out(BLUE2)
 	out("***************	 TEST ITERATORS		*****************")
 	out(END)
-	map<char,int> mymap;
+	NM::map<char,int> mymap;
 
 
 	if (mymap.begin() != mymap.end())
@@ -112,16 +112,16 @@ void test_map()
 	if (mymap.begin() == mymap.end())
 		std::cout << "This is wrong\n";
 	
-	for (map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); it++)
+	for (NM::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); it++)
 		std::cout << it->first << " => " << it->second << '\n';
 
 	std::cout << "Hello there\n";
-	for (map<char,int>::const_iterator it=mymap.begin(); it!=mymap.end(); it++)
+	for (NM::map<char,int>::const_iterator it=mymap.begin(); it!=mymap.end(); it++)
 		std::cout << it->first << " => " << it->second << '\n';
 	std::cout << "General Kenobi\n";
 
-	map<char, int>::const_iterator it = mymap.begin();
-	map<char, int>::const_iterator ti = mymap.end();
+	NM::map<char, int>::const_iterator it = mymap.begin();
+	NM::map<char, int>::const_iterator ti = mymap.end();
 	std::cout << "Wupwup\n";
 
 	it++;
@@ -141,7 +141,7 @@ void test_map()
 	ti = it;
 
 	std::cout << "Trump is a kiddo\n";
-	map<char, int>::iterator end = mymap.end();
+	NM::map<char, int>::iterator end = mymap.end();
 	while(it != end)
 	{
 		std::cout << it->first << " => " << it->second << '\n';
@@ -151,7 +151,7 @@ void test_map()
 	out(BLUE2)
 	out("***************	 TEST ASSIGNATION	*****************")
 	out(END)
-	map<char,int> mimap;
+	NM::map<char,int> mimap;
 	char c;
 
 	mimap ['a']=101;
@@ -176,16 +176,16 @@ void test_map()
 	out("**************      TEST VALUECOMP/KEYCOMP   ****************** ")
 	out(END)
 	
-	map<char,int>::key_compare mycomp = mymap.key_comp();
+	NM::map<char,int>::key_compare mycomp = mymap.key_comp();
 	std::cout << "comparing 3 to 2 " << std::endl;
 	if (mycomp(3 , 2) == true )
 		std::cout << BLUE2 << "3 is inferior to 2" << END << std::endl;
 	else
 		std::cout << BLUE2 << "3 is not inferior to 2" << END << std::endl;
-	map<char,int>::value_compare micomp = mymap.value_comp();
+	NM::map<char,int>::value_compare micomp = mymap.value_comp();
 
 	std::cout <<"comparing pair ('a', 2) to pair ('b', 4) "  << std::endl;
-	if (micomp(make_pair('a', 2), make_pair('b', 4)) == true)
+	if (micomp(NM::make_pair('a', 2), NM::make_pair('b', 4)) == true)
 		std::cout << BLUE2 <<"pair ('a', 2) is inferior to pair ('b' , 4)" << END << std::endl;
 	else
 		std::cout << BLUE2 <<"pair ('a', 2) is not inferior to pair ('b' , 4)" << END << std::endl;
@@ -202,7 +202,7 @@ void test_map()
 	out("**************      TEST RELATIONAL OPERATORS   ****************** ")
 	out(END)
 	
-	map<char,int> foo,bar;
+	NM::map<char,int> foo,bar;
 	foo['a']=100;
 	foo['b']=200;
 	bar['a']=10;
@@ -220,7 +220,7 @@ void test_map()
 	out("**************      TEST OPERATOR[]   ****************** ")
 	out(END)
 	
-	map<char,std::string> themap;
+	NM::map<char,std::string> themap;
 
 	themap['a']="an element";
 	themap['b']="another element";
@@ -236,15 +236,15 @@ void test_map()
 	out("**************      TEST OPERATOR=   ****************** ")
 	out(END)
 	
-	map<char,int> first;
-	map<char,int> second;
+	NM::map<char,int> first;
+	NM::map<char,int> second;
 
 	first['x']=8;
 	first['y']=16;
 	first['z']=32;
 
 	second=first;                	// second now contains 3 ints
-	first=map<char,int>();  		// and first is now empty
+	first=NM::map<char,int>();  		// and first is now empty
 
 	std::cout << "Size of first: " << first.size() << '\n';
 	std::cout << "Size of second: " << second.size() << '\n';
@@ -254,8 +254,8 @@ void test_map()
 	out("**************      TEST LOWER_BOUND   ****************** ")
 	out(END)
 	
-	map<char,int> mamap;
-	map<char,int>::iterator itlow,itup;
+	NM::map<char,int> mamap;
+	NM::map<char,int>::iterator itlow,itup;
 
 	mamap['a']=20;
 	mamap['b']=40;
@@ -272,19 +272,19 @@ void test_map()
 
 	mamap.erase(itlow,itup);
 
-	for (map<char,int>::iterator it=mamap.begin(); it!=mamap.end(); ++it)
+	for (NM::map<char,int>::iterator it=mamap.begin(); it!=mamap.end(); ++it)
 	  std::cout << it->first << " => " << it->second << '\n';
 
 	out(BLUE2)
 	out("**************      TEST EQUAL RANGE   ****************** ")
 	out(END)
 	
-	map<char,int> The_map;
+	NM::map<char,int> The_map;
 	The_map['a']=10;
 	The_map['b']=20;
 	The_map['c']=30;
 
-	pair<map<char,int>::iterator,map<char,int>::iterator> ret;
+	NM::pair<NM::map<char,int>::iterator,NM::map<char,int>::iterator> ret;
 	ret = The_map.equal_range('b');
 
 	std::cout << "lower bound points to: ";
@@ -298,12 +298,12 @@ void test_map()
 
 void	test_clear()
 {
-	map<int, std::string> mymap;
-	mymap.insert(pair<int, std::string>(-4, "bar"));
-	mymap.insert(pair<int, std::string>(2, "machin"));
-	mymap.insert(pair<int, std::string>(3, "foo"));
-	mymap.insert(pair<int, std::string>(746, "Marcel"));
-	mymap.insert(pair<int, std::string>(1, "truc"));
+	NM::map<int, std::string> mymap;
+	mymap.insert(NM::pair<int, std::string>(-4, "bar"));
+	mymap.insert(NM::pair<int, std::string>(2, "machin"));
+	mymap.insert(NM::pair<int, std::string>(3, "foo"));
+	mymap.insert(NM::pair<int, std::string>(746, "Marcel"));
+	mymap.insert(NM::pair<int, std::string>(1, "truc"));
 
 	
 	std::cout << "mymap size before clear is " << mymap.size() << std::endl;
@@ -319,7 +319,7 @@ void test_swap()
 	out("**************      TEST SWAP   ****************** ")
 	out(END)
 	
-	map<char,int> foo,bar;
+	NM::map<char,int> foo,bar;
 
 	foo['x']=100;
 	foo['y']=200;
@@ -329,29 +329,29 @@ void test_swap()
 	bar['c']=33;
 
 
-	map<char, int>::const_iterator tmp = foo.begin(); //tmp iterates through foo
-	map<char, int>::const_iterator tmp2 = bar.begin(); //tmp2 iterates through bar
+	NM::map<char, int>::const_iterator tmp = foo.begin(); //tmp iterates through foo
+	NM::map<char, int>::const_iterator tmp2 = bar.begin(); //tmp2 iterates through bar
 
 	std::cout << "foo contains:\n";
-	for (map<char,int>::iterator it=foo.begin();it!=foo.end(); ++it)
+	for (NM::map<char,int>::iterator it=foo.begin();it!=foo.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 	
 	std::cout << "bar contains:\n";
-	for (map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+	for (NM::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 		
 	foo.swap(bar); //tmp iterates through bar
 					//tmp2 iterates through foo
 
 	std::cout << "foo contains:\n";
-	for (map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+	for (NM::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 	std::cout << "bar contains:\n";
-	for (map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+	for (NM::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
-	map<char, int>	other;
+	NM::map<char, int>	other;
 
 	other['1'] = 73;
 	other['2'] = 173;
@@ -360,14 +360,14 @@ void test_swap()
 	other['5'] = 74683;
 	other['6'] = 753;
 
-	map<char, int>::const_iterator tmp3 = other.begin(); // tmp3 iterates through other
+	NM::map<char, int>::const_iterator tmp3 = other.begin(); // tmp3 iterates through other
 
 	std::cout << "foo contains:\n";
-	for (map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+	for (NM::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 	std::cout << "bar contains:\n";
-	for (map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+	for (NM::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 	while(tmp != bar.end())

@@ -6,14 +6,13 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:39:17 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/19 10:25:09 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:09:37 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_HPP
 #define TEST_HPP
 
-# define RED "\x1B[31m"
 # define GREEN "\x1B[32m"
 # define YELLOW "\x1B[33m"
 # define PINK "\x1B[45;1m"
@@ -33,10 +32,8 @@ namespace ft
 }
 
 
-void test_stack_ft();
-void test_stack_std();
-void test_vector_ft();
-void test_vector_std();
+void test_stack();
+void test_vector();
 void test_map();
 
 #endif

@@ -6,30 +6,32 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:26:44 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 18:05:08 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:01:38 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/stack.hpp"
 #include <deque>
 // #define std
-using namespace ft;
+# if !defined(NM)
+#  define NM ft
+# endif /* !defined(STD) */
 
-void test_stack_ft()
+void test_stack()
 {
-  vector<int> __vector (3,100);          // deque with 3 elements
-  vector<int> myvector (2,200);         // vector with 2 elements
-  stack<int> first;                     // empty stack
-  stack<int> second (__vector);          // stack initialized to copy of deque
+  NM::vector<int> __vector (3,100);          // deque with 3 elements
+  NM::vector<int> myvector (2,200);         // vector with 2 elements
+  NM::stack<int> first;                     // empty stack
+  NM::stack<int> second (__vector);          // stack initialized to copy of deque
   
-  stack<int,std::deque<int> > third;   // empty stack using deque
-  stack<int,vector<int> > fourth (myvector);
+  NM::stack<int,std::deque<int> > third;   // empty stack using deque
+  NM::stack<int,NM::vector<int> > fourth (myvector);
   std::cout << "size of first: " << first.size() << '\n';
   std::cout << "size of second: " << second.size() << '\n';
   std::cout << "size of third: " << third.size() << '\n';
   std::cout << "size of fourth: " << fourth.size() << '\n';
 
-  stack<int> a, b, c;
+  NM::stack<int> a, b, c;
   a.push(10);
   a.push(20);
   a.push(30);
@@ -48,9 +50,4 @@ void test_stack_ft()
   if (c>b) std::cout << "c is greater than b\n";
   if (a<=b) std::cout << "a is less than or equal to b\n";
   if (a>=b) std::cout << "a is greater than or equal to b\n";
-}
-
-void test_stack_std()
-{
-    test_stack_ft();
 }

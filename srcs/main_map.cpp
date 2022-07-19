@@ -8,19 +8,31 @@
 # define END "\033[0m"
 # define SIZE 42
 
-#include "../includes/tests.hpp"
-//#include "map/map.hpp"
+# if !defined(NM)
+#  define NM ft
+# endif
+
+#include "includes/tests.hpp"
+#include "includes/map.hpp"
+
 #include <map>
-#ifndef NAMESPACE
-# define NAMESPACE std
+#include <time.h>
 
 
+
+void test_vector();
+void test_stack();
+void test_map();
 
 int main()
 {
    // test_new_algo();
+    clock_t tStart = clock();
+    test_stack();
     test_map();
+    test_vector();
+    std::cout << "Time taken: "  << (double)(clock() - tStart)/CLOCKS_PER_SEC << std::endl;
     return 0;
 }
-#endif
+
 

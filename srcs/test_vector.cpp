@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:14:06 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/07/18 18:05:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:11:31 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@
 # define END "\033[0m"
 # define SIZE 42
 
-using namespace ft;
+# if !defined(NM)
+#  define NM ft
+# endif /* !defined(STD) */
 
-void test_vector_ft()
+void test_vector()
 {
     std::cout << PINK << "************** TEST CONSTRUCTOR ****************" << END << std::endl;
-      // constructors used in the same order as described above:
-    vector<int> first;
-    std::cout << "ok" <<std::endl;                                 // empty vector of ints
-    vector<int> second (4,100);
+    NM::vector<int> first;                                            // empty vector of ints
+    std::cout << "ok" <<std::endl;                                 
+    NM::vector<int> second (4,100);                                 // four ints with value 100  
     std::cout << "ok" <<std::endl;
-                         // four ints with value 100
-    //std::cout << *second.begin() << " " << *second.end() << std::endl;             
-    vector<int> third (second.begin(),second.end());  // iterating through second
+                                 
+    NM::vector<int> third (second.begin(),second.end());  // iterating through second
     std::cout << third.size() << std::endl;
     for (int i=0;i<(int)third.size() - 1;i++)
       std::cout << ' ' << third[i] << std::endl;   
     
     /**************************************************************************************************/
     std::cout << std::endl << "ok" <<std::endl; 
-    vector<int> fourth (third);
+    NM::vector<int> fourth (third);
     
     for (int i=0;i<(int)fourth.size() - 1;i++)
       std::cout << ' ' << fourth[i];
@@ -54,7 +54,7 @@ void test_vector_ft()
     std::cout << "size: " << third.size() << "\n";
 
     std::cout << PINK << "************** TEST RESIZE ****************" << END << std::endl;
-    vector<int> myvector;
+    NM::vector<int> myvector;
     for (int i=1;i<10;i++) myvector.push_back(i);
     std::cout << myvector.size() << std::endl;
     for (int i=0;i<(int)myvector.size();i++)
@@ -65,6 +65,7 @@ void test_vector_ft()
     myvector.resize(8,100);
     std::cout << myvector.size() << std::endl;
     myvector.resize(12);
+    
     std::cout << "end :" << *((myvector.end()- 1)) << std::endl;
     std::cout << PINK << "************** TEST ELEMENT ACCESS ****************" << END << std::endl;
     std::cout << "myvector contains:";
@@ -82,9 +83,10 @@ void test_vector_ft()
     std::cout << '\n';
     std::cout << "front: "<< myvector.front() << std::endl;
     std::cout << "back : " << myvector.back() << std::endl;
+    
     std::cout << PINK << "************** MODIFIERS ****************" << END << std::endl;
     std::cout << BLUE2 << "**************  INSERT ****************" << END << std::endl;
-    vector<int>::iterator it;
+    NM::vector<int>::iterator it;
     it = myvector.begin();
     std::cout << "my vector   :";
     for (int i=0;i<(int)myvector.size();i++)
@@ -97,8 +99,8 @@ void test_vector_ft()
     std::cout << std::endl;
   
     
-    std::vector<int> v(3, 2);
-    std::vector<int>::iterator t;
+    NM::vector<int> v(3, 2);
+    NM::vector<int>::iterator t;
     t = v.begin();
     std::cout << "my vector   :";
     for (int i=0;i<(int)v.size();i++)
@@ -111,7 +113,7 @@ void test_vector_ft()
     std::cout << std::endl;
 
     
-    vector<int> l(5, 8);
+    NM::vector<int> l(5, 8);
     std::cout << "my vector   :";
     for (int i=0;i< (int)l.size();i++)
       std::cout << ' ' << l[i];
@@ -142,13 +144,12 @@ void test_vector_ft()
     std::cout << std::endl;
     std::cout << BLUE2 << "**************  ASSIGN ****************" << END << std::endl;
     
-    vector<int> f;
-    vector<int> s;
-    vector<int> th;
+    NM::vector<int> f;
+    NM::vector<int> s;
+    NM::vector<int> th;
 
-    f.assign (7,100);    
-             // 7 ints with a value of 100
-    vector<int>::iterator iti;
+    f.assign (7,100);     // 7 ints with a value of 100
+    NM::vector<int>::iterator iti;
     iti=f.begin()+1;
     s.assign (iti,f.end()-1); // the 5 central values of first
     int myints[] = {1776,7,4};
@@ -160,8 +161,8 @@ void test_vector_ft()
     
     std::cout << BLUE2 << "**************  SWAP  ****************" << END << std::endl;
 
-    vector<int> foo (3,100);   // three ints with a value of 100
-    vector<int> bar (5,200);   // five ints with a value of 200
+    NM::vector<int> foo (3,100);   // three ints with a value of 100
+    NM::vector<int> bar (5,200);   // five ints with a value of 200
 
     foo.swap(bar);
 
@@ -176,11 +177,11 @@ void test_vector_ft()
     std::cout << '\n';
     
     std::cout << BLUE2 << "**************  OPERATOR=  ****************" << END << std::endl;
-    vector<int> jet (3,0);
-    vector<int> li (5,0);
+    NM::vector<int> jet (3,0);
+    NM::vector<int> li (5,0);
 
     li = jet;
-    jet = vector<int>();
+    jet = NM::vector<int>();
 
     std::cout << "Size of jet: " << int(jet.size()) << '\n';
     std::cout << "Size of li : " << int(li.size()) << '\n';
@@ -188,19 +189,14 @@ void test_vector_ft()
     std::cout << PINK << "************** NON MEMBER FONCTION OVERLOADS ****************" << END << std::endl;
     std::cout << BLUE2 << "**************  RELATIONAL OPERATOR==  ****************" << END << std::endl;
     {
-    vector<int> foo (3,100);   // three ints with a value of 100
-    vector<int> bar (2,200);   // two ints with a value of 200
+      NM::vector<int> foo (3,100);   // three ints with a value of 100
+      NM::vector<int> bar (2,200);   // two ints with a value of 200
 
-    if (foo==bar) std::cout << "foo and bar are equal\n";
-    if (foo!=bar) std::cout << "foo and bar are not equal\n";
-    if (foo< bar) std::cout << "foo is less than bar\n";
-    if (foo> bar) std::cout << "foo is greater than bar\n";
-    if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-    if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+      if (foo==bar) std::cout << "foo and bar are equal\n";
+      if (foo!=bar) std::cout << "foo and bar are not equal\n";
+      if (foo< bar) std::cout << "foo is less than bar\n";
+      if (foo> bar) std::cout << "foo is greater than bar\n";
+      if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+      if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
     }  
-}
-
-void test_vector_std()
-{
-  test_vector_ft();
 }
