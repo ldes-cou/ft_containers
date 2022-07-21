@@ -23,6 +23,6 @@ C++ containers, easy mode.
 ## SET 
 
 + use your map file and change the name map to set
-+ change the template <key, T> by <T>
++ change the template <key, T> by < T > 
 + change the key_compare by value_compare
 
