@@ -5,7 +5,7 @@ C++ containers, easy mode.
 
 + code insert, erase, assign, clear
 + work with stl iterators at first
-+ code your own iterators, you can find reverse_iterators code base
++ code your own iterators(reverse_iterators code base will help you)
 
 ## STACK 
 
